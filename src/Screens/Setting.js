@@ -1,21 +1,39 @@
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
 import React from 'react';
-
-const Setting = (props) => {
+import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native';
+import { appcolor } from '../components/Colorss';
+const Setting = ({ navigation }) => {
     return (
-        <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.steelblue}>
-                Setting Screen
-            </Text>
-        </SafeAreaView>
+        <View style={styles.container}>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('TeacherList')}
+            >
+                <Text style={styles.buttonText}> Rule Setting    </Text>
+            </TouchableOpacity>
+
+        </View>
     );
 };
-
 export default Setting;
 const styles = StyleSheet.create({
-    steelblue: {
-        color: "steelblue",
-        fontSize: 40,
-        fontWeight: 'bold',
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    button: {
+        backgroundColor: appcolor.primarycolor,
+        paddingHorizontal: 50,
+        paddingVertical: 10,
+
+        marginVertical: 10,
+        borderRadius: 30,
+        elevation: 29,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 26,
+        fontWeight: 'bold'
     },
 });
+

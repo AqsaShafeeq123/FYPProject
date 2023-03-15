@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
+import { appcolor } from '../components/Colorss';
 
 export default Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -55,16 +54,18 @@ export default Login = ({ navigation }) => {
                 />
             </View>
 
-            <TouchableOpacity
-                style={styles.btnForgotPassword}
-                onPress={() => showAlert('restore_password')}>
-                <Text style={styles.btnText}>Forgot your password?</Text>
-            </TouchableOpacity>
+
 
             <TouchableOpacity
                 style={[styles.buttonContainer, styles.loginButton]}
 
                 onPress={() => navigation.navigate('Tabs')}>
+
+                {/* onPress={() => navigation.navigate('StdDashboard')}> */}
+
+                {/* onPress={() => navigation.navigate('TeacherDashboard')}> */}
+
+                {/* onPress={() => navigation.navigate('DirectorDashboard')}>   */}
 
 
                 <Text style={styles.loginText}>Login</Text>
@@ -122,21 +123,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
-        width: 300,
+        width: 200,
         borderRadius: 30,
         backgroundColor: 'transparent',
     },
-    btnForgotPassword: {
-        height: 15,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        marginBottom: 10,
-        width: 300,
-        backgroundColor: 'transparent',
-    },
+
     loginButton: {
-        backgroundColor: '#4682b4',
+        backgroundColor: appcolor.primarycolor,
 
         shadowColor: '#800',
         shadowOffset: {
@@ -160,17 +153,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
     },
-    btnText: {
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: 10,
 
-    },
-    image: {
-        marginBottom: 5,
-        marginTop: 10,
-        width: 250,
-        height: 250,
-    },
+
 });
 

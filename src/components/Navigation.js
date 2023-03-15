@@ -1,7 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -12,7 +9,7 @@ import ViewS from '../Screens/ViewS';
 import Setting from '../Screens/Setting';
 import Schedule from '../Screens/Schedule';
 
-
+import { appcolor } from '../components/Colorss';
 
 
 
@@ -36,7 +33,7 @@ export default MyTabs = ({ navigation }) => {
                     borderRadius: 0,
                     elevation: 0,
 
-                    backgroundColor: '#4682b4',
+                    backgroundColor: appcolor.primarycolor,
                     height: 60,
                     marginBottom: -25
                 },
@@ -52,11 +49,12 @@ export default MyTabs = ({ navigation }) => {
                     if (route.name === 'Views') {
                         iconName = focused ? 'md-list-circle-sharp' : 'md-list-circle-outline';
                     }
-                    if (route.name === 'Setting') {
-                        iconName = focused ? 'settings' : 'settings-outline';
-                    }
+
                     if (route.name === 'Schedule') {
                         iconName = focused ? 'calendar-sharp' : 'calendar-outline';
+                    }
+                    if (route.name === 'Setting') {
+                        iconName = focused ? 'person-add' : 'person-add-outline';
                     }
 
                     // You can return any component that you like here!
@@ -79,7 +77,7 @@ export default MyTabs = ({ navigation }) => {
                 name="Home"
                 component={Home}
                 options={{
-                    headerShown: false,
+                    // headerShown: false,
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         color: 'white',
@@ -87,7 +85,7 @@ export default MyTabs = ({ navigation }) => {
                         fontSize: 20,
                     },
                     headerStyle: {
-                        backgroundColor: '#333',
+                        backgroundColor: appcolor.primarycolor,
                     },
 
                 }}></Tab.Screen>
@@ -104,7 +102,23 @@ export default MyTabs = ({ navigation }) => {
                         fontSize: 20,
                     },
                     headerStyle: {
-                        backgroundColor: '#333',
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }}
+            />
+
+            <Tab.Screen
+                name="Schedule"
+                component={Schedule}
+                options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
                     },
                 }}
             />
@@ -119,22 +133,7 @@ export default MyTabs = ({ navigation }) => {
                         fontSize: 20,
                     },
                     headerStyle: {
-                        backgroundColor: '#4682b4',
-                    },
-                }}
-            />
-            <Tab.Screen
-                name="Schedule"
-                component={Schedule}
-                options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: '#4682b4',
+                        backgroundColor: appcolor.primarycolor,
                     },
                 }}
             />
