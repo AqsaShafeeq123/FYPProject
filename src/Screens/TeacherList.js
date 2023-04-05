@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     FlatList,
 
@@ -58,6 +58,24 @@ const TeacherList = ({ navigation }) => {
     const [searchTeacher, setSearchTeacher] = useState('');
 
 
+    // Api response store
+    const [teacherdata, setTeacherData] = useState();
+    // APi Code
+    useEffect(() => {
+        getTeacher();
+    }, []);
+    async function getTeacher() {
+        try {
+            let response = await fetch('http://192.168.0.105:8000/api/user-details');
+            // let response = await fetch(appcolor.api + 'user-details');
+            let json = await response.json();
+            setTeacherData(json);
+            console.log(json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -77,36 +95,47 @@ const TeacherList = ({ navigation }) => {
             <View style={{ flex: 1, padding: 5 }}>
                 <FlatList
                     style={{ flex: 1 }}
-                    data={DATA}
+                    // data={DATA}
+                    // storing data is here in  flatlist
+                    data={teacherdata}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => {
                         if (item.name.toLowerCase().includes(searchTeacher.toLowerCase())) {
-                            return (
-                                <View
-                                    style={{
-                                        padding: 5,
-                                        backgroundColor: '#ffff',
-                                        elevation: 2,
-                                        margin: 3,
-                                        borderRadius: 8,
-                                    }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            navigation.navigate('ScheduleRules', {
-                                                Id: '123',
-                                                Name: item.name,
+                            {
+                                return (
+                                    item.role == 'Teacher' &&
+                                    <View
+                                        style={{
+                                            padding: 5,
+                                            backgroundColor: '#ffff',
+                                            elevation: 2,
+                                            margin: 3,
+                                            borderRadius: 8,
+                                        }}>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                navigation.navigate('ScheduleRules', {
+                                                    Id: '123',
+                                                    Name: item.name,
 
-                                            });
-                                        }}
-                                        style={[styles.item]}>
-                                        <Image source={{ uri: item.image }} style={styles.imgStyle} />
-                                        <Text style={{ fontSize: 16, color: 'black' }}>
-                                            {item.name}
-                                        </Text>
+                                                });
+                                            }}
+                                            style={[styles.item]}>
+                                            {
+                                                item.image == null ?
+                                                    <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
+                                                    :
+                                                    <Image source={{ uri: 'http://192.168.0.105:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                            }
+                                            <Text style={{ fontSize: 16, color: 'black' }}>
+                                                {item.name}
+                                            </Text>
 
 
-                                    </TouchableOpacity>
-                                </View>
-                            );
+                                        </TouchableOpacity>
+                                    </View>
+                                );
+                            }
                         }
                     }}></FlatList>
             </View>
@@ -140,3 +169,4 @@ const styles = StyleSheet.create({
 
 
 });
+

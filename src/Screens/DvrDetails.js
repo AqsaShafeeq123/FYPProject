@@ -19,11 +19,7 @@ import { appcolor } from '../components/Colorss';
 const DvrDetails = ({ navigation, route }) => {
     const [searchDvr, setSearchDvr] = useState('');
 
-    const { Name, Host, IP, MaxChannel } = route.params;
-
-    // Api response store
-    const [DVRdata, setDVRData] = useState();
-    const[VenueDetail , setVenueDetail]=useState();
+    const { id, Name, Host, IP, Channel } = route.params;
 
 
     // for update  icon
@@ -40,8 +36,8 @@ const DvrDetails = ({ navigation, route }) => {
     const showDialog = () => setdVisible(true);
     const hideDialog = () => setdVisible(false);
 
-    //  for camera
-    const [selectedVC, setSelectedVC] = useState();
+
+
     const [modalCam, setModalCam] = useState(false);
 
     const openModal = () => {
@@ -53,63 +49,227 @@ const DvrDetails = ({ navigation, route }) => {
     };
 
 
-    // APi Code
+
+
+
+
+    // Api response store
+    const [cameraDetail, setCamera] = useState();
+    // APi Code to get cameras from dvr  wd ID on specific dvr click
     useEffect(() => {
-        getDVR();
-        getVenueDetail();
+        getCamera();
+        // venue func also call here in camera get api
+        GetVenue();
+        // channel func also call here in camera get api
+        GetChannel();
+
     }, []);
-    async function getDVR() {
+    async function getCamera() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/dvr-details');
+            let response = await fetch('http://192.168.0.105:8000/api/camera-details/' + id);
             let json = await response.json();
-            setDVRData(json);
-            console.log(json);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+            setCamera(json.data);
 
-      // APi Code
-     
-    async function  getVenueDetail () {
-        try {
-            let response = await fetch('http://192.168.1.103:8000/api/venue-details');
-            let json = await response.json();
-            setVenueDetail(json);
-            console.log(json);
+            console.log(json.data);
         } catch (error) {
             console.log(error);
         }
     }
 
 
-    const [data, setData] = useState([
-        {
-            id: '1',
-            Room: 'Lab1 ',
-            Channel: '5',
-        },
-        {
-            id: '2',
-            Room: 'Lab2 ',
-            Channel: '1',
-        },
-        {
-            id: '3',
-            Room: 'Lab 5 ',
-            Channel: '3',
-        },
-        {
-            id: '4',
-            Room: 'Lt 6 ',
-            Channel: '4',
-        },
-        {
-            id: '5',
-            Room: 'Lt 7 ',
-            Channel: '2',
-        },
-    ]);
+    // ---------------------------------------------------------
+    // get venue in picker dropdown on update icon click
+
+
+
+    // USE IN Venue PICKER
+    const [venue, setVenue] = useState();
+    //  use in below api func
+    const [venueData, setVenueData] = useState([]);
+    async function GetVenue() {
+
+        let response = await fetch('http://192.168.0.105:8000/api/venue-details')
+
+        let json = await response.json();
+        let arr = json.data;
+        let newArray = arr.map(item => {
+            return {
+                label: item.name,
+                value: item.id,
+            };
+        });
+
+        setVenueData(newArray);
+    }
+
+
+
+
+    // ---------------------------------------
+
+
+    // get channel in picker dropdown on update icon click
+    // USE IN CHANNEL PICKER Code Portion
+
+    const [channel, setChannel] = useState();
+    //  use in below api func
+    const [channelData, setChannelData] = useState([]);
+
+    async function GetChannel() {
+
+        let response = await fetch('http://192.168.0.105:8000/api/camera-details/' + id)
+
+        let json = await response.json();
+        let arr = json.data;
+        let newArray = arr.map(item => {
+            return {
+                label: item.portNumber,
+                value: item.id,
+            };
+        });
+
+        let data = []
+
+        for (let index = 1; index <= Channel; index++) {
+            let a = {
+                label: '',
+                value: '',
+            };
+            let check = 0;
+            for (let i = 0; i < newArray.length; i++) {
+                if (index == newArray[i].label) {
+                    check = check + 1;
+                }
+            }
+            if (check != 1) {
+                a.label = index.toString();
+                a.value = index;
+                data.push(a);
+            }
+        }
+        // console.log("*****" + data[1].label);
+        // console.log('---------new array---------', newArray)
+        console.log('---------data---------', data)
+        setChannelData(data);
+    }
+
+
+
+
+
+
+
+    // --------------------------
+
+    const [idUpdate, setIdUpdate] = useState();
+    const UpdateCamera = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        console.log(venue + "   ................................" + channel)
+        var raw = JSON.stringify(
+            {
+                "id": idUpdate,
+                "dvrID": id,
+                "venueID": venue,
+                "portNumber": channel,
+                "venueName": "string"
+            }
+        );
+
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        console.log(raw);
+        fetch('http://192.168.0.105:8000/api/update-camera-details', requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+    }
+
+
+
+
+    // --------------------------------------
+
+    // APi Code FOR dlt icon to dlt camera convert it into 3 lines
+
+    const [camdelid, setcamdelid] = useState()
+    const DeleteCamera = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        console.log("Deleted id" + camdelid)
+        var raw = JSON.stringify(
+            {
+                "id": camdelid,
+                "dvrID": 0,
+                "venueID": 0,
+                "portNumber": "string",
+                "venueName": "string"
+            }
+        );
+
+        var requestOptions = {
+            method: 'Delete',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        console.log(raw);
+        fetch("http://192.168.0.105:8000/api/delete-camera-details", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+    }
+
+    // -------------------------------------------
+
+
+
+
+    // APi Code  on CAMERA ICON click to add camera
+
+
+    const AddCamera = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify(
+            {
+                "id": 0,
+                "dvrID": id,
+                "venueID": venue,
+                "portNumber": channel,
+                "venueName": "0"
+            }
+        );
+        console.log('!!!!!!!!!!!!!!!!!' + raw);
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://192.168.0.105:8000/api/add-camera", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+    }
+
+
+
+
+
+
+
+
+
 
 
     const handleDelete = id => {
@@ -136,6 +296,8 @@ const DvrDetails = ({ navigation, route }) => {
                         <Dialog.Actions>
                             <Button
                                 onPress={() => {
+                                    // api func call fr dlt icon
+                                    DeleteCamera();
                                     hideDialog();
 
                                 }}>
@@ -162,51 +324,59 @@ const DvrDetails = ({ navigation, route }) => {
                     <View style={{ top: 40 }}>
                         <Text style={{ color: 'black', fontSize: 20 }}>Select Venue</Text>
 
-                        {/* PICKER 1 */}
-                        <Picker
-                            mode="dropdown"
-                            style={styles.picker}
-                            selectedValue={selectedVC}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSelectedVC(itemValue)
-                            }>
-                            <Picker.Item label="Lab1" color='black' value="Lab1" />
-                            <Picker.Item label="Lab2" color='black' value="Lab2" />
-                            <Picker.Item label="Lab3" color='black' value="Lab3" />
-                            <Picker.Item label="Lab4" color='black' value="Lab4" />
-                            <Picker.Item label="Lab5" color='black' value="Lab5" />
-                            <Picker.Item label="Lab6" color='black' value="Lab6" />
-                            <Picker.Item label="Lab7" color='black' value="Lab7" />
+                        {/* PICKER 1 VENUE  wd api*/}
 
+                        <Picker
+                            style={styles.picker}
+                            dropdownIconColor={"black"}
+                            mode="dropdown"
+                            selectedValue={venue}
+                            onValueChange={itemValue => {
+                                setVenue(itemValue)
+                            }}>
+                            {venueData.map((item, index) => {
+                                return (
+                                    <Picker.Item label={item.label} value={item.value} key={index} />
+                                );
+                            })}
                         </Picker>
+
                     </View>
 
 
-                    {/* PICKER 2 */}
+                    {/* PICKER 2 CHANNEL  wd api*/}
                     <View style={{ top: 100 }}>
                         <Text style={{ color: 'black', fontSize: 20 }}>Select Channel</Text>
+
+
                         <Picker
                             style={styles.picker}
+                            dropdownIconColor={"black"}
                             mode="dropdown"
-
-                            selectedValue={selectedVC}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSelectedVC(itemValue)
-                            }>
-                            <Picker.Item label="3" color='black' value="3" />
-                            <Picker.Item label="4" color='black' value="4" />
+                            // above state channel use here
+                            selectedValue={channel}
+                            onValueChange={itemValue => {
+                                setChannel(itemValue)
+                            }}>
+                            {/* state 2 channel data */}
+                            {channelData.map((item, index) => {
+                                return (
+                                    <Picker.Item label={item.label} value={item.value} key={index} />
+                                );
+                            })}
                         </Picker>
                     </View>
+
 
 
                     <View style={{ padding: 5, top: 4, borderRadius: 26 }}>
 
 
-                        {/* BTN SAve */}
+                        {/* BTN updt*/}
                         <TouchableOpacity
                             style={{
                                 width: '40%',
-                                top: 14,
+                                top: 34,
                                 alignSelf: 'center',
                                 margin: 100,
                                 alignItems: 'center',
@@ -218,7 +388,8 @@ const DvrDetails = ({ navigation, route }) => {
                                 backgroundColor: '#4682b4',
                             }}
                             onPress={() => {
-                                handleUpdate(Updateid, text);
+                                // api func call updt
+                                UpdateCamera();
                                 setText('');
                             }}>
                             <Text
@@ -239,10 +410,13 @@ const DvrDetails = ({ navigation, route }) => {
                 <Text style={styles.text}>Host :{Host} </Text>
                 <Text style={styles.text}>IP :{IP} </Text>
                 <Text style={styles.text}>
-                    MaxChannel : <Text>{MaxChannel}</Text>
+                    MaxChannel : <Text>{Channel}</Text>
                 </Text>
             </View>
 
+
+
+            {/* -------------------------------------------------------- */}
             {/*Search bar   */}
             <View style={{ margin: '1%' }}>
                 <Searchbar
@@ -255,13 +429,16 @@ const DvrDetails = ({ navigation, route }) => {
                 />
             </View>
 
+
+            {/* ------------------------------------------------------ */}
             <View style={{ flex: 1, padding: 5 }}>
                 <FlatList
                     style={{ flex: 1 }}
-                    // storing data is here in  flatlist
-                    data={DVRdata}
+                    // storing data is here in  flatlist list of camera for get method
+                    data={cameraDetail}
+
                     renderItem={({ item, index }) => {
-                        if (item.Room.toLowerCase().includes(searchDvr.toLowerCase())) {
+                        if (item.venueName.toLowerCase().includes(searchDvr.toLowerCase())) {
                             return (
                                 <View
                                     style={{
@@ -273,9 +450,10 @@ const DvrDetails = ({ navigation, route }) => {
                                         flexDirection: 'row',
                                         justifyContent: 'space-between',
                                     }}>
+                                    {/* api get here  the room and channel in list fr get*/}
                                     <View>
-                                        <Text style={styles.title}> Room : {item.Room}</Text>
-                                        <Text style={styles.title}> Channel : {item.Channel}</Text>
+                                        <Text style={styles.title}> Room : {item.venueName}</Text>
+                                        <Text style={styles.title}> Channel : {item.portNumber}</Text>
                                     </View>
                                     {/* ICONS DLT UPDT */}
                                     <View
@@ -285,15 +463,20 @@ const DvrDetails = ({ navigation, route }) => {
                                         <Ionicons
                                             onPress={() => {
                                                 showModal();
-                                                setUpdateId(item.id);
+                                                // above state of update api
+                                                setIdUpdate(item.id);
                                             }}
                                             style={{}}
                                             name="create-outline"
                                             size={24}
                                             color="black"
                                         />
-
-                                        <TouchableOpacity onPress={() => showDialog()}>
+                                        {/* dlt icon  */}
+                                        <TouchableOpacity onPress={() => {
+                                            showDialog()
+                                            // api setting state fr dlt cam
+                                            setcamdelid(item.id);
+                                        }}>
                                             <Ionicons
                                                 style={{ left: 5 }}
                                                 name="trash-outline"
@@ -308,6 +491,10 @@ const DvrDetails = ({ navigation, route }) => {
                     }}></FlatList>
             </View>
 
+
+
+
+            {/* ---------------------------------------------------------------------- */}
             {/* Camera icon */}
             <View
                 style={{
@@ -349,39 +536,44 @@ const DvrDetails = ({ navigation, route }) => {
                             <View style={{ top: 50 }}>
                                 <Text style={{ color: 'black', fontSize: 20 }}>Select Venue</Text>
 
-                                {/* PICKER 1 */}
-                                <Picker
-                                    mode="dropdown"
-                                    style={styles.picker}
-                                    selectedValue={selectedVC}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        setSelectedVC(itemValue)
-                                    }>
-                                    <Picker.Item label="Lab1" color='black' value="Lab1" />
-                                    <Picker.Item label="Lab2" color='black' value="Lab2" />
-                                    <Picker.Item label="Lab3" color='black' value="Lab3" />
-                                    <Picker.Item label="Lab4" color='black' value="Lab4" />
-                                    <Picker.Item label="Lab5" color='black' value="Lab5" />
-                                    <Picker.Item label="Lab6" color='black' value="Lab6" />
-                                    <Picker.Item label="Lab7" color='black' value="Lab7" />
+                                {/* PICKER 1 Camera venue  wd api*/}
 
+                                <Picker
+                                    style={styles.picker}
+                                    dropdownIconColor={"black"}
+                                    mode="dropdown"
+                                    selectedValue={venue}
+                                    onValueChange={itemValue => {
+                                        setVenue(itemValue)
+                                    }}>
+                                    {venueData.map((item, index) => {
+                                        return (
+                                            <Picker.Item label={item.label} value={item.value} key={index} />
+                                        );
+                                    })}
                                 </Picker>
+
                             </View>
 
 
-                            {/* PICKER 2 */}
+                            {/* PICKER 2  camera with api*/}
                             <View style={{ top: 100 }}>
                                 <Text style={{ color: 'black', fontSize: 20 }}>Select Channel</Text>
                                 <Picker
                                     style={styles.picker}
+                                    dropdownIconColor={"black"}
                                     mode="dropdown"
-
-                                    selectedValue={selectedVC}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        setSelectedVC(itemValue)
-                                    }>
-                                    <Picker.Item label="3" color='black' value="3" />
-                                    <Picker.Item label="4" color='black' value="4" />
+                                    // above state channel use here
+                                    selectedValue={channel}
+                                    onValueChange={itemValue => {
+                                        setChannel(itemValue)
+                                    }}>
+                                    {/* state 2 channel data */}
+                                    {channelData.map((item, index) => {
+                                        return (
+                                            <Picker.Item label={item.label} value={item.value} key={index} />
+                                        );
+                                    })}
                                 </Picker>
                             </View>
 
@@ -400,7 +592,13 @@ const DvrDetails = ({ navigation, route }) => {
 
                                         backgroundColor: '#4682b4',
                                     }}
-                                    onPress={() => { }}>
+                                    onPress={() => {
+                                        AddCamera(),
+                                            getCamera();
+
+                                    }}
+
+                                >
                                     <Text
                                         style={{
                                             fontSize: 20,
@@ -423,16 +621,17 @@ export default DvrDetails;
 const styles = StyleSheet.create({
     txt: {
         backgroundColor: '#fff',
-        padding: 20,
+        padding: 13,
 
         justifyContent: 'flex-start',
         color: 'black',
-        height: 120,
-        width: '100%',
+        height: 110,
+        width: '95%',
         borderRadius: 30,
-        marginRight: 5,
-        marginLeft: 5,
+        marginRight: 8,
+        marginLeft: 9,
         marginBottom: 10,
+        marginTop: 20
     },
     text: {
         fontSize: 15,
@@ -454,4 +653,46 @@ const styles = StyleSheet.create({
         color: 'black',
         backgroundColor: appcolor.primarycolor
     },
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

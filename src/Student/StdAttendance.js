@@ -61,16 +61,16 @@ const DATA = [
 ];
 
 const StdAttendance = ({ navigation, route }) => {
-    const { CourseName, Credit_hours, Teach_By, Attendance } = route.params;
+    // const { CourseName, Credit_hours, Teach_By, Attendance } = route.params;
 
     return (
-        <View style={{ flex: 1 }}>
-            <View style={styles.txt}>
+        <View style={{ flex: 1, }}>
+            {/* <View style={styles.txt}>
                 <Text style={styles.text}>CourseName: {CourseName}</Text>
                 <Text style={styles.text}>Credit_hours : {Credit_hours}</Text>
                 <Text style={styles.text}>Teach_By: {Teach_By} </Text>
                 <Text style={styles.text}>Attendance : {Attendance} </Text>
-            </View>
+            </View> */}
 
             <View
                 style={{
@@ -80,8 +80,8 @@ const StdAttendance = ({ navigation, route }) => {
                     top: 10,
                     margin: 3,
                 }}>
-                <Text style={{ color: 'black' }}> DATE </Text>
-                <Text style={{ color: 'black' }}> STATUS</Text>
+                <Text style={{ color: 'black', backgroundColor: '#afeeee' }}> DATE </Text>
+                <Text style={{ color: 'black', backgroundColor: '#afeeee' }}> STATUS</Text>
             </View>
 
             <FlatList
@@ -114,15 +114,15 @@ export default StdAttendance;
 
 const styles = StyleSheet.create({
     txt: {
-        backgroundColor: '#fff',
+        backgroundColor: '#6495ed',
         alignItems: 'center',
         justifyContent: 'center',
         height: 100,
         width: '100%',
         borderRadius: 30,
         marginTop: 20,
-        marginRight: 5,
-        marginLeft: 5,
+        marginRight: 15,
+        // marginLeft: 5,
         marginBottom: 50,
     },
     text: {

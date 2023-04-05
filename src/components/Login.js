@@ -1,11 +1,57 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity, Image, Alert } from 'react-native';
 
 import { appcolor } from '../components/Colorss';
 
 export default Login = ({ navigation }) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+
+    const handleLogin = async () => {
+        try {
+            let response = await fetch('http://192.168.0.105:8000/api/signin?userId=' + username + '&password=' + password);
+            let json = await response.json();
+            // api response store
+            let data = json;
+
+            // console.log(data.role)
+            console.log(data)
+            console.log(username, password)
+
+
+            if (data.role == 'Admin') {
+
+                navigation.navigate('Tabs');
+            }
+
+            else if (data.role == 'Teacher') {
+
+                navigation.navigate('TeacherDashboard', {
+                    screen: 'HOME',
+                    // passing obj to teacher dashboard
+                    params: { dat: data },
+                });
+
+            }
+            else if (data.role == 'Student') {
+                navigation.navigate('StdDashboard');
+
+            }
+            else if (data.role == 'Director') {
+                navigation.navigate('DirectorDashboard');
+
+
+            }
+            else {
+                alert('Invalid username or password');
+            }
+
+        } catch (error) {
+
+        }
+
+    };
 
 
     return (
@@ -27,11 +73,12 @@ export default Login = ({ navigation }) => {
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.inputs}
-                    placeholder="Email"
+                    placeholder=" username"
+                    value={username}
                     placeholderTextColor={'black'}
-                    keyboardType="email-address"
+
                     underlineColorAndroid="transparent"
-                    onChangeText={e => setEmail({ e })}
+                    onChangeText={(e) => setUsername(e)}
                 />
                 <Image
                     style={styles.inputIcon}
@@ -43,10 +90,11 @@ export default Login = ({ navigation }) => {
                 <TextInput
                     style={styles.inputs}
                     placeholder="Password"
+                    value={password}
                     placeholderTextColor={'black'}
                     secureTextEntry={true}
                     underlineColorAndroid="transparent"
-                    onChangeText={p => setPassword({ p })}
+                    onChangeText={(p) => setPassword(p)}
                 />
                 <Image
                     style={styles.inputIcon}
@@ -59,15 +107,7 @@ export default Login = ({ navigation }) => {
             <TouchableOpacity
                 style={[styles.buttonContainer, styles.loginButton]}
 
-                onPress={() => navigation.navigate('Tabs')}>
-
-                {/* onPress={() => navigation.navigate('StdDashboard')}> */}
-
-                {/* onPress={() => navigation.navigate('TeacherDashboard')}> */}
-
-                {/* onPress={() => navigation.navigate('DirectorDashboard')}>   */}
-
-
+                onPress={handleLogin} >
                 <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
 

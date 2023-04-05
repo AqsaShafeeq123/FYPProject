@@ -7,7 +7,8 @@ import {
     Text,
     View,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    ScrollView
 
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
@@ -20,8 +21,7 @@ import { Button, Dialog, Portal, Provider, Modal } from 'react-native-paper';
 const Dvr = ({ navigation }) => {
     const [searchDvr, setSearchDvr] = useState('');
 
-    // Api response store
-    const [DVRdata, setDVRData] = useState();
+
     // update modal
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
@@ -32,10 +32,6 @@ const Dvr = ({ navigation }) => {
     const showDialog = () => setdVisible(true);
     const hideDialog = () => setdVisible(false);
 
-    const [Updateid, setUpdateId] = useState();
-
-    //updt  modal k andr jo textinput
-    const [text, setText] = useState('');
 
 
 
@@ -52,13 +48,18 @@ const Dvr = ({ navigation }) => {
     };
 
 
-    // APi Code
+
+    // Api response store for get
+    const [DVRdata, setDVRData] = useState();
+
+    // APi Code get Get DVr
     useEffect(() => {
         getDVR();
+
     }, []);
     async function getDVR() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/dvr-details');
+            let response = await fetch('http://192.168.0.105:8000/api/dvr-details');
             let json = await response.json();
             setDVRData(json);
             console.log(json);
@@ -66,6 +67,95 @@ const Dvr = ({ navigation }) => {
             console.log(error);
         }
     }
+
+
+
+
+
+
+    //updt Dvr  modal textinput
+    const [id, setID] = useState('');
+    const [ip, setIp] = useState('');
+    const [channel, setChannel] = useState('');
+    const [host, setHost] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+
+
+    // APi Code UPDATE DVR 
+    const [updateId, setUpdateId] = useState();
+    const UpdateDvr = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id": updateId,
+            "ip": ip,
+            "name": name,
+            "channel": channel,
+            "host": host,
+            "password": password,
+
+        });
+        console.log(raw);
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch('http://192.168.0.105:8000/api/update-dvr-details', requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        getDVR();
+
+    }
+
+
+
+
+
+    // -------------------------------------------
+
+
+    // For Dlt dvr icon
+    const [dvrDelid, setDvrDelid] = useState()
+    const DeleteDvr = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id": dvrDelid,
+            "ip": "",
+            "name": "",
+            "channel": "",
+            "host": "",
+            "password": "",
+        });
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        console.log(raw);
+        fetch("http://192.168.0.105:8000/api/delete-dvr-details", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+    }
+
+
+
+
+
+
+
+
 
     return (
         <Provider style={styles.container}>
@@ -78,9 +168,11 @@ const Dvr = ({ navigation }) => {
                     <Dialog.Actions>
                         <Button
                             onPress={() => {
+                                DeleteDvr()
                                 hideDialog();
+                            }
 
-                            }}>
+                            }>
                             Yes
                         </Button>
                         <Button onPress={hideDialog}>No</Button>
@@ -93,145 +185,156 @@ const Dvr = ({ navigation }) => {
                 <Modal
                     visible={visible}
                     onDismiss={hideModal}
-                    style={{ padding: 9 }}
+
                     contentContainerStyle={{
-                        backgroundColor: '#fff',
-                        padding: 20,
-                        borderRadius: 8,
+
+
+                        backgroundColor: 'white',
+                        padding: 30,
+                        marginBottom: 80,
+                        marginTop: 20,
+                        marginLeft: 20,
+                        marginRight: 20,
+                        borderRadius: 20
                     }}>
-                    <Text
-                        style={{
-                            textAlign: 'center',
-                            fontSize: 16,
-                            color: '#333',
-                            fontWeight: 'bold',
-                        }}>
-                        Update DVR
-                    </Text>
+                    <ScrollView>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 30, color: '#333', fontWeight: 'bold' }}> Update DVR</Text>
+                            <View style={{ padding: 5, top: 7, borderRadius: 26 }}>
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                                        IP
+                                    </Text>
+                                    <TextInput
+                                        value={ip}
+                                        textColor={'black'}
+                                        style={{
+                                            margin: 4,
+                                            color: 'black',
+                                            backgroundColor: 'white',
+                                            elevation: 8,
+                                            borderRadius: 8,
+                                            height: 50,
+                                            width: 250
+                                        }}
 
-                    <View style={{ padding: 5, top: 7, borderRadius: 26 }}>
-                        <View>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                                        onChangeText={text => setIp(text)}
+                                    />
+                                </View>
 
-                                IP
-                            </Text>
-                            <TextInput
-                                value={text}
-                                style={{
-                                    margin: 4,
-                                    color: 'black',
-                                    elevation: 2,
-                                    width: 290,
-                                    borderRadius: 8,
-                                }}
-                                onChangeText={text => setText(text)}
-                            />
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                                        Channel
+                                    </Text>
+                                    <TextInput
+                                        value={channel}
+                                        textColor={'black'}
+                                        style={{
+                                            margin: 4,
+                                            color: 'black',
+                                            backgroundColor: 'white',
+                                            elevation: 8,
+                                            borderRadius: 8,
+                                            height: 50,
+                                            width: 250
+                                        }}
+
+                                        onChangeText={text => setChannel(text)}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                                        Host
+                                    </Text>
+                                    <TextInput
+                                        value={host}
+                                        textColor={'black'}
+                                        style={{
+                                            margin: 4,
+                                            color: 'black',
+                                            backgroundColor: 'white',
+                                            elevation: 8,
+                                            borderRadius: 8,
+                                            height: 50,
+                                            width: 250
+                                        }}
+
+                                        onChangeText={text => setHost(text)}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                                        Password
+                                    </Text>
+                                    <TextInput
+                                        value={password}
+                                        textColor={'black'}
+                                        style={{
+                                            margin: 4,
+                                            color: 'black',
+                                            backgroundColor: 'white',
+                                            elevation: 8,
+                                            borderRadius: 8,
+                                            height: 50,
+                                            width: 250
+                                        }}
+
+                                        onChangeText={text => setPassword(text)}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                                        Name
+                                    </Text>
+                                    <TextInput
+                                        value={name}
+                                        textColor={'black'}
+                                        style={{
+                                            margin: 4,
+                                            color: 'black',
+                                            backgroundColor: 'white',
+                                            elevation: 8,
+                                            borderRadius: 8,
+                                            height: 50,
+                                            width: 250
+                                        }}
+
+                                        onChangeText={text => setName(text)}
+                                    />
+                                </View>
+
+
+
+
+                                {/* BTN Update */}
+                                <TouchableOpacity
+                                    style={{
+                                        width: 90,
+                                        marginTop: 30,
+                                        alignSelf: 'center',
+                                        padding: 10,
+                                        top: -9,
+                                        borderRadius: 10,
+                                        backgroundColor: '#4682b4',
+                                    }}
+                                    onPress={() => {
+                                        // CALLING API FUNC
+
+                                        UpdateDvr();
+
+                                    }}>
+                                    <Text
+                                        style={{
+                                            fontSize: 20,
+                                            color: '#ffffff',
+                                            //fontFamily: 'times new roman bold',
+                                        }}>
+                                        Update
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-
-                        <View>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-
-                                Channel
-                            </Text>
-
-                            <TextInput
-                                value={text}
-                                style={{
-                                    margin: 4,
-                                    color: 'black',
-                                    elevation: 2,
-                                    width: 290,
-                                    borderRadius: 8,
-                                    // backgroundColor: '#fff'
-                                }}
-                                onChangeText={text => setText(text)}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-
-                                Host
-                            </Text>
-
-                            <TextInput
-                                value={text}
-                                style={{
-                                    margin: 4,
-                                    color: 'black',
-                                    elevation: 2,
-                                    width: 290,
-                                    borderRadius: 8,
-                                    // backgroundColor: '#fff'
-                                }}
-                                onChangeText={text => setText(text)}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-
-                                Password
-                            </Text>
-
-                            <TextInput
-                                value={text}
-                                style={{
-                                    margin: 4,
-                                    color: 'black',
-                                    elevation: 2,
-                                    width: 290,
-                                    borderRadius: 8,
-                                    // backgroundColor: '#fff'
-                                }}
-                                onChangeText={text => setText(text)}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-                                Name
-                            </Text>
-
-                            <TextInput
-                                value={text}
-                                style={{
-                                    margin: 4,
-                                    color: 'black',
-                                    elevation: 2,
-                                    width: 290,
-                                    borderRadius: 8,
-                                    // backgroundColor: '#fff'
-                                }}
-                                onChangeText={text => setText(text)}
-                            />
-                        </View>
-                        {/* BTN SAve */}
-                        <TouchableOpacity
-                            style={{
-                                width: '40%',
-                                top: 10,
-                                alignSelf: 'center',
-                                margin: 5,
-                                alignItems: 'center',
-                                justifyContent: 'space-evenly',
-                                borderRadius: 10,
-                                padding: 10,
-                                height: 50,
-
-                                backgroundColor: '#4682b4',
-                            }}
-                            onPress={() => {
-                                handleUpdate(Updateid, text);
-                                setText('');
-                            }}>
-                            <Text
-                                style={{
-                                    fontSize: 20,
-                                    color: '#ffffff',
-                                    //fontFamily: 'times new roman bold',
-                                }}>
-                                Update
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                    </ScrollView>
                 </Modal>
             </Portal>
 
@@ -271,12 +374,14 @@ const Dvr = ({ navigation }) => {
                                     <TouchableOpacity
                                         onPress={() => {
                                             navigation.navigate('DvrDetails', {
+                                                id: item.id,
                                                 Name: item.name,
                                                 IP: item.ip,
-
-                                                Channel: item.Channel,
+                                                Host: item.host,
+                                                Channel: item.channel,
                                             });
                                         }}
+                                        // here is the data pattern  which we get from api
                                         style={[styles.item]}>
                                         <Text style={styles.title}><Text style={{ fontWeight: 'bold' }}>Name:</Text> {item.name}</Text>
                                         <Text style={styles.title}><Text style={{ fontWeight: 'bold' }}>IP:</Text> {item.ip}</Text>
@@ -292,6 +397,7 @@ const Dvr = ({ navigation }) => {
                                         <Ionicons
                                             onPress={() => {
                                                 showModal();
+                                                // above state written in update
                                                 setUpdateId(item.id);
                                             }}
                                             style={{}}
@@ -300,10 +406,13 @@ const Dvr = ({ navigation }) => {
                                             color="black"
                                         />
 
-                                        <TouchableOpacity onPress={() => showDialog()}>
+                                        {/* dlt icon */}
+                                        <TouchableOpacity onPress={() => {
+                                            showDialog();
+                                            setDvrDelid(item.id);
+
+                                        }}>
                                             <Ionicons
-
-
                                                 style={{}}
                                                 name="trash-outline"
                                                 size={24}

@@ -1,150 +1,75 @@
-// import React, { useState } from 'react';
-// import {
-//   FlatList,
-//   SafeAreaView,
-//   StatusBar,
-//   StyleSheet,
-//   Text,
-
-//   View,
-
-//   TouchableOpacity,
-// } from 'react-native';
-// import { Searchbar } from 'react-native-paper';
-
-
-// const DATA = [
-//   {
-//     id: '1',
-//     name: 'Video1 ',
-
-//   },
-//   {
-//     id: '2',
-//     name: 'Video2 ',
-
-//   },
-//   {
-//     id: '3',
-//     name: 'Video3 ',
-
-//   },
-//   {
-//     id: '4',
-//     name: 'camera4 ',
-
-//   },
-//   {
-//     id: '5',
-//     name: 'camera5 ',
-
-//   },
-//   {
-//     id: '6',
-//     name: 'camera6',
-
-//   },
-//   {
-//     id: '7',
-//     name: 'camera7',
-
-//   },
-//   {
-//     id: '8',
-//     name: 'camera8 ',
-
-//   },
-
-// ];
-
-// const Home = ({ navigation }) => {
-//   const [searchStream, setSearchStream] = useState('');
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <View style={{ margin: '1%' }}>
-//         <Searchbar
-//           placeholder="Search"
-//           value={searchStream}
-
-//           fontSize={12}
-//           style={{ borderRadius: 10 }}
-//           onChangeText={text => setSearchStream(text)}
-//         />
-//       </View>
-//       <View style={{ flex: 1, padding: 5 }}>
-//         <FlatList
-//           style={{ flex: 1 }}
-//           numColumns={2}
-//           data={DATA}
-//           renderItem={({ item, index }) => {
-//             if (item.name.toLowerCase().includes(searchStream.toLowerCase())) {
-//               return (
-//                 <View
-//                   style={{
-//                     padding: 5,
-//                     backgroundColor: '#ffff',
-//                     elevation: 5,
-//                     margin: 4,
-//                     borderRadius: 9,
-//                   }}>
-//                   <TouchableOpacity onPress={() => {
-
-//                     navigation.navigate('StreamingDetails', {
-//                       Disp: 'BSCS_7C',
-//                       TeacherName: 'Dr Naseer',
-//                       Subject: 'CC',
-//                       Name: item.name,
-//                     });
-//                   }} style={[styles.item]}>
-
-//                     <Text style={styles.title}>{item.name}</Text>
-//                   </TouchableOpacity>
-//                 </View>
-//               );
-//             }
-//           }}></FlatList>
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default Home;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     marginTop: StatusBar.currentHeight || 0,
-//   },
-//   item: {
-//     padding: 20,
-//     marginVertical: 25,
-//     marginHorizontal: 28,
-//     borderRadius: 10,
-//     // flexDirection: 'row',
-
-//   },
-//   title: {
-//     fontSize: 15,
-//     color: 'black'
-//   },
-
-// });
-
-
-// ---------------------------------------------------
-
-
-
-
 import { StyleSheet, Text, View, ScrollView, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WebView } from 'react-native-webview';
+import { FAB } from 'react-native-paper';
 
 import { Modal, Portal, Provider, TextInput } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const Home = ({ navigation }) => {
+
+
+  const htmlContent = `
+      <html>
+        <head>
+          <style>
+            h1 {
+              color: red;
+              font-size: 44px;
+              text-align: left;
+           
+            }
+          </style>
+        </head>
+        <body>
+          <h1>LAB 1</h1>
+        </body>
+      </html>
+    `;
+
+  const handlePress = () => {
+    navigation.navigate('StreamingDetails', {
+      // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
+      Disp: 'BSCS-8B',
+      Instructor: 'Mr.Umar',
+      Course: 'Pdc',
+      Time: '08:30-10:00',
+      Venue: 'Lab1',
+      Channnel: '02',
+    });
+  };
+
+  // APi Code
+
+
+  const AddDvr = async () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "id": 0,
+      "ip": ip,
+      "name": name,
+      "channel": channel,
+      "host": host,
+      "password": password,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://192.168.0.105:8000/api/add-dvr", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+  }
+
 
 
 
@@ -162,198 +87,195 @@ const Home = ({ navigation }) => {
   };
 
 
-  //updt  modal k andr jo textinput
-  const [text, setText] = useState('');
+  //Add Dvr  modal textinput
+  const [ip, setIp] = useState('');
+  const [channel, setChannel] = useState('');
+  const [host, setHost] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+
 
   return (
 
     <Provider >
-      <View style={styles.body}>
-        <View style={styles.View}>
-          <TouchableOpacity onPress={() => {
+      <ScrollView>
 
-            navigation.navigate('LiveStreamDetails', {
-              Section: 'BSCS-5C',
-              Course: 'PDC',
-              Venue: 'LAB 5',
-              Name: 'MR UMAR',
-              Time: '08:30 -10:00',
-              Camera: ' camera 2',
 
-            });
-          }} >
+        <TouchableOpacity onPress={handlePress} >
+          <View style={styles.View}>
+
             <WebView
               javaScriptEnabled={true}
               domStorageEnabled={true}
               source={{
-                // uri: `http://192.168.0.103:8080/video`,
+                // uri: `http:// 192.168.0.105:8080/video`,
 
-                // uri: `http://192.168.0.103:8080/video`,
-                uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
+                // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
+
+
+                // html: '<h1>LAB 1</h1>'
+                html: htmlContent
+              }}
+            >
+
+            </WebView>
+
+
+
+          </View>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity onPress={handlePress}>
+          <View style={styles.View}>
+
+            <WebView
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              source={{
+                // uri: `http:// 192.168.0.105:8080/video`,
+
+                // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
+                html: '<h1>LAB 2</h1>'
               }}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.View}>
-          <WebView
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            source={{
-              // uri: `http://192.168.235.103:8080/video`,
 
-              // uri: `http://192.168.0.103:8080/video`,
-              uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
-            }}
-          />
-
-        </View>
-        {/* CAMERA ICON */}
-        <View
-          style={{
-            backgroundColor: '#4682b4',
-            marginBottom: 50,
-            marginLeft: 290,
-            alignItems: 'center',
-            borderRadius: 100,
-            marginRight: 20,
-            height: 60,
-            width: 60
-          }}>
-          <TouchableOpacity onPress={openModal}>
-            <Ionicons name="ios-camera-outline" size={42} color="black" />
-          </TouchableOpacity>
-
-          {/* Modal */}
-
-          <Portal>
-
-            <Modal
-              visible={modalCam}
-              onDismiss={closeModal}
-              contentContainerStyle={{
+          </View>
+        </TouchableOpacity>
 
 
-                backgroundColor: '#fff',
-                padding: 30,
-                marginBottom: 80,
-                marginTop: 80,
-                marginLeft: 20,
-                marginRight: 20,
-                borderRadius: 20
-              }}>
 
+
+        {/* Modal */}
+
+        <Portal>
+
+          <Modal
+            visible={modalCam}
+            onDismiss={closeModal}
+            contentContainerStyle={{
+
+
+              backgroundColor: 'white',
+              padding: 30,
+              marginBottom: 80,
+              marginTop: 20,
+              marginLeft: 20,
+              marginRight: 20,
+              borderRadius: 20
+            }}>
+            <ScrollView>
 
               <View style={{ alignItems: 'center' }}>
                 <Text style={{ fontSize: 30, color: '#333', fontWeight: 'bold' }}>ADD DVR</Text>
 
 
 
-                <View style={{ padding: 5, top: 7, borderRadius: 26 }}>
+                <View style={{ padding: 8, borderRadius: 26 }}>
                   <View>
-                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, marginTop: 10 }}>
                       IP
                     </Text>
                     <TextInput
-                      value={text}
+                      value={ip}
                       textColor={'black'}
                       style={{
                         margin: 4,
                         color: 'black',
                         backgroundColor: 'white',
-                        elevation: 38,
-                        width: 290,
+                        elevation: 8,
                         borderRadius: 8,
+                        height: 50,
+                        width: 250
                       }}
 
-                      onChangeText={text => setText(text)}
+                      onChangeText={text => setIp(text)}
                     />
                   </View>
 
-                  <View>
-                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
 
+                  <View>
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, marginTop: 30 }}>
                       Channel
                     </Text>
-
                     <TextInput
-                      value={text}
-
-
+                      value={channel}
                       textColor={'black'}
                       style={{
                         margin: 4,
                         color: 'black',
-                        elevation: 2,
-                        width: 290,
+                        backgroundColor: 'white',
+                        elevation: 8,
                         borderRadius: 8,
-                        backgroundColor: '#fff'
+                        height: 50,
+                        width: 250
                       }}
-                      onChangeText={text => setText(text)}
+
+                      onChangeText={text => setChannel(text)}
                     />
                   </View>
                   <View>
-                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>
                       Host
                     </Text>
-
                     <TextInput
-                      value={text}
-
+                      value={host}
                       textColor={'black'}
                       style={{
                         margin: 4,
                         color: 'black',
-                        elevation: 2,
-                        width: 290,
+                        backgroundColor: 'white',
+                        elevation: 8,
                         borderRadius: 8,
-                        backgroundColor: '#fff'
+                        height: 50,
+                        width: 250
                       }}
-                      onChangeText={text => setText(text)}
+
+                      onChangeText={text => setHost(text)}
                     />
                   </View>
                   <View>
-                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
-
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>
                       Password
                     </Text>
-
                     <TextInput
-                      value={text}
-
+                      value={password}
                       textColor={'black'}
                       style={{
                         margin: 4,
                         color: 'black',
-                        elevation: 2,
-                        width: 290,
+                        backgroundColor: 'white',
+                        elevation: 8,
                         borderRadius: 8,
-                        backgroundColor: '#fff'
+                        height: 50,
+                        width: 250
                       }}
-                      onChangeText={text => setText(text)}
+
+                      onChangeText={text => setPassword(text)}
                     />
                   </View>
                   <View>
-                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>
+                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, marginTop: 20 }}>
                       Name
                     </Text>
-
                     <TextInput
-                      value={text}
-
+                      value={name}
                       textColor={'black'}
                       style={{
                         margin: 4,
                         color: 'black',
-                        elevation: 2,
-                        width: 290,
+                        backgroundColor: 'white',
+                        elevation: 8,
                         borderRadius: 8,
-                        backgroundColor: '#fff'
+                        height: 50,
+                        width: 250
                       }}
-                      onChangeText={text => setText(text)}
+
+                      onChangeText={text => setName(text)}
                     />
                   </View>
+
 
 
 
@@ -361,18 +283,17 @@ const Home = ({ navigation }) => {
                   <View style={{ alignItems: 'center', }}>
                     <TouchableOpacity
                       style={{
-                        width: '50%',
-
+                        width: 90,
+                        marginTop: 40,
                         margin: 5,
                         alignItems: 'center',
 
                         borderRadius: 10,
                         padding: 10,
-                        height: 50,
-
                         backgroundColor: '#4682b4',
                       }}
-                      onPress={() => { }}>
+                      // CALLING API FUNC
+                      onPress={AddDvr}>
                       <Text
                         style={{
                           fontSize: 20,
@@ -387,14 +308,26 @@ const Home = ({ navigation }) => {
                   </View>
                 </View>
               </View>
-            </Modal>
+            </ScrollView>
+          </Modal>
 
-          </Portal>
+        </Portal>
 
-        </View>
-      </View>
+      </ScrollView>
 
 
+      <FAB
+        style={{
+          position: 'absolute',
+          margin: 16,
+          right: 0,
+          bottom: 40,
+          backgroundColor: '#4682b4'
+        }}
+        small
+        icon="plus"
+        onPress={openModal}
+      />
 
     </Provider>
 
@@ -411,20 +344,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   View: {
-    height: 230,
-    width: 350,
-    margin: 20,
+    height: 210,
+    width: 320,
+    margin: 10,
     borderRadius: 20,
+
+    marginLeft: 20
+
   },
 
-
+  label: {
+    position: 'relative',
+    top: 10,
+    left: 10,
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 
 });
-
-
-
-
-
 
 
 

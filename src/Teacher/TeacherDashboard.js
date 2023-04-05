@@ -80,7 +80,7 @@ export default TeacherDashboard = ({ navigation }) => {
                 name="HOME"
                 component={HOME}
                 options={{
-                    // headerShown: false,
+                    headerShown: false,
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         color: 'white',

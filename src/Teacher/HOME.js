@@ -1,247 +1,117 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
 import React, { useState } from 'react';
 import { appcolor } from '../components/Colorss';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const HOME = ({ navigation, route }) => {
-    // const { Name, Email } = route.params;
 
-
-    const [checked, setChecked] = React.useState(false);
-
+    const { dat } = route.params;
 
     const DATA = [
         {
-            time: '8:30-10',
-            slot1: 'CS-1A LT-10',
-            slot2: '',
-            slot3: '',
-            slot4: '',
-            slot5: '',
+            id: '1',
+            venue: 'LAB 6',
+            Course: 'MAP',
+            Discipline: 'Flutter'
+
         },
         {
-            time: '10-11:30',
-            slot1: '',
-            slot2: 'CS-1A LT-10',
-            slot3: '',
-            slot4: '',
-            slot5: '',
+            id: '2',
+            venue: 'LAB 6',
+            Course: 'MAP',
+            Discipline: 'Flutter'
+
         },
         {
-            time: '11:30-1',
-            slot1: '',
-            slot2: '',
-            slot3: 'CS-1A LT-10',
-            slot4: '',
-            slot5: '',
-        },
-        {
-            time: '1:30-3:00',
-            slot1: '',
-            slot2: '',
-            slot3: '',
-            slot4: 'CS-1A LT-10',
-            slot5: '',
-        },
-        {
-            time: '3:00-4:30',
-            slot1: '',
-            slot2: '',
-            slot3: 'CS-1A LT-10',
-            slot4: '',
-            slot5: '',
+            id: '3',
+            venue: 'LAB 6',
+            Course: 'MAP',
+            Discipline: 'Flutter'
+
         },
     ];
 
-
-
-
-
     return (
-        <View style={{ flex: 1 }}>
-            {/* <View style={styles.text}>
-                <Text style={styles.text}> {Name}</Text>
-                <Text style={styles.text}> {Email}</Text>
-            </View> */}
+        <View style={{ flex: 1, marginTop: 8, padding: 4, backgroundColor: '#eee' }}>
 
-            <View
-                style={{
-                    padding: 5,
+            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.text}>
+                        {/* extracting obj */}
+                        {dat.name}
 
-                    margin: 3,
-                    borderRadius: 8,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                }}>
-                <View
-                    style={{
-                        width: 50,
-
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}></Text>
+                    </Text>
                 </View>
-                <View
-                    style={{
-                        width: 50,
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Ionicons
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Mon</Text>
+                        name="notifications-circle"
+                        onPress={() => console.log('Edit pressed')}
+
+                        size={42}
+                        color='#00008b'
+                        style={{
+                            alignSelf: 'center',
+                            marginRight: 30
+                        }}
+
+
+                    />
+                    <Image source={{ uri: 'http://192.168.0.105:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                 </View>
-                <View
-                    style={{
-                        width: 50,
-
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Tue</Text>
-                </View>
-                <View
-                    style={{
-                        width: 50,
-
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Wed</Text>
-                </View>
-                <View
-                    style={{
-                        width: 50,
-
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Thu</Text>
-                </View>
-                <View
-                    style={{
-                        width: 50,
-
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Fri</Text>
-                </View>
-            </View>
-            <FlatList
-                style={{}}
-                data={DATA}
-                renderItem={({ item, index }) => {
-                    return (
-                        <View
-                            style={{
-                                padding: 5,
-                                margin: 3,
-                                borderRadius: 8,
-                                flexDirection: 'row',
-                                justifyContent: 'space-evenly',
-                            }}>
-                            <View
-                                style={{
-                                    width: 50,
-
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 11, color: 'black' }}>{item.time}</Text>
-                            </View>
-                            <View
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    // backgroundColor: getBackgroundColor(item.slot1),
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot1}</Text>
-                            </View>
-                            <View
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot2),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot2}</Text>
-                            </View>
-                            <View
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot3),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot3}</Text>
-                            </View>
-                            <View
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot4),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot4}</Text>
-                            </View>
-                            <View
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot5),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot5}</Text>
-                            </View>
-                        </View>
-                    );
-                }}></FlatList>
-
-            <View
-                style={{
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 80,
-
-
-                }}>
 
             </View>
 
+            {/* flatlist */}
+            <View style={{ flex: 1, padding: 5, top: 10 }}>
+                <FlatList
+                    style={{ padding: 2 }}
+                    data={DATA}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <View
+                                onPress={() => {
+
+                                }}
+                                style={{
+                                    padding: 10,
+                                    backgroundColor: `#6495ed`,
+                                    elevation: 2,
+                                    margin: 3,
+                                    borderRadius: 8,
+
+                                    height: 100,
+                                }}>
+
+                                <View>
+                                    <Text
+                                        style={{
+                                            fontSize: 16,
+                                            color: 'black',
+                                            fontWeight: 'bold',
+                                        }}>
+                                        Venue:{item.venue}
+                                    </Text>
+                                </View>
+
+
+                                <View style={{}}>
+                                    <Text style={{ color: 'black', fontWeight: '600', top: 5 }}>
+                                        Course:{item.Course}
+                                    </Text>
+                                </View>
+
+                                <View style={{}}>
+                                    <Text style={{ color: 'black', fontWeight: '600', top: 8 }}>
+                                        Discipline:{item.Discipline}
+                                    </Text>
+                                </View>
+                            </View>
+                        );
+                    }}></FlatList>
+            </View>
         </View>
+
 
     );
 };
@@ -267,5 +137,19 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
     },
+    imgStyle: {
+        width: 60,
+        height: 60,
+        borderRadius: 40,
+
+    },
 
 });
+
+
+
+
+
+
+
+

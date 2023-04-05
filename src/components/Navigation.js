@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../Screens/Home';
 import ViewS from '../Screens/ViewS';
-import Setting from '../Screens/Setting';
+import Profile from '../Screens/Profile';
 import Schedule from '../Screens/Schedule';
 
 import { appcolor } from '../components/Colorss';
@@ -23,7 +23,7 @@ export default MyTabs = ({ navigation }) => {
                 tabBarHideOnKeyboard: false,
 
                 tabBarStyle: {
-                    position: 'absolute',
+                    // position: 'absolute',
                     height: 5,
 
                     elevation: 10,
@@ -53,7 +53,7 @@ export default MyTabs = ({ navigation }) => {
                     if (route.name === 'Schedule') {
                         iconName = focused ? 'calendar-sharp' : 'calendar-outline';
                     }
-                    if (route.name === 'Setting') {
+                    if (route.name === 'Profile') {
                         iconName = focused ? 'person-add' : 'person-add-outline';
                     }
 
@@ -123,8 +123,8 @@ export default MyTabs = ({ navigation }) => {
                 }}
             />
             <Tab.Screen
-                name="Setting"
-                component={Setting}
+                name="Profile"
+                component={Profile}
                 options={{
                     headerTitleAlign: 'center',
                     headerTitleStyle: {

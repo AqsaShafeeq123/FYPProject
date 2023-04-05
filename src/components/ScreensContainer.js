@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyTabs from '../components/Navigation';
 import Login from './Login';
-
+// Admin side
 import ViewS from '../Screens/ViewS';
 import TeacherRecording from '../Screens/TeacherRecording';
 import TeacherSchedule from '../Screens/TeacherSchedule';
@@ -14,25 +14,40 @@ import StreamingDetails from '../Screens/StreamingDetails';
 import TeacherList from '../Screens/TeacherList';
 import ScheduleRules from '../Screens/ScheduleRules';
 
-
 import Reschedule from '../Screens/Reschedule';
 import Preschedule from '../Screens/Preschedule';
+
 import Swap from '../Screens/Swap';
-import SlotsChecking from '../Screens/SlotsChecking';
+import FreeSlot from '../Screens/FreeSlot';
+import AddUser from '../Screens/AddUser';
+import ClassRescheduled from '../Screens/ClassRescheduled';
+import FreeSlotPre from '../Screens/FreeSlotPre';
+import ClassPrescheduled from '../Screens/ClassPrescheduled';
+import AssignCourse from '../Screens/AssignCourse';
+import StudentDetails from '../Screens/StudentDetails';
 
 
+
+
+
+
+
+// Std Side
 import StdDashboard from '../Student/StdDashboard';
 import StdAttendance from '../Student/StdAttendance';
+
+
+// Teacher Side
+
 import TeacherDashboard from '../Teacher/TeacherDashboard';
 import EditAttendance from '../Teacher/EditAttendance';
-import LiveStreamDetails from '../Screens/LiveStreamDetails';
+
 import SessionsChr from '../Teacher/SessionsChr';
+
+
+// Director Side
 import DirectorDashBoard from '../Director/DirectorDashBoard';
 import ChrDetail from '../Director/ChrDetail';
-
-
-
-
 const Stack = createStackNavigator();
 
 export default function stackss() {
@@ -165,7 +180,7 @@ export default function stackss() {
 
 
 
-                <Stack.Screen name='SlotsChecking' component={SlotsChecking} options={{
+                <Stack.Screen name='FreeSlot' component={FreeSlot} options={{
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         color: 'white',
@@ -221,17 +236,6 @@ export default function stackss() {
                     },
                 }} ></Stack.Screen>
 
-                <Stack.Screen name='LiveStreamDetails' component={LiveStreamDetails} options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
-                }} ></Stack.Screen>
 
 
 
@@ -262,6 +266,92 @@ export default function stackss() {
                         backgroundColor: appcolor.primarycolor,
                     },
                 }} ></Stack.Screen>
+
+
+
+
+                <Stack.Screen name='AddUser' component={AddUser} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+
+                <Stack.Screen name='ClassRescheduled' component={ClassRescheduled} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+
+                <Stack.Screen name='FreeSlotPre' component={FreeSlotPre} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='ClassPrescheduled' component={ClassPrescheduled} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='AssignCourse' component={AssignCourse} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='StudentDetails' component={StudentDetails} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
     );
