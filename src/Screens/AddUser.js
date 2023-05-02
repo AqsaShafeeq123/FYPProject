@@ -1,3 +1,4 @@
+
 import {
     StyleSheet,
     Text,
@@ -14,21 +15,32 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Picker } from '@react-native-picker/picker';
 import { Provider, Modal, Portal, Button } from 'react-native-paper';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { PermissionsAndroid } from 'react-native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';;
 
 
 
 const AddUser = ({ navigation }) => {
-    const [text, setText] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState('Teacher');
+
+    // states for textfields
+    const [id, setId] = useState();
+    const [name, setName] = useState();
+    const [password, setPassword] = useState();
+    const [selectedUser, setSelectedUser] = useState('Teacher');
 
     const [modalVisible, setModalVisible] = useState(false);
     const showModal = () => setModalVisible(true);
     const hideModal = () => setModalVisible(false);
 
-    const [imagelink, setimage] = useState({});
-    const [isimage, setisimage] = useState(false);
+    // to get img name 
+    const [imgname, setImgName] = useState();
 
+    // camera icon
+    const [imagelink, setimage] = useState();
+    const [isimage, setisimage] = useState(false);
+    const [userData, setUserData] = useState();
+
+    // camera icon 
     async function onCameraButtonClick() {
         let options = {
             options: {
@@ -42,16 +54,222 @@ const AddUser = ({ navigation }) => {
         const result = await launchCamera(options);
 
         setisimage(true);
-        setimage(result.assets[0]);
+        const obj = {
+            uri: result.assets[0].uri,
+            name: result.assets[0].fileName,
+            type: result.assets[0].type
+        }
+        setimage(obj.uri);
         // console.log(result.assets[0]);
+
+        console.log(obj);
+        // await uploadImage(obj)
+
         // let src = result.assets[0].base64;
         // setImage(src);
     }
 
+
+
+    // save button api for other user
+    const handleSavePress = async () => {
+        var myHeaders = new Headers();
+        const formData = new FormData();
+
+        formData.append('file', userData);
+        myHeaders.append("Content-Type", "multipart/form-data");
+        // state is here
+        var raw = JSON.stringify(userData);
+        console.log('!!!!!!!!!!!!!!!!!' + raw);
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formData,
+            redirect: 'follow'
+
+        };
+
+        fetch("http://192.168.1.102:8000/api/add-user?id=" + 0 + "&userID=" + id + "&name=" + name + "&password=" + password + "&role=" + selectedUser, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+    }
+
+
+
+
+    // save button api for std
+    const StdSavePress = async () => {
+        var myHeaders = new Headers();
+        const formData = new FormData();
+
+        formData.append('file', userData);
+        myHeaders.append("Content-Type", "multipart/form-data");
+        // state is here
+        var raw = JSON.stringify(userData);
+        console.log('!!!!!!!!!!!!!!!!!' + raw);
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formData,
+            redirect: 'follow'
+
+        };
+
+        fetch("http://192.168.1.102:8000/api/add-student?aridNo=" + id + "&name=" + name + "&image=" + 0 + "&password=" + password, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+    }
+
+    // call on btn bellow
+    const SaveUserInfo = () => {
+        console.log(selectedUser + "aaaaaaaaaaaaaaaaaaa")
+        if (selectedUser == 'Student') {
+            StdSavePress();
+        }
+        else {
+            handleSavePress();
+        }
+    }
+
+
+
+
+
+
+    const requestCameraPermission = async () => {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.CAMERA,
+                    {
+                        title: 'common:App_Camera_Permission',
+                        message: 'common:App_needs_access_to_your_camera',
+                        buttonNeutral: 'common:Ask_Me_Later',
+                        buttonNegative: 'common:Cancel',
+                        buttonPositive: 'common:OK',
+                    },
+                );
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    openCamara();
+                } else {
+                    console.log('Camera permission denied');
+                    console.log(granted);
+                }
+            } catch (err) {
+                console.warn(err);
+            }
+        } else {
+            openCamara();
+        }
+    };
+
+    const requestGallaryPermission = async () => {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    {
+                        title: 'common:Gallary_Permission',
+                        message: 'common:App_needs_access_to_your_storage',
+                        buttonNeutral: 'common:Ask_Me_Later',
+                        buttonNegative: 'common:Cancel',
+                        buttonPositive: 'common:OK',
+                    },
+                );
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    console.log('Gallary permission given');
+
+                    openGallery();
+                } else {
+                    console.log('Gallary permission denied');
+                }
+            } catch (err) {
+                console.warn(err);
+            }
+        } else {
+            openGallery();
+        }
+    };
+
+    const openCamara = () => {
+        let options = {
+            options: {
+                mediaType: 'photo',
+                includeBase64: false,
+                maxHeight: 600,
+                maxWidth: 800
+            },
+        };
+        launchCamera(options, response => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                // You can also display the image using data:
+
+                console.log(response.assets[0].uri);
+                setisimage(true);
+                setimage(response.assets[0].uri);
+
+                // onImageSelected(source?.uri);
+            }
+        });
+    };
+
+
+    const openGallery = async () => {
+        let options = {
+            options: {
+                mediaType: 'photo',
+                includeBase64: false,
+                maxHeight: 600,
+                maxWidth: 800
+            },
+        };
+
+        launchImageLibrary(options, response => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                // You can also display the image using data:
+                console.log(response);
+                setisimage(true);
+                setimage(response.assets[0].uri);
+                const obj = {
+                    uri: response.assets[0].uri,
+                    name: response.assets[0].fileName,
+                    type: response.assets[0].type
+                }
+
+                // console.log(result.assets[0]);
+                setUserData(obj);
+                console.log(obj);
+
+
+            }
+        });
+    };
+
+
     return (
         <Provider style={{ flex: 1, backgroundColor: '#eee' }}>
             {/* view in which camera placed */}
-            <View style={{ height: 200, backgroundColor: 'grey', elevation: 5 }}></View>
+            <View style={{ height: 200, alignItems: 'center', justifyContent: 'center' }}>
+                {isimage && <Image source={{ uri: imagelink }} style={{ width: 180, height: 180, borderRadius: 100, }} />}
+            </View>
             {/* camera icon */}
             <View
                 style={{
@@ -100,8 +318,8 @@ const AddUser = ({ navigation }) => {
 
                         <Ionicons
                             name="camera-outline"
-
                             onPress={onCameraButtonClick}
+                            // onPress={() => requestCameraPermission()}
                             size={48}
                             color='#00008b'
                         // iconColor={'black'}
@@ -110,7 +328,7 @@ const AddUser = ({ navigation }) => {
                         <Ionicons
 
                             name="image-outline"
-                            onPress={() => console.log('Edit pressed')}
+                            onPress={() => requestGallaryPermission()}
 
                             size={42}
                             color='#00008b'
@@ -129,6 +347,8 @@ const AddUser = ({ navigation }) => {
                 }}>
                 <TextInput
                     label="User Id"
+                    value={id}
+                    onChangeText={text => setId(text)}
                     placeholderTextColor="black"
                     activeUnderline="disable"
                     activeUnderlineColor="black"
@@ -147,6 +367,8 @@ const AddUser = ({ navigation }) => {
                 }}>
                 <TextInput
                     label="Name"
+                    value={name}
+                    onChangeText={text => setName(text)}
                     placeholderTextColor="black"
                     activeUnderline="disable"
                     activeUnderlineColor="black"
@@ -154,7 +376,7 @@ const AddUser = ({ navigation }) => {
                     textColor='black'
                     style={{ backgroundColor: `#ffffff` }}
                     left={<TextInput.Icon icon="account" size={35} iconColor="#00008b" />}
-                    secureTextEntry
+
                 />
             </View>
             <View
@@ -164,6 +386,9 @@ const AddUser = ({ navigation }) => {
                 }}>
                 <TextInput
                     label="Password"
+
+                    value={password}
+                    onChangeText={text => setPassword(text)}
                     activeUnderline="disable"
                     activeUnderlineColor="black"
                     outlineColor="Black "
@@ -182,19 +407,20 @@ const AddUser = ({ navigation }) => {
                 <Picker
                     style={{ backgroundColor: `#ffffff` }}
                     dropdownIconColor={'black'}
-                    selectedValue={selectedLanguage}
+                    selectedValue={selectedUser}
                     onValueChange={(itemValue, itemIndex) =>
-                        setSelectedLanguage(itemValue)
+                        setSelectedUser(itemValue)
                     }>
-                    <Picker.Item label="Teacher" color='black' value="Lab-1" />
+                    <Picker.Item label="Teacher" color='black' value="Teacher" />
+                    <Picker.Item label="Student" color='black' value="Student" />
+                    <Picker.Item label="Admin" color='black' value="Admin" />
                 </Picker>
             </View>
             <View style={{ padding: 5, top: 10 }}>
                 <TouchableOpacity
                     style={styles.btnSave}
-                    onPress={() => {
-                        console.log(imagelink);
-                    }}>
+                    onPress={SaveUserInfo}
+                >
                     <Text
                         style={{
                             fontSize: 20,

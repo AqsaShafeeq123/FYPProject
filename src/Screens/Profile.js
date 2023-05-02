@@ -96,7 +96,7 @@ const Profile = ({ navigation }) => {
                 <View>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => { }}
+                        onPress={() => { navigation.navigate('Logins') }}
                     >
                         <Text style={styles.buttonText}> Log Out    </Text>
                     </TouchableOpacity>

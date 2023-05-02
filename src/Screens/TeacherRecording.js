@@ -50,7 +50,7 @@
 //         <SafeAreaView style={styles.container}>
 //             <View style={styles.txt}>
 
-//                 <Image source={{ uri: 'http://192.168.0.105:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+//                 <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + Img }}
 //                     style={styles.imgStyle} />
 //                 <Text style={styles.text}>{Name}</Text>
 
@@ -149,119 +149,120 @@
 
 
 
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
-import React from 'react';
-import { WebView } from 'react-native-webview';
-import Video from 'react-native-video';
-
-const TeacherRecording = () => {
-    const [isPlaying, setIsPlaying] = React.useState(false);
-    const [isMuted, setIsMuted] = React.useState(false);
-    return (
-        <ScrollView>
-            <View style={styles.body}>
-                <View style={styles.View}>
-                    {/* <WebView
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        source={{
-                            uri: `http://192.168.0.105:8000/video?path=Recordings/file,63,start_recording.mp4`,
-                            //   uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
-                        }}
-                    /> */}
-
-                    <Video
-                        source={{
-                            uri: `http://192.168.0.105:8000/videoFile`,
-                            //   uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
-                        }}
-                        ref={(ref) => {
-                            this.player = ref
-                        }}
-                        paused={!isPlaying}
-                        controls={true}
-                        style={styles.backgroundVideo}
-                        muted={isMuted}
-                    />
-
-                    {/* <WebView
-                        source={{ html: '<iframe width="100%" height="50%" src="http:// 192.168.0.105:8000/video?path=Recordings/file,63,start_recording.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' }}
-                        style={{ marginTop: 20 }}
-                    /> */}
-
-
-                </View>
-            </View>
-        </ScrollView>
-    );
-};
-
-export default TeacherRecording;
-
-const styles = StyleSheet.create({
-    body: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    View: {
-        height: 250,
-        width: 550,
-        margin: 10,
-        borderRadius: 20,
-    },
-
-    lable: {},
-    backgroundVideo: {
-        position: 'absolute',
-        top: 60,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    },
-});
-
-
-
-
-
-
-
-// import React, { useEffect, useState } from 'react';
+// import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+// import React from 'react';
 // import { WebView } from 'react-native-webview';
-// import {
-//     ScrollView,
-//     StyleSheet,
-//     Text,
-//     TextInput,
-//     Pressable,
-//     Alert,
-//     Button,
-//     TouchableOpacity,
-//     FlatList,
-//     Image,
-//     View,
-// } from 'react-native';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import Video from 'react-native-video';
 
-// export default function TeacherRecording({ navigation }) {
-//     id = global.pid;
+// const TeacherRecording = () => {
+//     const [isPlaying, setIsPlaying] = React.useState(false);
+//     const [isMuted, setIsMuted] = React.useState(false);
 //     return (
-//         <View style={{ flex: 1 }}>
-//             {/* <WebView
-//                 //source={{ html: '<iframe width="100%" height="50%" src="http:// 192.168.0.105:8000/video?path=Recordings/file,63,start_recording.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' }}
-//                 source={{ uri: "http:// 192.168.0.105:8000/video?path=Recordings/file,63,start_recording.mp4" }}
-//                 style={{ marginTop: 20 }}
-//             /> */}
-//             <Video
-//                 source={{ uri: `http:// 192.168.0.105:8000/videoFile` }}
-//                 style={{ width: '100%', height: 300 }}
-//                 resizeMode="contain"
-//                 controls={true}
-//             />
-//         </View>
+//         <ScrollView>
+//             <View style={styles.body}>
+//                 <View style={styles.View}>
+//                     {/* <WebView
+//                         javaScriptEnabled={true}
+//                         domStorageEnabled={true}
+//                         source={{
+//                             uri: `http://192.168.1.102:8000/video?path=Recordings/abc.mp4`,
+//                             //   uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
+//                         }}
+//                     /> */}
+
+//                     <Video
+//                         source={{
+//                             uri: `http://192.168.1.102:8000/video?path=Recordings/ab.mp4`,
+//                             //   uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
+//                         }}
+//                         ref={(ref) => {
+//                             this.player = ref
+//                         }}
+//                         paused={!isPlaying}
+//                         controls={true}
+//                         style={styles.backgroundVideo}
+//                         muted={isMuted}
+//                     />
+
+//                     {/* <WebView
+//                         source={{ html: '<iframe width="100%" height="50%" src="http:// 192.168.1.102:8000/video?path=Recordings/file,63,start_recording.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' }}
+//                         style={{ marginTop: 20 }}
+//                     /> */}
+
+
+//                 </View>
+//             </View>
+//         </ScrollView>
 //     );
-// }
+// };
+
+// export default TeacherRecording;
+
+// const styles = StyleSheet.create({
+//     body: {
+//         flex: 1,
+//         backgroundColor: '#ffffff',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//     },
+//     View: {
+//         height: 250,
+//         width: 550,
+//         margin: 10,
+//         borderRadius: 20,
+//     },
+
+//     lable: {},
+//     backgroundVideo: {
+//         position: 'absolute',
+//         top: 60,
+//         left: 0,
+//         bottom: 0,
+//         right: 0,
+//     },
+// });
+
+
+
+
+
+
+
+import React, { useEffect, useState } from 'react';
+import { WebView } from 'react-native-webview';
+import {
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    Pressable,
+    Alert,
+    Button,
+    TouchableOpacity,
+    FlatList,
+    Image,
+    View,
+} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Video from 'react-native-video';
+
+export default function TeacherRecording({ navigation }) {
+    id = global.pid;
+    return (
+        <View style={{ flex: 1 }}>
+            <WebView
+                //source={{ html: '<iframe width="100%" height="50%" src="http:// 192.168.1.102:8000/video?path=Recordings/file,63,start_recording.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' }}
+                source={{ uri: `http://192.168.1.102:8000/videoss` }}
+                style={{ marginTop: 20 }}
+            />
+            {/* <Video
+                source={{ uri: `http://192.168.1.102:8000/videos` }}
+                // source={{ uri: "http:// 192.168.1.102:8000/video?path=Recordings/file,63,start_recording.mp4" }}
+                style={{ width: '100%', height: 300 }}
+                resizeMode="contain"
+                controls={true}
+            /> */}
+        </View>
+    );
+}

@@ -32,10 +32,6 @@ const Dvr = ({ navigation }) => {
     const showDialog = () => setdVisible(true);
     const hideDialog = () => setdVisible(false);
 
-
-
-
-
     const handleDelete = id => {
 
         setVisible(false);
@@ -59,7 +55,7 @@ const Dvr = ({ navigation }) => {
     }, []);
     async function getDVR() {
         try {
-            let response = await fetch('http://192.168.0.105:8000/api/dvr-details');
+            let response = await fetch('http://192.168.1.102:8000/api/dvr-details');
             let json = await response.json();
             setDVRData(json);
             console.log(json);
@@ -67,11 +63,6 @@ const Dvr = ({ navigation }) => {
             console.log(error);
         }
     }
-
-
-
-
-
 
     //updt Dvr  modal textinput
     const [id, setID] = useState('');
@@ -105,17 +96,13 @@ const Dvr = ({ navigation }) => {
             redirect: 'follow'
         };
 
-        fetch('http://192.168.0.105:8000/api/update-dvr-details', requestOptions)
+        fetch('http://192.168.1.102:8000/api/update-dvr-details', requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
         getDVR();
 
     }
-
-
-
-
 
     // -------------------------------------------
 
@@ -142,19 +129,12 @@ const Dvr = ({ navigation }) => {
             redirect: 'follow'
         };
         console.log(raw);
-        fetch("http://192.168.0.105:8000/api/delete-dvr-details", requestOptions)
+        fetch("http://192.168.1.102:8000/api/delete-dvr-details", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
 
     }
-
-
-
-
-
-
-
 
 
     return (

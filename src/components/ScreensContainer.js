@@ -30,8 +30,6 @@ import StudentDetails from '../Screens/StudentDetails';
 
 
 
-
-
 // Std Side
 import StdDashboard from '../Student/StdDashboard';
 import StdAttendance from '../Student/StdAttendance';
@@ -41,7 +39,7 @@ import StdAttendance from '../Student/StdAttendance';
 
 import TeacherDashboard from '../Teacher/TeacherDashboard';
 import EditAttendance from '../Teacher/EditAttendance';
-
+import ATTENDANCE from '../Teacher/ATTENDANCE';
 import SessionsChr from '../Teacher/SessionsChr';
 
 
@@ -348,6 +346,19 @@ export default function stackss() {
                         backgroundColor: appcolor.primarycolor,
                     },
                 }} ></Stack.Screen>
+
+
+                <Stack.Screen name='ATTENDANCE' component={ATTENDANCE} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }}></Stack.Screen>
 
 
 

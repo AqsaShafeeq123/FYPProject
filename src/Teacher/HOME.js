@@ -1,34 +1,46 @@
-import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native';
-
-import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import Time from './Time';
+import React, { useState, useEffect } from 'react';
 import { appcolor } from '../components/Colorss';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const HOME = ({ navigation, route }) => {
 
     const { dat } = route.params;
 
-    const DATA = [
-        {
-            id: '1',
-            venue: 'LAB 6',
-            Course: 'MAP',
-            Discipline: 'Flutter'
 
+    // Api response store for get
+    const [scheduleData, setScheduleData] = useState([]);
+
+    // APi Code get Get Schedule
+    useEffect(() => {
+        getSchedule();
+    }, []);
+    async function getSchedule() {
+        try {
+            let response = await fetch('http://192.168.1.102:8000/api/teacher-timetable-details/' + dat.name);
+            let json = await response.json();
+
+            setScheduleData(json);
+            console.log(json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const timers = [
+        {
+            Subject: 'Visual Programming',
+            startTime: { hours: 21, minutes: 45 },
+            endTime: { hours: 21, minutes: 55 },
+            Venue: 'LT-11',
         },
         {
-            id: '2',
-            venue: 'LAB 6',
-            Course: 'MAP',
-            Discipline: 'Flutter'
-
+            Subject: 'Data Base',
+            startTime: { hours: 21, minutes: 47 },
+            endTime: { hours: 21, minutes: 58 },
+            Venue: 'Lab-5',
         },
-        {
-            id: '3',
-            venue: 'LAB 6',
-            Course: 'MAP',
-            Discipline: 'Flutter'
 
-        },
     ];
 
     return (
@@ -57,7 +69,7 @@ const HOME = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.0.105:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                 </View>
 
             </View>
@@ -65,50 +77,30 @@ const HOME = ({ navigation, route }) => {
             {/* flatlist */}
             <View style={{ flex: 1, padding: 5, top: 10 }}>
                 <FlatList
-                    style={{ padding: 2 }}
-                    data={DATA}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <View
-                                onPress={() => {
+                    data={scheduleData}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => {
 
-                                }}
-                                style={{
-                                    padding: 10,
-                                    backgroundColor: `#6495ed`,
-                                    elevation: 2,
-                                    margin: 3,
-                                    borderRadius: 8,
-
-                                    height: 100,
-                                }}>
-
-                                <View>
-                                    <Text
-                                        style={{
-                                            fontSize: 16,
-                                            color: 'black',
-                                            fontWeight: 'bold',
-                                        }}>
-                                        Venue:{item.venue}
-                                    </Text>
-                                </View>
+                                navigation.navigate('ATTENDANCE', {
+                                    Discipline: item.discipline,
+                                    Course: item.courseName,
 
 
-                                <View style={{}}>
-                                    <Text style={{ color: 'black', fontWeight: '600', top: 5 }}>
-                                        Course:{item.Course}
-                                    </Text>
-                                </View>
 
-                                <View style={{}}>
-                                    <Text style={{ color: 'black', fontWeight: '600', top: 8 }}>
-                                        Discipline:{item.Discipline}
-                                    </Text>
-                                </View>
-                            </View>
-                        );
-                    }}></FlatList>
+                                })
+                            }}>
+                            <Time
+                                starttime={item.starttime}
+                                endtime={item.endtime}
+                                venue={item.venue}
+                                courseName={item.courseName}
+                                discipline={item.discipline}
+                            />
+                        </TouchableOpacity>
+                    )}
+                />
             </View>
         </View>
 
@@ -145,8 +137,6 @@ const styles = StyleSheet.create({
     },
 
 });
-
-
 
 
 

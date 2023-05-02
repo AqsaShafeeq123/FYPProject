@@ -4,13 +4,14 @@ import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity, I
 import { appcolor } from '../components/Colorss';
 
 export default Login = ({ navigation }) => {
+    // states use in text box for api
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
 
     const handleLogin = async () => {
         try {
-            let response = await fetch('http://192.168.0.105:8000/api/signin?userId=' + username + '&password=' + password);
+            let response = await fetch('http://192.168.1.102:8000/api/signin?userId=' + username + '&password=' + password);
             let json = await response.json();
             // api response store
             let data = json;

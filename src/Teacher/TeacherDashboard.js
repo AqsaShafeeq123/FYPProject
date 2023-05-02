@@ -8,12 +8,7 @@ import HOME from '../Teacher/HOME';
 import ATTENDANCE from '../Teacher/ATTENDANCE';
 import CHR from '../Teacher/CHR';
 import NOTIFICATION from '../Teacher/NOTIFICATION';
-
 import { appcolor } from '../components/Colorss';
-
-
-
-
 
 const Tab = createBottomTabNavigator();
 
@@ -56,9 +51,7 @@ export default TeacherDashboard = ({ navigation }) => {
                         iconName = focused ? 'file-tray-full-sharp' : 'file-tray-full-outline';
                     }
 
-                    if (route.name === 'NOTIFICATION') {
-                        iconName = focused ? 'notifications-circle' : 'notifications-outline';
-                    }
+
 
                     // You can return any component that you like here!
                     return (
@@ -93,22 +86,7 @@ export default TeacherDashboard = ({ navigation }) => {
 
                 }}></Tab.Screen>
 
-            <Tab.Screen
-                name="ATTENDANCE"
-                component={ATTENDANCE}
-                options={{
-                    // headerShown: false,
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
-                }}
-            />
+
             <Tab.Screen
                 name="CHR"
                 component={CHR}
@@ -126,21 +104,7 @@ export default TeacherDashboard = ({ navigation }) => {
             />
 
 
-            <Tab.Screen
-                name="NOTIFICATION"
-                component={NOTIFICATION}
-                options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
-                }}
-            />
+
         </Tab.Navigator>
 
 

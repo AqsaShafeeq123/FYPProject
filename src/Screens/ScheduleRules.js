@@ -12,7 +12,13 @@ const ScheduleRules = ({
     size,
     textValue,
     isSelectAll,
+    route
 }) => {
+
+    const { Name } = route.params;
+
+    console.log(Name);
+
     // for 3 check boxes
     const [ten, setten] = React.useState(false);
     const [twenty, settwenty] = React.useState(false);
@@ -46,23 +52,23 @@ const ScheduleRules = ({
 
 
     // Api response store for get
-    // const [scheduleData, setScheduleData] = useState([]);
+    const [scheduleData, setScheduleData] = useState([]);
 
-    // // APi Code get Get Schedule
-    // useEffect(() => {
-    //     getSchedule();
-    // }, []);
-    // async function getSchedule() {
-    //     try {
-    //         let response = await fetch('http://192.168.0.105:8000/api/teacher-timetable-details/' + Name);
-    //         let json = await response.json();
+    // APi Code get Get Schedule
+    useEffect(() => {
+        getSchedule();
+    }, []);
+    async function getSchedule() {
+        try {
+            let response = await fetch('http://192.168.1.102:8000/api/teacher-timetable-details/' + Name);
+            let json = await response.json();
 
-    //         setScheduleData(json);
-    //         console.log(json);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+            setScheduleData(json);
+            console.log(json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 
@@ -331,7 +337,7 @@ const ScheduleRules = ({
         timeSlots.forEach((timeSlot) => {
             const obj = { starttime_endtime: `${timeSlot.startTime}-${timeSlot.endTime}` };
             ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
-                const course = teacherSchedule.find((item) => item.day === day && item.starttime === timeSlot.startTime && item.endtime === timeSlot.endTime) || '';
+                const course = scheduleData.find((item) => item.day === day && item.starttime === timeSlot.startTime && item.endtime === timeSlot.endTime) || '';
                 if (course.discipline && course.venue) {
                     obj[day] = `${course.discipline}\n ${course.venue} \n${course.courseCode}-${course.courseName}`;
                 }
@@ -350,7 +356,7 @@ const ScheduleRules = ({
         <View style={{ flex: 1 }}>
             {/* <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.0.105:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 
@@ -369,6 +375,7 @@ const ScheduleRules = ({
             <FlatList
                 data={DATA}
                 keyExtractor={(item, index) => index.toString()}
+                // keyExtractor={item => item.id}
                 renderItem={({ item: { starttime_endtime, Monday, Tuesday, Wednesday, Thursday, Friday } }) => (
                     <View style={styles.timeTableWrapper}>
                         <View style={styles.timeWrapper}>
@@ -379,7 +386,7 @@ const ScheduleRules = ({
                             //     <Text style={styles.gridText}>{value}</Text>
                             // </View>
                             <SlotCheckBox
-                                key={value || index}
+                                key={index}
                                 value={isChecked}
                                 onValueChange={handleOnValueChange}
                                 textValue={value || ''}
