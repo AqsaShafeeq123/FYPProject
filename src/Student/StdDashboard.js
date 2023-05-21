@@ -1,6 +1,4 @@
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     FlatList,
     SafeAreaView,
@@ -12,7 +10,7 @@ import {
     TouchableOpacity,
     Pressable,
 } from 'react-native';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { appcolor } from '../components/Colorss';
 const DATA = [
     {
@@ -44,20 +42,75 @@ const DATA = [
     },
 ];
 
-const StdDashboard = ({ navigation }) => {
+const StdDashboard = ({ navigation, route }) => {
+    // std img plus id
+    const { dat } = route.params;
+    console.log(dat + '****')
+
+
+
+
+    // Api response store for get
+    const [stddata, setStdData] = useState();
+
+    // APi Code get Get 
+    useEffect(() => {
+        getStudentDetail();
+
+    }, []);
+    async function getStudentDetail() {
+        try {
+            let response = await fetch('http://192.168.1.100:8000/api/get-student-courses?aridNumber=' + dat.userID);
+            let json = await response.json();
+            setStdData(json);
+            console.log(json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 30 }}>
-                    Courses
-                </Text>
+
+
+            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.text}>
+                        {/* extracting obj */}
+                        {dat.name}
+
+                    </Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Ionicons
+
+                        name="notifications-circle"
+                        onPress={() => console.log('Edit pressed')}
+
+                        size={42}
+                        color='#00008b'
+                        style={{
+                            alignSelf: 'center',
+                            marginRight: 30
+                        }}
+
+
+                    />
+                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-student-image/UserImages/Student/' + dat.image }} style={styles.imgStyle} />
+                </View>
+
             </View>
 
-            <View style={{ flex: 1, padding: 5 }}>
+
+            <View style={{ flex: 1, padding: 2 }}>
                 <FlatList
                     horizontal={true}
-                    style={{ padding: 2 }}
-                    data={DATA}
+                    showsVerticalScrollIndicator={false}
+                    // style={{ padding: 2 }}
+                    data={stddata}
                     renderItem={({ item, index }) => {
                         return (
                             <Pressable
@@ -70,7 +123,7 @@ const StdDashboard = ({ navigation }) => {
                                     });
                                 }}
                                 style={{
-                                    padding: 10,
+                                    padding: 1,
                                     backgroundColor: '#afeeee',
                                     elevation: 2,
                                     margin: 3,
@@ -87,25 +140,18 @@ const StdDashboard = ({ navigation }) => {
                                     <View>
                                         <Text
                                             style={{ fontSize: 16, color: '#333', fontWeight: 'bold' }}>
-                                            {item.name}
+                                            {item.courseName}
                                         </Text>
 
-                                        <Text style={styles.title}>Teach_By: {item.Teach_By}</Text>
+                                        <Text style={styles.title}>Teach_By: {item.teacherName}</Text>
                                     </View>
                                     <View>
-                                        <Image
-                                            source={{ uri: item.image }}
-                                            style={{
-                                                width: 60,
-                                                height: 60,
-                                                borderRadius: 40,
-                                            }}
-                                        />
+                                        <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                     </View>
                                 </View>
                                 <View style={{ top: 36 }}>
                                     <Text style={{ color: '#333' }}>
-                                        Attendance:{item.attendence}
+                                        Attendance:{item.percentage}
                                     </Text>
                                 </View>
                             </Pressable>
@@ -116,7 +162,7 @@ const StdDashboard = ({ navigation }) => {
 
             {/* Below flatlist */}
             <View>
-                <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 30, marginBottom: 40 }}>
+                <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 30, marginBottom: 20 }}>
                     Recent
                 </Text>
             </View>
@@ -191,7 +237,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 5,
-        marginTop: StatusBar.currentHeight || 0,
+
     },
     item: {
         padding: 30,
@@ -205,5 +251,20 @@ const styles = StyleSheet.create({
         fontSize: 15,
         top: 20,
         color: 'black',
+    },
+    text: {
+        fontSize: 15,
+
+        color: '#000',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        fontSize: 25
+    },
+    imgStyle: {
+        width: 60,
+        height: 60,
+        borderRadius: 40,
+
     },
 });

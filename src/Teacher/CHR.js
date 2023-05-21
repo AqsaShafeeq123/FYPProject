@@ -1,257 +1,265 @@
-import { FlatList, StyleSheet, Text, View, Pressable } from 'react-native';
 
-import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from 'react-native';
+import Time from './Time';
+import React, { useState, useEffect } from 'react';
 import { appcolor } from '../components/Colorss';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Provider, Modal, Portal, Button } from 'react-native-paper';
+
 
 const CHR = ({ navigation, route }) => {
-    // const { Name, Email } = route.params;
-
-
-    const DATA = [
-        {
-            time: '8:30-10',
-            slot1: 'CS-1A LT-10',
-            slot2: '',
-            slot3: '',
-            slot4: '',
-            slot5: '',
-        },
-        {
-            time: '10-11:30',
-            slot1: '',
-            slot2: 'CS-1A LT-10',
-            slot3: '',
-            slot4: '',
-            slot5: '',
-        },
-        {
-            time: '11:30-1',
-            slot1: '',
-            slot2: '',
-            slot3: 'CS-1A LT-10',
-            slot4: '',
-            slot5: '',
-        },
-        {
-            time: '1:30-3:00',
-            slot1: '',
-            slot2: '',
-            slot3: '',
-            slot4: 'CS-1A LT-10',
-            slot5: '',
-        },
-        {
-            time: '3:00-4:30',
-            slot1: '',
-            slot2: '',
-            slot3: 'CS-1A LT-10',
-            slot4: '',
-            slot5: '',
-        },
-    ];
 
 
 
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    //  data from login
+    const [name, setName] = useState('');
+    const [img, setImg] = useState();
+
+    // Api response store for get
+    const [teacherData, setTeacherData] = useState([]);
+
+    // APi Code get Get DVr
+    useEffect(() => {
+        getData();
+        getTeacherDetail();
+
+    }, []);
 
 
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('TeacherData');
+            if (value !== null) {
+                const data = JSON.parse(value);
+                // frpm prev screen storedata login screen
+                setName(data.Name)
+                setImg(data.Image)
+                console.log('****' + value);
+            }
+        } catch (e) {
+            // error reading value
+        }
+    };
+
+
+    async function getTeacherDetail() {
+        try {
+
+            const value = await AsyncStorage.getItem('TeacherData');
+
+            const data = JSON.parse(value);
+            // frpm prev screen storedata
+
+            console.log('****aqsa' + data.Name);
+
+            let response = await fetch('http://192.168.1.100:8000/api/get-teacher-chr?teacherName=' + data.Name);
+            let json = await response.json();
+            setTeacherData(json);
+            console.log(json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // modal
+    const [modalVisible, setModalVisible] = useState(false);
+    const showModal = () => setModalVisible(true);
+    const hideModal = () => setModalVisible(false);
 
     return (
-        <View style={{ flex: 1 }}>
-            {/* <View style={styles.text}>
-                <Text style={styles.text}> {Name}</Text>
-                <Text style={styles.text}> {Email}</Text>
-            </View> */}
+        <Provider style={{ flex: 1, marginTop: 8, padding: 4, backgroundColor: '#eee' }}>
 
-            <View
-                style={{
-                    padding: 5,
+            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.text}>
+                        {/* extracting obj  above state */}
 
-                    margin: 3,
-                    borderRadius: 8,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                }}>
-                <View
-                    style={{
-                        width: 50,
+                        {name}
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}></Text>
+                    </Text>
                 </View>
-                <View
-                    style={{
-                        width: 50,
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Ionicons
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Mon</Text>
-                </View>
-                <View
-                    style={{
-                        width: 50,
+                        name="notifications-circle"
+                        onPress={() => console.log('Edit pressed')}
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Tue</Text>
-                </View>
-                <View
-                    style={{
-                        width: 50,
+                        size={42}
+                        color='#00008b'
+                        style={{
+                            alignSelf: 'center',
+                            marginRight: 30
+                        }}
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Wed</Text>
-                </View>
-                <View
-                    style={{
-                        width: 50,
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Thu</Text>
+                    />
+                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
                 </View>
-                <View
-                    style={{
-                        width: 50,
 
-                        height: 40,
-                        margin: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ fontSize: 12, color: 'black' }}>Fri</Text>
-                </View>
             </View>
-            <FlatList
-                style={{}}
-                data={DATA}
-                renderItem={({ item, index }) => {
-                    return (
-                        <View
+
+
+
+            <Portal>
+                <Modal
+                    visible={modalVisible}
+                    onDismiss={hideModal}
+                    style={{ padding: 12 }}
+                    contentContainerStyle={{
+                        backgroundColor: appcolor.primarycolor,
+                        padding: 30,
+                        borderRadius: 8,
+                    }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, color: '#ffffff' }}>
+                        Want TO View
+                    </Text>
+
+                    <View style={{ padding: 5, top: 7 }}>
+                        <TouchableOpacity
                             style={{
-                                padding: 5,
-                                margin: 3,
-                                borderRadius: 8,
-                                flexDirection: 'row',
+                                width: '70%',
+                                top: 14,
+                                alignSelf: 'center',
+                                margin: 5,
+                                alignItems: 'center',
                                 justifyContent: 'space-evenly',
+                                borderRadius: 10,
+                                padding: 10,
+                                height: 50,
+
+                                backgroundColor: '#ffffff',
+                            }}
+                            onPress={() => {
+                                navigation.navigate('ActivityReport', {
+                                    Discipline: selectedItem.discipline,
+                                    Date: selectedItem.date,
+                                    Course: selectedItem.courseName,
+                                    Day: selectedItem.day,
+                                    Sit: selectedItem.teacherCHRActivityDetails[0].sit,
+                                    Stand: selectedItem.teacherCHRActivityDetails[0].stand,
+                                    Mobile: selectedItem.teacherCHRActivityDetails[0].mobile,
+                                    Times: selectedItem.startTime,
+                                    Timee: selectedItem.endTime,
+                                    Status: selectedItem.status,
+                                    Img: selectedItem.image,
+
+                                });
                             }}>
-                            <View
+                            <Text
                                 style={{
-                                    width: 50,
+                                    fontSize: 20,
+                                    color: 'black',
 
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
                                 }}>
-                                <Text style={{ fontSize: 11, color: 'black' }}>{item.time}</Text>
+                                Activity Report
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                width: '70%',
+                                top: 14,
+                                alignSelf: 'center',
+                                margin: 5,
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly',
+                                borderRadius: 10,
+                                padding: 10,
+                                height: 50,
+
+                                backgroundColor: '#ffffff',
+                            }}
+                            onPress={() => {
+                                navigation.navigate('TeacherChr', {
+
+                                    Discipline: selectedItem.discipline,
+                                    Date: selectedItem.date,
+                                    Course: selectedItem.courseName,
+                                    Day: selectedItem.day,
+                                    TimeIn: selectedItem.totalTimeIn,
+                                    TimeOut: selectedItem.totalTimeOut,
+                                    Times: selectedItem.startTime,
+                                    Timee: selectedItem.endTime,
+                                    Status: selectedItem.status,
+                                    Img: selectedItem.image,
+                                });
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    color: 'black',
+
+                                }}>
+                                Class Held Report
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
+            </Portal>
+
+
+            {/* flatlist */}
+
+            <View style={{ flex: 1, }}>
+                <FlatList
+                    style={{}}
+                    data={teacherData}
+                    renderItem={({ item, index }) => {
+
+                        return (
+                            <View style={{
+                                padding: 2,
+                                backgroundColor: `#fff`,
+                                elevation: 8,
+                                margin: 13,
+                                borderRadius: 8,
+
+                                height: 150,
+                            }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        // console.log('aqsa');
+                                        showModal();
+                                        setSelectedItem(item);
+                                    }}
+                                >
+
+
+
+                                    <Text style={{ color: 'black', fontWeight: '600', alignSelf: 'center', top: 20 }}>
+                                        {item.status}
+                                    </Text>
+
+
+                                    <View style={{ borderBottomWidth: 4, borderBottomColor: 'grey', top: 25, }}>
+
+                                    </View>
+
+                                    <Text style={{ color: 'black', fontWeight: '600', top: 35 }}>
+                                        Date:{item.date}
+                                    </Text>
+
+
+
+                                    <Text style={{ color: 'black', fontWeight: '600', top: 35 }}>
+                                        Course:{item.courseName}
+                                    </Text>
+
+
+                                    <Text style={{ color: 'black', fontWeight: '600', top: 35 }}>
+                                        Discipline:{item.discipline}
+                                    </Text>
+
+                                </TouchableOpacity>
                             </View>
-                            <Pressable
-                                onPress={() => navigation.navigate('SessionsChr')}
-                                android_ripple={{ color: 'green' }}
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
+                        );
 
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    //  backgroundColor: getBackgroundColor(item.slot1),
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot1}</Text>
-                            </Pressable>
-                            <Pressable
-                                onPress={() => navigation.navigate('SessionsChr')}
-                                android_ripple={{ color: 'green' }}
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot2),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot2}</Text>
-                            </Pressable>
-                            <Pressable
-                                onPress={() => navigation.navigate('SessionsChr')}
-                                android_ripple={{ color: 'green' }}
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot3),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot3}</Text>
-                            </Pressable>
-
-                            <Pressable
-                                onPress={() => navigation.navigate('SessionsChr')}
-                                android_ripple={{ color: 'green' }}
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot4),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot4}</Text>
-                            </Pressable>
-
-                            <Pressable
-                                onPress={() => navigation.navigate('SessionsChr')}
-                                android_ripple={{ color: 'green' }}
-                                style={{
-                                    borderWidth: 1,
-                                    width: 50,
-                                    // backgroundColor: getBackgroundColor(item.slot5),
-                                    height: 40,
-                                    margin: 2,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={{ fontSize: 12, color: 'black' }}>{item.slot5}</Text>
-                            </Pressable>
-                        </View>
-                    );
-                }}></FlatList>
-
-            <View
-                style={{
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 80,
-
-
-                }}>
-
+                    }}></FlatList>
             </View>
+        </Provider>
 
-        </View>
 
     );
 };
@@ -277,5 +285,42 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
     },
+    imgStyle: {
+        width: 60,
+        height: 60,
+        borderRadius: 40,
+
+    },
+    modalContent: {
+        backgroundColor: appcolor.primarycolor,
+        borderRadius: 30,
+        padding: 80,
+        alignItems: 'center',
+        marginTop: 150,
+        marginRight: 10,
+        marginLeft: 10,
+    },
+    modalText: {
+        marginBottom: 30,
+        textAlign: 'center',
+        fontSize: 30,
+        color: 'black',
+    },
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

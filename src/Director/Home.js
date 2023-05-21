@@ -1,126 +1,163 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     FlatList,
+    SafeAreaView,
     StatusBar,
     StyleSheet,
     Text,
     Image,
     View,
     TouchableOpacity,
+    Pressable,
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { Modal, Portal, Provider } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { appcolor } from '../components/Colorss';
-import { Picker } from '@react-native-picker/picker';
-const DATA = [
-    {
-        id: '1',
-        name: 'Dr Naseer',
-        Course: 'CC',
-        Room: 'LT-6',
-    },
-    {
-        id: '2',
-        name: 'Mr. Umar',
-        Course: 'CC',
-        Room: 'LT-6',
-    },
-    {
-        id: '3',
-        name: 'Dr Munir',
-        Course: 'CC',
-        Room: 'LT-6',
-    },
-    {
-        id: '4',
-        name: 'Mr. Zahid',
-        Course: 'CC',
-        Room: 'LT-6',
-    },
-    {
-        id: '5',
-        name: 'Sir. Aftab',
-        Course: 'CC',
-        Room: 'LT-6',
-    },
-    {
-        id: '6',
-        name: 'Dr Mohsin',
-        Course: 'CC',
-        Room: 'LT-6',
-    },
-];
 
-const Home = ({ navigation }) => {
-    // Modal 
+
+const Home = ({ navigation, route }) => {
+
+    const { dat } = route.params;
+    console.log(dat + '****')
+
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const [visible, setVisible] = React.useState(false);
-    //   search bar
+
+    // fab wrk
+
+    const [state, setState] = React.useState({ open: false });
+
+    const onStateChange = ({ open }) => setState({ open });
+
+    const { open } = state;
+
+
+
+
+
+    // Api response store for get
+    const [teacherData, setTeacherData] = useState([]);
+
+    // APi Code get Get DVr
+    useEffect(() => {
+        getTeacherDetail();
+
+    }, []);
+    async function getTeacherDetail() {
+        try {
+            let response = await fetch('http://192.168.1.100:8000/api/get-all-teacher-chr');
+            let json = await response.json();
+            setTeacherData(json);
+            console.log(json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
     const [searchTeacher, setSearchTeacher] = useState('');
-
-    const [data, setdata] = useState();
-    const [selectedVC, setSelectedVC] = useState();
-
     return (
         <Provider style={styles.container}>
-            <View style={{ margin: '3%' }}>
+            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9, top: 5 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.text}>
+                        {/* extracting obj */}
+                        {dat.name}
+
+
+
+                    </Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Ionicons
+
+                        name="notifications-circle"
+                        onPress={() => console.log('Edit pressed')}
+
+                        size={42}
+                        color='#00008b'
+                        style={{
+                            alignSelf: 'center',
+                            marginRight: 30
+                        }}
+
+
+                    />
+                    {
+                        dat.image == null ?
+                            <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
+                            :
+                            <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                    }
+                </View>
+
+            </View>
+
+            {/* Below flatlist */}
+            <View style={{ margin: '3%', flexDirection: 'row', }}>
                 <Searchbar
                     placeholder="Search"
-                    placeholderTextColor="#000"
                     value={searchTeacher}
+                    placeholderTextColor="#000"
+                    inputStyle={{ fontSize: 16, color: '#000' }}
                     fontSize={12}
-
-                    style={{ borderRadius: 10, backgroundColor: '#f5fffa' }}
+                    style={{ borderRadius: 10, backgroundColor: '#f5fffa', width: '89%', marginRight: 7 }}
                     onChangeText={text => setSearchTeacher(text)}
                 />
+
+                <Ionicons
+
+                    name="filter-sharp"
+                    onPress={showModal}
+
+                    size={32}
+                    color='#00008b'
+                    style={{
+                        alignSelf: 'center',
+                        marginRight: 13,
+                        justifyContent: 'flex-end'
+
+                    }}
+
+
+                />
             </View>
+
+            {/* Filter icon code */}
+
+
             <Portal>
                 <Modal
                     visible={visible}
                     onDismiss={hideModal}
                     style={{ padding: 12 }}
                     contentContainerStyle={{
-                        backgroundColor: '#f0ffff',
-                        padding: 50,
+                        backgroundColor: appcolor.primarycolor,
+                        padding: 30,
                         borderRadius: 8,
                     }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, color: '#ffffff' }}>
+                        Search By
+                    </Text>
 
-                    <View style={{ padding: 5, top: 2 }}>
-
-                        <Text style={{ color: 'black', fontSize: 20 }}>Select Date</Text>
-
-                        {/* PICKER 1 */}
-                        <Picker
-                            mode="dropdown"
-                            style={styles.picker}
-                            selectedValue={selectedVC}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSelectedVC(itemValue)
-                            }>
-                            <Picker.Item label="12-03-2023" color='black' value="12-03-2023" />
-                            <Picker.Item label="12-03-2023" color='black' value="12-03-2023" />
-                            <Picker.Item label="12-03-2023" color='black' value="12-03-2023" />
-
-
-                        </Picker>
-                    </View>
-
-
-                    <View style={{ padding: 5, top: 4, borderRadius: 26 }}>
-
-
-                        {/* BTN SAve */}
+                    <View style={{ padding: 5, top: 7 }}>
                         <TouchableOpacity
                             style={{
-                                width: '40%',
-                                height: 40,
+                                width: '50%',
+                                top: 14,
                                 alignSelf: 'center',
-
+                                margin: 5,
                                 alignItems: 'center',
                                 justifyContent: 'space-evenly',
                                 borderRadius: 10,
-                                backgroundColor: '#4682b4',
+                                padding: 10,
+                                height: 50,
+
+                                backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
 
@@ -128,55 +165,218 @@ const Home = ({ navigation }) => {
                             <Text
                                 style={{
                                     fontSize: 20,
-                                    color: '#ffffff',
-                                    //fontFamily: 'times new roman bold',
+                                    color: 'black',
+
                                 }}>
-                                ok
+                                Date
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                width: '50%',
+                                top: 14,
+                                alignSelf: 'center',
+                                margin: 5,
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly',
+                                borderRadius: 10,
+                                padding: 10,
+                                height: 50,
+
+                                backgroundColor: '#ffffff',
+                            }}
+                            onPress={() => {
+
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    color: 'black',
+
+                                }}>
+                                Course
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                width: '50%',
+                                top: 14,
+                                alignSelf: 'center',
+                                margin: 5,
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly',
+                                borderRadius: 10,
+                                padding: 10,
+                                height: 50,
+
+                                backgroundColor: '#ffffff',
+                            }}
+                            onPress={() => {
+
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    color: 'black',
+
+                                }}>
+                                Section
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                width: '50%',
+                                top: 14,
+                                alignSelf: 'center',
+                                margin: 5,
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly',
+                                borderRadius: 10,
+                                padding: 10,
+                                height: 50,
+
+                                backgroundColor: '#ffffff',
+                            }}
+                            onPress={() => {
+
+
+                            }}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    color: 'black',
+
+                                }}>
+                                Teacher
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>
+
+            </Portal>
+            {/* FAB */}
+            <Portal>
+
+
+                <FAB.Group
+                    style={{ marginBottom: 50, position: 'absolute' }}
+                    open={open}
+                    visible
+                    icon={open ? 'calendar-today' : 'plus'}
+                    actions={[
+
+                        {
+                            icon: 'star',
+                            label: 'Switch to Activity ',
+                            onPress: () => { navigation.navigate('Activity') },
+                        },
+                        {
+                            icon: 'view-grid',
+                            label: 'Switch to DataTable',
+                            onPress: () => { navigation.navigate('ChrDetail') },
+                        },
+
+                    ]}
+                    onStateChange={onStateChange}
+                    onPress={() => {
+                        if (open) {
+                            // do something if the speed dial is open
+                        }
+                    }}
+                />
+
             </Portal>
 
-            <View style={{ flex: 1, padding: 9 }}>
+            <View style={{ flex: 1, }}>
                 <FlatList
-                    style={{ flex: 1 }}
-                    data={DATA}
+                    style={{}}
+                    // data={DATA}
+                    data={teacherData}
                     renderItem={({ item, index }) => {
-                        if (item.name.toLowerCase().includes(searchTeacher.toLowerCase())) {
+                        if (item.courseName.toLowerCase().includes(searchTeacher.toLowerCase())) {
                             return (
-                                <View
+                                <Pressable
+                                    onPress={() => {
+                                        navigation.navigate('ClassHeldReport', {
+                                            Name: item.name,
+                                            Discipline: item.discipline,
+                                            Date: item.date,
+                                            Course: item.courseName,
+                                            Day: item.day,
+                                            TimeIn: item.totalTimeIn,
+                                            TimeOut: item.totalTimeOut,
+                                            Times: item.startTime,
+                                            Timee: item.endTime,
+                                            Status: item.status,
+                                            Img: item.image,
+
+
+                                        });
+                                    }}
                                     style={{
-                                        padding: 5,
-                                        backgroundColor: '#ffff',
+                                        padding: 2,
+                                        backgroundColor: `#dcdcdc`,
                                         elevation: 2,
-                                        margin: 3,
+                                        margin: 13,
                                         borderRadius: 8,
+
+
+                                        height: 150,
                                     }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            setdata(item.name);
-                                            showModal();
-                                        }}
-                                        style={[styles.item]}>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
 
-                                        <Text style={{ fontSize: 16, color: 'black' }}> Name:
-                                            {item.name}
+                                            justifyContent: 'space-between',
+                                        }}>
+                                        <View>
+                                            <Text
+                                                style={{
+                                                    fontSize: 16,
+                                                    color: 'black',
+                                                    fontWeight: 'bold',
+                                                }}>
+                                                {item.teacherName}
+                                            </Text>
+                                        </View>
+                                        <View>
+                                            <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                        </View>
+                                    </View>
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Date:{item.date}
                                         </Text>
-                                        <Text style={{ fontSize: 16, color: 'black', }}> Course:
-                                            {item.Course}
+                                    </View>
+
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Course:{item.courseName}
                                         </Text>
-                                        <Text style={{ fontSize: 16, color: 'black' }}> Room:
-                                            {item.Room}
+                                    </View>
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Discipline:{item.discipline}
+                                        </Text>
+                                    </View>
+
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600', alignSelf: 'flex-end' }}>
+                                            {item.status}
                                         </Text>
 
-                                    </TouchableOpacity>
-                                </View>
+                                    </View>
+
+                                    <View style={{ borderBottomWidth: 4, borderBottomColor: 'red' }}>
+
+                                    </View>
+                                </Pressable>
                             );
                         }
                     }}></FlatList>
             </View>
         </Provider>
+
     );
 };
 
@@ -185,39 +385,42 @@ export default Home;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
+        padding: 5,
+
     },
     item: {
-        padding: 10,
+        padding: 30,
         marginVertical: 8,
         marginHorizontal: 10,
         borderRadius: 10,
-        flexDirection: 'row',
+
         justifyContent: 'flex-start',
     },
+    title: {
+        fontSize: 15,
+        top: 20,
+        color: 'black',
+    },
+    text: {
+        fontSize: 15,
 
-
-    modalContent: {
-        backgroundColor: appcolor.primarycolor,
-        borderRadius: 30,
-        padding: 80,
+        color: '#000',
         alignItems: 'center',
-        marginTop: 150,
-        marginRight: 10,
-        marginLeft: 10,
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        fontSize: 25
     },
-    modalText: {
-        marginBottom: 30,
-        textAlign: 'center',
-        fontSize: 30,
-        color: 'black',
-    },
-    picker: {
+    imgStyle: {
+        width: 60,
+        height: 60,
+        borderRadius: 40,
 
-        color: 'black',
-        backgroundColor: appcolor.primarycolor
     },
-
 });
+
+
+
+
+
 
 

@@ -60,7 +60,7 @@ const ScheduleRules = ({
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.102:8000/api/teacher-timetable-details/' + Name);
+            let response = await fetch('http://192.168.1.100:8000/api/teacher-timetable-details/' + Name);
             let json = await response.json();
 
             setScheduleData(json);
@@ -356,7 +356,7 @@ const ScheduleRules = ({
         <View style={{ flex: 1 }}>
             {/* <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 
@@ -462,6 +462,31 @@ const ScheduleRules = ({
 
                     <Text style={{ fontSize: 15, fontWeight: '500', color: '#fff' }}>
                         Last 10 Minutes
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        backgroundColor: appcolor.primarycolor,
+                        height: 35,
+                        width: 190,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+
+                        borderRadius: 8,
+                        left: 10,
+
+                        marginTop: 10,
+                    }}>
+                    <CheckBox
+                        tintColors={{ true: '#fff', false: '#fff' }}
+                        value={full}
+                        onValueChange={() => {
+                            setfull(!full);
+                        }}
+                    />
+
+                    <Text style={{ fontSize: 15, fontWeight: '500', color: '#fff' }}>
+                        Half session
                     </Text>
                 </View>
                 <View

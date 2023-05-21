@@ -12,13 +12,13 @@ const HOME = ({ navigation, route }) => {
     // Api response store for get
     const [scheduleData, setScheduleData] = useState([]);
 
-    // APi Code get Get Schedule
+    // APi Code get Get timetable of teacher
     useEffect(() => {
         getSchedule();
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.102:8000/api/teacher-timetable-details/' + dat.name);
+            let response = await fetch('http://192.168.1.100:8000/api/teacher-timetable-details/' + dat.name);
             let json = await response.json();
 
             setScheduleData(json);
@@ -69,7 +69,7 @@ const HOME = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                 </View>
 
             </View>

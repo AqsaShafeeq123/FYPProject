@@ -32,7 +32,7 @@ const Schedule = ({ navigation }) => {
     }, []);
     async function getTeacher() {
         try {
-            let response = await fetch('http://192.168.1.102:8000/api/user-details');
+            let response = await fetch('http://192.168.1.100:8000/api/user-details');
             // let response = await fetch(appcolor.api + 'user-details');
             let json = await response.json();
             setTeacherData(json);
@@ -54,7 +54,7 @@ const Schedule = ({ navigation }) => {
                     placeholderTextColor="#000"
                     value={searchTeacher}
                     fontSize={12}
-
+                    inputStyle={{ fontSize: 16, color: '#000' }}
                     style={{ borderRadius: 10, backgroundColor: '#f5fffa' }}
                     onChangeText={text => setSearchTeacher(text)}
                 />
@@ -191,7 +191,7 @@ const Schedule = ({ navigation }) => {
                                                 item.image == null ?
                                                     <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                                     :
-                                                    <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                             }
                                             <Text style={{ fontSize: 16, color: 'black' }}>
                                                 {item.name}

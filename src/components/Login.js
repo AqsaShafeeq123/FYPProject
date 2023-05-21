@@ -2,16 +2,31 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity, Image, Alert } from 'react-native';
 
 import { appcolor } from '../components/Colorss';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default Login = ({ navigation }) => {
+
+
     // states use in text box for api
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
 
+    const storeData = async (nam, img) => {
+        try {
+            const data = {
+                Name: nam,
+                Image: img,
+            };
+            await AsyncStorage.setItem('TeacherData', JSON.stringify(data));
+            console.log('Data saved successfully.');
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     const handleLogin = async () => {
         try {
-            let response = await fetch('http://192.168.1.102:8000/api/signin?userId=' + username + '&password=' + password);
+            let response = await fetch('http://192.168.1.100:8000/api/signin?userId=' + username + '&password=' + password);
             let json = await response.json();
             // api response store
             let data = json;
@@ -19,7 +34,7 @@ export default Login = ({ navigation }) => {
             // console.log(data.role)
             console.log(data)
             console.log(username, password)
-
+            storeData(data.name, data.image);
 
             if (data.role == 'Admin') {
 
@@ -36,11 +51,19 @@ export default Login = ({ navigation }) => {
 
             }
             else if (data.role == 'Student') {
-                navigation.navigate('StdDashboard');
+                navigation.navigate('StdDashboard', {
+
+                    // passing obj to std dashboard
+                    dat: data,
+                });
 
             }
             else if (data.role == 'Director') {
-                navigation.navigate('DirectorDashboard');
+                navigation.navigate('DirectorDashboard', {
+                    screen: 'Home',
+                    // screen: 'ShortReport',
+                    params: { dat: data },
+                });
 
 
             }

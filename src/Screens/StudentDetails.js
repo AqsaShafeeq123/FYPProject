@@ -60,7 +60,7 @@ const StudentDetails = ({ navigation, route }) => {
             redirect: 'follow'
         };
         let response = await fetch(
-            "http://192.168.1.102:8000/api/student-offered-courses", requestOptions
+            "http://192.168.1.100:8000/api/student-offered-courses", requestOptions
         );
         let json = await response.json();
 
@@ -89,7 +89,7 @@ const StudentDetails = ({ navigation, route }) => {
 
 
         console.log("api response****");
-        fetch('http://192.168.1.102:8000/api/student-enroll', requestOptions)
+        fetch('http://192.168.1.100:8000/api/student-enroll', requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -134,7 +134,7 @@ const StudentDetails = ({ navigation, route }) => {
                                         styles.itemContainer,
                                         selectedItems.includes(item.aridNo) && styles.selectedItemContainer,
                                     ]}>
-                                    <Image source={{ uri: 'http://192.168.1.102:8000/api/get-student-image/UserImages/Student/' + item.image }} style={styles.imgStyle} />
+                                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-student-image/UserImages/Student/' + item.image }} style={styles.imgStyle} />
                                     <Text style={{
                                         fontSize: 16, color: 'black', marginLeft: 70, bottom: 40
                                     }}>

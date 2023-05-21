@@ -1,6 +1,4 @@
 
-
-
 // -------------------
 import React, { useState, useEffect } from 'react';
 import {
@@ -20,9 +18,12 @@ import { appcolor } from '../components/Colorss';
 
 
 const Teacher = ({ navigation }) => {
+  // for modal
+
+  const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const [visible, setVisible] = React.useState(false);
+  // searchbar
   const [searchTeacher, setSearchTeacher] = useState('');
 
   const [data, setdata] = useState();
@@ -39,7 +40,7 @@ const Teacher = ({ navigation }) => {
   }, []);
   async function getTeacher() {
     try {
-      let response = await fetch('http://192.168.1.102:8000/api/user-details');
+      let response = await fetch('http://192.168.1.100:8000/api/user-details');
 
       let json = await response.json();
       setTeacherData(json);
@@ -64,7 +65,10 @@ const Teacher = ({ navigation }) => {
           placeholder="Search"
           placeholderTextColor="#000"
           value={searchTeacher}
+          inputStyle={{ fontSize: 16, color: '#000' }}
           fontSize={12}
+
+
 
           style={{ borderRadius: 10, backgroundColor: '#f5fffa' }}
           onChangeText={text => setSearchTeacher(text)}
@@ -186,7 +190,7 @@ const Teacher = ({ navigation }) => {
                       item.image == null ?
                         <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                         :
-                        <Image source={{ uri: 'http://192.168.1.102:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                        <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                     }
                     <Text style={{ fontSize: 16, color: 'black' }}>
                       {item.name}

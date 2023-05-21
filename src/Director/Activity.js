@@ -1,13 +1,13 @@
+
+
+
+
 import React, { useState, useEffect } from 'react';
 
 import { DataTable } from 'react-native-paper';
-import {
-    ScrollView
-} from 'react-native';
+import { ScrollView } from 'react-native';
 
-const ChrDetail = () => {
-
-
+const Activity = () => {
     // Api response store for get
     const [teacherData, setTeacherData] = useState([]);
 
@@ -15,7 +15,9 @@ const ChrDetail = () => {
 
     async function getTeacherDetail() {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/get-all-teacher-chr');
+            let response = await fetch(
+                'http://192.168.1.100:8000/api/get-all-teacher-chr',
+            );
             let json = await response.json();
             setTeacherData(json);
             console.log(json);
@@ -25,10 +27,9 @@ const ChrDetail = () => {
     }
     useEffect(() => {
         getTeacherDetail();
-        return () => { }
+        return () => { };
     }, []);
     return (
-
         <ScrollView horizontal={true}>
             <DataTable style={{ width: 950 }}>
                 <DataTable.Header style={{ backgroundColor: 'pink', top: 4 }}>
@@ -36,11 +37,13 @@ const ChrDetail = () => {
                     <DataTable.Title numeric>Teacher Name</DataTable.Title>
 
                     <DataTable.Title numeric>Course Name</DataTable.Title>
-                    <DataTable.Title numeric> Discipline</DataTable.Title>
+
                     <DataTable.Title numeric>Date</DataTable.Title>
+                    <DataTable.Title numeric>discipline </DataTable.Title>
+                    <DataTable.Title numeric> sit</DataTable.Title>
+                    <DataTable.Title numeric> stand </DataTable.Title>
+                    <DataTable.Title numeric> mobile </DataTable.Title>
                     <DataTable.Title numeric>Status</DataTable.Title>
-                    <DataTable.Title numeric>Total Time In</DataTable.Title>
-                    <DataTable.Title numeric>Total Time Out</DataTable.Title>
                 </DataTable.Header>
 
                 {teacherData.map((item, index) => (
@@ -48,19 +51,25 @@ const ChrDetail = () => {
                         <DataTable.Cell>{index + 1}</DataTable.Cell>
                         <DataTable.Cell numeric>{item.teacherName}</DataTable.Cell>
                         <DataTable.Cell numeric>{item.courseName}</DataTable.Cell>
-                        <DataTable.Cell numeric>{item.discipline}</DataTable.Cell>
+
                         <DataTable.Cell numeric>{item.date}</DataTable.Cell>
+                        <DataTable.Cell numeric>{item.discipline}</DataTable.Cell>
+                        <DataTable.Cell numeric>
+                            {item.teacherCHRActivityDetails[0]?.sit || 0}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric>
+                            {item.teacherCHRActivityDetails[0]?.stand || 0}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric>
+                            {item.teacherCHRActivityDetails[0]?.mobile || 0}
+                        </DataTable.Cell>
+
                         <DataTable.Cell numeric>{item.status}</DataTable.Cell>
-                        <DataTable.Cell numeric>{item.totalTimeIn}</DataTable.Cell>
-                        <DataTable.Cell numeric>{item.totalTimeOut}</DataTable.Cell>
                     </DataTable.Row>
                 ))}
             </DataTable>
         </ScrollView>
-
-
     );
 };
 
-export default ChrDetail;
-
+export default Activity;

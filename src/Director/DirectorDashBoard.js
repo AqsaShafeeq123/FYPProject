@@ -74,16 +74,8 @@ export default DirectorDashboard = ({ navigation }) => {
                 name="Home"
                 component={Home}
                 options={{
-                    // headerShown: false,
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
+                    headerShown: false,
+
 
                 }}></Tab.Screen>
 
@@ -92,6 +84,7 @@ export default DirectorDashboard = ({ navigation }) => {
                 name="ShortReport"
                 component={ShortReport}
                 options={{
+                    headerShown: false,
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         color: 'white',
@@ -112,13 +105,6 @@ export default DirectorDashboard = ({ navigation }) => {
 
     );
 };
-
-
-
-
-
-
-
 
 
 

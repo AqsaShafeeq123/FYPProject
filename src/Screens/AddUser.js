@@ -89,7 +89,7 @@ const AddUser = ({ navigation }) => {
 
         };
 
-        fetch("http://192.168.1.102:8000/api/add-user?id=" + 0 + "&userID=" + id + "&name=" + name + "&password=" + password + "&role=" + selectedUser, requestOptions)
+        fetch("http://192.168.1.100:8000/api/add-user?id=" + 0 + "&userID=" + id + "&name=" + name + "&password=" + password + "&role=" + selectedUser, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -117,7 +117,7 @@ const AddUser = ({ navigation }) => {
 
         };
 
-        fetch("http://192.168.1.102:8000/api/add-student?aridNo=" + id + "&name=" + name + "&image=" + 0 + "&password=" + password, requestOptions)
+        fetch("http://192.168.1.100:8000/api/add-student?aridNo=" + id + "&name=" + name + "&image=" + 0 + "&password=" + password, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));

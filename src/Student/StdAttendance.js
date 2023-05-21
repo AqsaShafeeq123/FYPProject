@@ -87,6 +87,7 @@ const StdAttendance = ({ navigation, route }) => {
             <FlatList
                 style={{ top: 10 }}
                 data={DATA}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => {
                     return (
                         <Pressable

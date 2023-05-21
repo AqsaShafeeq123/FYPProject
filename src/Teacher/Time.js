@@ -4,8 +4,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Time = ({ starttime, endtime, venue, courseName, discipline }) => {
     const [currentStatus, setCurrentStatus] = useState('Running');
 
+
+    if (starttime == '1:30' && endtime == '3:00') {
+        starttime = '13:30';
+        endtime = '15:00';
+    }
+    if (starttime == '3:00' && endtime == '4:30') {
+        starttime = '15:00';
+        endtime = '16:30';
+    }
+
+
     useEffect(() => {
         const interval = setInterval(() => {
+
             const now = new Date();
             const start = new Date();
             const end = new Date();

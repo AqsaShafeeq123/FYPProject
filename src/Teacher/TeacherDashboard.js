@@ -91,15 +91,7 @@ export default TeacherDashboard = ({ navigation }) => {
                 name="CHR"
                 component={CHR}
                 options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
+                    headerShown: false,
                 }}
             />
 

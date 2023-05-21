@@ -46,7 +46,14 @@ import SessionsChr from '../Teacher/SessionsChr';
 // Director Side
 import DirectorDashBoard from '../Director/DirectorDashBoard';
 import ChrDetail from '../Director/ChrDetail';
+import ClassHeldReport from '../Director/ClassHeldReport';
+import ActivityReport from '../Teacher/ActivityReport';
+import TeacherChr from '../Teacher/TeacherChr';
+import Activity from '../Director/Activity';
+import RecordingDetails from '../Screens/RecordingDetails';
+
 const Stack = createStackNavigator();
+
 
 export default function stackss() {
     return (
@@ -194,17 +201,7 @@ export default function stackss() {
 
 
 
-                <Stack.Screen name='StdDashboard' component={StdDashboard} options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
-                }} ></Stack.Screen>
+                <Stack.Screen name='StdDashboard' component={StdDashboard} options={{ headerShown: false }} ></Stack.Screen>
 
 
                 <Stack.Screen name='StdAttendance' component={StdAttendance} options={{
@@ -360,9 +357,46 @@ export default function stackss() {
                     },
                 }}></Stack.Screen>
 
+                <Stack.Screen name='ClassHeldReport' component={ClassHeldReport} options={{
+                    headerShown: false
+
+                }}></Stack.Screen>
+
+                <Stack.Screen name='ActivityReport' component={ActivityReport} options={{
+                    headerShown: false
+
+                }}></Stack.Screen>
 
 
+                <Stack.Screen name='TeacherChr' component={TeacherChr} options={{
+                    headerShown: false
 
+                }}></Stack.Screen>
+
+                <Stack.Screen name='Activity' component={Activity} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='RecordingDetails' component={RecordingDetails} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );
