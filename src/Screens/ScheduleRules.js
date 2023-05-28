@@ -2,7 +2,7 @@
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import SlotCheckBox from '../components/SlotCheckBox';
-
+import { Snackbar } from 'react-native-paper';
 import React, { useState, useEffect } from 'react';
 import { appcolor } from '../components/Colorss';
 
@@ -19,15 +19,68 @@ const ScheduleRules = ({
 
     console.log(Name);
 
-    // for 3 check boxes
+
+
+
+    // snackbar
+    const [visible, setVisible] = React.useState(false);
+
+    const onToggleSnackBar = () => setVisible(!visible);
+
+    const onDismissSnackBar = () => setVisible(false);
+
+    // for 4 check boxes
     const [ten, setten] = React.useState(false);
     const [twenty, settwenty] = React.useState(false);
+    const [mid, setMid] = React.useState(false);
     const [full, setfull] = React.useState(false);
 
-    const handleSavePress = () => {
-        console.log('saved');
+    const [selectedTimeTableIds, setelectedTimeTableIds] = React.useState([]);
+    const [dataToApi, setDataToApi] = useState([]);
+
+    const handleSavePress = async () => {
+        const rules = {
+            startRecord: ten ? 1 : 0,
+            midRecord: mid ? 1 : 0,
+            endRecord: twenty ? 1 : 0,
+            fullRecord: full ? 1 : 0,
+
+        }
+        const mergedArray = selectedTimeTableIds.map((id, index) => ({
+            id: index,
+            timeTableId: id,
+            ...rules
+        }))
+
+
+
+        // APi Code  on CAMERA ICON click to add camera
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify(
+            mergedArray
+        );
+        console.log('!!!!!!!!!!!!!!!!!' + raw);
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://192.168.1.104:8000/api/add-rules/" + Name, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+
+
     };
 
+
+
+    // --------
     const [isChecked, setIsChecked] = useState(value);
     const handleOnPress = () => {
         setIsChecked(!isChecked);
@@ -42,7 +95,15 @@ const ScheduleRules = ({
 
     const [selectAll, setSelectAll] = useState(false);
 
-    const handleOnValueChange = value => {
+    const handleOnValueChange = (value, timeTableId) => {
+        if (value && timeTableId) {
+            setelectedTimeTableIds((prevIds) => [...prevIds, timeTableId]); //add timetable id to array
+        }
+        else {
+            setelectedTimeTableIds((prevIds) =>
+                prevIds.filter((id) => id !== timeTableId)  //rmv timetavle id from the aarray 
+            );
+        }
         setIsChecked(value);
     };
 
@@ -60,7 +121,7 @@ const ScheduleRules = ({
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/teacher-timetable-details/' + Name);
+            let response = await fetch('http://192.168.1.104:8000/api/teacher-timetable-details/' + Name);
             let json = await response.json();
 
             setScheduleData(json);
@@ -69,6 +130,10 @@ const ScheduleRules = ({
             console.log(error);
         }
     }
+
+    // ----
+
+
 
 
 
@@ -339,7 +404,10 @@ const ScheduleRules = ({
             ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
                 const course = scheduleData.find((item) => item.day === day && item.starttime === timeSlot.startTime && item.endtime === timeSlot.endTime) || '';
                 if (course.discipline && course.venue) {
-                    obj[day] = `${course.discipline}\n ${course.venue} \n${course.courseCode}-${course.courseName}`;
+                    obj[day] = {
+                        timeTableId: course.id,
+                        detail: `${course.discipline}\n ${course.venue} \n${course.courseCode}-${course.courseName}`
+                    };
                 }
             });
             schedule.push(obj);
@@ -356,7 +424,7 @@ const ScheduleRules = ({
         <View style={{ flex: 1 }}>
             {/* <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 
@@ -389,7 +457,8 @@ const ScheduleRules = ({
                                 key={index}
                                 value={isChecked}
                                 onValueChange={handleOnValueChange}
-                                textValue={value || ''}
+                                timeTableId={value?.timeTableId || ''}
+                                textValue={value?.detail || ''}
                                 //    textValue={item[slot]}
                                 size={28}
                                 isSelectAll={selectAll}
@@ -464,6 +533,11 @@ const ScheduleRules = ({
                         Last 10 Minutes
                     </Text>
                 </View>
+
+
+
+
+
                 <View
                     style={{
                         backgroundColor: appcolor.primarycolor,
@@ -479,14 +553,14 @@ const ScheduleRules = ({
                     }}>
                     <CheckBox
                         tintColors={{ true: '#fff', false: '#fff' }}
-                        value={full}
+                        value={mid}
                         onValueChange={() => {
-                            setfull(!full);
+                            setMid(!mid);
                         }}
                     />
 
                     <Text style={{ fontSize: 15, fontWeight: '500', color: '#fff' }}>
-                        Half session
+                        Mid 10 Minutes
                     </Text>
                 </View>
                 <View
@@ -516,10 +590,25 @@ const ScheduleRules = ({
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleSavePress}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                handleSavePress()
+                onToggleSnackBar()
+            }}>
                 <Text style={styles.wrd}> Save!</Text>
             </TouchableOpacity>
 
+
+            <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                    label: 'Undo',
+                    onPress: () => {
+                        // Do something
+                    },
+                }}>
+                Rule Added Successfully !
+            </Snackbar>
         </View>
 
     );

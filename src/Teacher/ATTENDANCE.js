@@ -20,7 +20,7 @@ const ATTENDANCE = ({ navigation, route }) => {
 
         formData.append('file', file);
 
-        const response = await fetch('http://192.168.1.100:8000/api/mark-attendance', {
+        const response = await fetch('http://192.168.1.101:8000/api/mark-attendance', {
             method: 'POST',
             body: formData,
             headers: {
@@ -48,7 +48,7 @@ const ATTENDANCE = ({ navigation, route }) => {
             redirect: 'follow'
         };
 
-        fetch("http://192.168.1.100:8000/api/add-attendance", requestOptions)
+        fetch("http://192.168.1.101:8000/api/add-attendance", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));

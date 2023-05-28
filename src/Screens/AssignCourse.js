@@ -55,7 +55,7 @@ const AssignCourse = ({ navigation }) => {
     const [sectionData, setSectionData] = useState([]);
     async function GetSection() {
         let response = await fetch(
-            'http://192.168.1.100:8000/api/section-offer-details',
+            'http://192.168.1.101:8000/api/section-offer-details',
         );
 
         let json = await response.json();

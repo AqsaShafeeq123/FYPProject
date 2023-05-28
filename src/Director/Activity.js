@@ -16,7 +16,7 @@ const Activity = () => {
     async function getTeacherDetail() {
         try {
             let response = await fetch(
-                'http://192.168.1.100:8000/api/get-all-teacher-chr',
+                'http://192.168.1.101:8000/api/get-all-teacher-chr',
             );
             let json = await response.json();
             setTeacherData(json);
@@ -55,13 +55,13 @@ const Activity = () => {
                         <DataTable.Cell numeric>{item.date}</DataTable.Cell>
                         <DataTable.Cell numeric>{item.discipline}</DataTable.Cell>
                         <DataTable.Cell numeric>
-                            {item.teacherCHRActivityDetails[0]?.sit || 0}
+                            {item.sit}
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            {item.teacherCHRActivityDetails[0]?.stand || 0}
+                            {item.stand}
                         </DataTable.Cell>
                         <DataTable.Cell numeric>
-                            {item.teacherCHRActivityDetails[0]?.mobile || 0}
+                            {item.mobile}
                         </DataTable.Cell>
 
                         <DataTable.Cell numeric>{item.status}</DataTable.Cell>

@@ -60,7 +60,7 @@ const StdDashboard = ({ navigation, route }) => {
     }, []);
     async function getStudentDetail() {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/get-student-courses?aridNumber=' + dat.userID);
+            let response = await fetch('http://192.168.1.101:8000/api/get-student-courses?aridNumber=' + dat.userID);
             let json = await response.json();
             setStdData(json);
             console.log(json);
@@ -99,7 +99,7 @@ const StdDashboard = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-student-image/UserImages/Student/' + dat.image }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-student-image/UserImages/Student/' + dat.image }} style={styles.imgStyle} />
                 </View>
 
             </View>
@@ -146,7 +146,7 @@ const StdDashboard = ({ navigation, route }) => {
                                         <Text style={styles.title}>Teach_By: {item.teacherName}</Text>
                                     </View>
                                     <View>
-                                        <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                        <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                     </View>
                                 </View>
                                 <View style={{ top: 36 }}>

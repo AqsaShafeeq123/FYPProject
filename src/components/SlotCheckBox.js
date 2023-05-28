@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
-const SlotCheckBox = ({ value, onValueChange, size, textValue, isSelectAll }) => {
+const SlotCheckBox = ({ value, onValueChange, size, textValue, isSelectAll, timeTableId }) => {
 
     const [isChecked, setIsChecked] = useState(value);
     const checkboxSize = size * 2 || 30;
 
     const handleOnPress = () => {
         setIsChecked(!isChecked);
-        onValueChange(!isChecked);
+        onValueChange(!isChecked, timeTableId);
     };
 
     useEffect(() => {

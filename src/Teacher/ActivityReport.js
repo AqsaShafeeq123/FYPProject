@@ -76,7 +76,7 @@ const ActivityReport = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
                 </View>
             </View>
 
@@ -99,7 +99,7 @@ const ActivityReport = ({ navigation, route }) => {
             }} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + Img }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }} style={styles.imgStyle} />
 
                     <Text style={{ color: '#000', fontWeight: 'bold', top: 25 }}>{Name}</Text></View>
 
@@ -126,14 +126,27 @@ const ActivityReport = ({ navigation, route }) => {
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: 30 }}>
-                    <Text style={styles.text}>Sit:{Sit}</Text>
+                    {Sit === null ? (
+                        <Text style={styles.text}> Sit:0</Text>
+                    ) : (
+                        <Text style={styles.text}>Sit:{Sit}</Text>
+                    )}
 
-                    <Text style={styles.text}>Stand:{Stand}</Text>
+
+                    {Sit === null ? (
+                        <Text style={styles.text}> Stand:0</Text>
+                    ) : (
+                        <Text style={styles.text}>Stand:{Stand}</Text>
+                    )}
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: 30 }}>
-                    <Text style={styles.text}>Mobile:{Mobile} </Text>
 
+                    {Sit === null ? (
+                        <Text style={styles.text}> Mobile:0</Text>
+                    ) : (
+                        <Text style={styles.text}>Mobile:{Mobile}</Text>
+                    )}
 
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: 30 }}>

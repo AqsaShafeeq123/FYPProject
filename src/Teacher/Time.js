@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const Time = ({ starttime, endtime, venue, courseName, discipline }) => {
+const Time = ({ starttime, endtime, venue, courseName, discipline, day }) => {
     const [currentStatus, setCurrentStatus] = useState('Running');
 
 
-    if (starttime == '1:30' && endtime == '3:00') {
+    if (starttime === '01:30' && endtime == '03:00') {
         starttime = '13:30';
         endtime = '15:00';
     }
-    if (starttime == '3:00' && endtime == '4:30') {
+    if (starttime == '03:00' && endtime == '04:30') {
         starttime = '15:00';
         endtime = '16:30';
     }
 
-
     useEffect(() => {
         const interval = setInterval(() => {
-
             const now = new Date();
             const start = new Date();
             const end = new Date();
@@ -49,7 +47,7 @@ const Time = ({ starttime, endtime, venue, courseName, discipline }) => {
             style={[
                 currentStatus === 'Running'
                     ? { backgroundColor: '#ffffff' }
-                    : { backgroundColor: 'slateblue' },
+                    : { backgroundColor: 'green' },
                 {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -136,6 +134,29 @@ const Time = ({ starttime, endtime, venue, courseName, discipline }) => {
                             },
                         ]}>
                         Discipline:{discipline}
+                    </Text>
+                </View>
+
+
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Ionicons
+                        name="today"
+                        size={30}
+                        style={
+                            currentStatus === 'Running' ? { color: 'blue' } : { color: '#ffffff' }
+                        }></Ionicons>
+                    <Text
+                        style={[
+                            currentStatus === 'Running'
+                                ? { color: '#333' }
+                                : { color: '#ffffff' },
+                            {
+                                fontSize: 20,
+                                left: 10,
+                            },
+                        ]}>
+                        Day:{day}
                     </Text>
                 </View>
             </View>

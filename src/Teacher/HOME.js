@@ -18,29 +18,59 @@ const HOME = ({ navigation, route }) => {
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/teacher-timetable-details/' + dat.name);
+            let response = await fetch('http://192.168.1.101:8000/api/teacher-timetable-details/' + dat.name);
             let json = await response.json();
-
-            setScheduleData(json);
-            console.log(json);
+            const d = new Date()
+            let currentDay = d.getDay()
+            let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+            let arr = []
+            for (let i = 0; i < json.length; i++) {
+                if (json[i].day == days[currentDay]) {
+                    arr.push(json[i])
+                }
+            }
+            setScheduleData(arr);
+            console.log(arr);
         } catch (error) {
             console.log(error);
         }
     }
     const timers = [
         {
-            Subject: 'Visual Programming',
-            startTime: { hours: 21, minutes: 45 },
-            endTime: { hours: 21, minutes: 55 },
-            Venue: 'LT-11',
+            starttime: '8:30',
+            endtime: '10:00',
+            venue: 'LT17',
+            courseName: 'WEB',
+            discipline: 'BCS-5A',
         },
         {
-            Subject: 'Data Base',
-            startTime: { hours: 21, minutes: 47 },
-            endTime: { hours: 21, minutes: 58 },
-            Venue: 'Lab-5',
+            starttime: '10:00',
+            endtime: '11:30',
+            venue: 'LT17',
+            courseName: 'WEB',
+            discipline: 'BCS-5A',
         },
-
+        {
+            starttime: '11:30',
+            endtime: '1:00',
+            venue: 'LT17',
+            courseName: 'WEB',
+            discipline: 'BCS-5A',
+        },
+        {
+            starttime: '1:30',
+            endtime: '3:00',
+            venue: 'LT17',
+            courseName: 'WEB',
+            discipline: 'BCS-5A',
+        },
+        {
+            starttime: '3:00',
+            endtime: '4:30',
+            venue: 'LT17',
+            courseName: 'CC',
+            discipline: 'BCS-6A',
+        },
     ];
 
     return (
@@ -69,7 +99,7 @@ const HOME = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                 </View>
 
             </View>
@@ -78,6 +108,8 @@ const HOME = ({ navigation, route }) => {
             <View style={{ flex: 1, padding: 5, top: 10 }}>
                 <FlatList
                     data={scheduleData}
+                    // data={timers}
+
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
                         <TouchableOpacity
@@ -97,6 +129,7 @@ const HOME = ({ navigation, route }) => {
                                 venue={item.venue}
                                 courseName={item.courseName}
                                 discipline={item.discipline}
+                                day={item.day}
                             />
                         </TouchableOpacity>
                     )}

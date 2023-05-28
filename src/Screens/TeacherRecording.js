@@ -29,7 +29,7 @@ const TeacherRecording = ({ navigation, route }) => {
 
     async function getTeacherRec() {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/recordings-details-by-teachername/Abdul Sami');
+            let response = await fetch('http://192.168.1.101:8000/api/recordings-details-by-teachername/Abdul Sami');
             let json = await response.json();
             setTeacherRec(json);
             console.log(json);
@@ -48,7 +48,7 @@ const TeacherRecording = ({ navigation, route }) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 

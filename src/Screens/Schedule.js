@@ -9,19 +9,29 @@ import {
     Image,
     View,
     TouchableOpacity,
+    Alert
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { Modal, Portal, Provider } from 'react-native-paper';
 import { appcolor } from '../components/Colorss';
-
+import axios from "axios";
 
 const Schedule = ({ navigation }) => {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const [visible, setVisible] = React.useState(false);
+    // for making btn hide or show
+    const [scheduleVisible, setscheduleVisible] = React.useState(false);
+    // SEarchBar
     const [searchTeacher, setSearchTeacher] = useState('');
 
     const [data, setdata] = useState();
+
+
+    // data passing nxtt screen
+
+    const [section, setSection] = useState([]);
+    const [val, setVal] = useState();
 
 
     // Api response store
@@ -32,7 +42,7 @@ const Schedule = ({ navigation }) => {
     }, []);
     async function getTeacher() {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/user-details');
+            let response = await fetch('http://192.168.1.101:8000/api/user-details');
             // let response = await fetch(appcolor.api + 'user-details');
             let json = await response.json();
             setTeacherData(json);
@@ -41,6 +51,38 @@ const Schedule = ({ navigation }) => {
             console.log(error);
         }
     }
+
+
+    // --------------------------------
+
+    const showOptios = (name) => {
+        console.log("http://192.168.1.101:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"));
+        fetch("http://192.168.1.101:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"))
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Data:" + data[0].discipline);
+                // 
+                setSection(data);
+                //if (response.status === 200) {
+                if (data == "No Class Missed") {
+                    //navigation.navigate('Reschedule', { data: data });
+                    setscheduleVisible(false);
+                    showModal();//no need for reshceudle
+                } else {
+                    //Alert.alert(data);
+                    setscheduleVisible(true);
+                    showModal();//need to schedule
+                }
+                // } else {
+                //     Alert.alert("Error");
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+                Alert.alert("Error");
+            });
+    };
+
 
 
 
@@ -76,7 +118,9 @@ const Schedule = ({ navigation }) => {
                     {/* Btn Schedule */}
                     <View style={{ padding: 5, top: 7 }}>
                         <TouchableOpacity
+                            // visible={scheduleVisible}
                             style={{
+                                display: scheduleVisible ? 'flex' : 'none',
                                 width: '50%',
                                 top: 14,
                                 alignSelf: 'center',
@@ -90,7 +134,10 @@ const Schedule = ({ navigation }) => {
                                 backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
-                                navigation.navigate('Reschedule');
+                                navigation.navigate('Reschedule', {
+                                    Section: section,
+                                    VALUE: val,
+                                });
                             }}>
                             <Text
                                 style={{
@@ -162,6 +209,7 @@ const Schedule = ({ navigation }) => {
             </Portal>
 
             <View style={{ flex: 1, padding: 5 }}>
+                {/* {data.map((item) => ( */}
                 <FlatList
                     style={{ flex: 1 }}
                     // data={DATA}
@@ -183,15 +231,20 @@ const Schedule = ({ navigation }) => {
                                         }}>
                                         <TouchableOpacity
                                             onPress={() => {
+
+
                                                 setdata(item.name);
-                                                showModal();
+                                                //  showModal();
+                                                showOptios(item.name);
+                                                // obj send to next screen full info
+                                                setVal(item);
                                             }}
                                             style={[styles.item]}>
                                             {
                                                 item.image == null ?
                                                     <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                                     :
-                                                    <Image source={{ uri: 'http://192.168.1.100:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                             }
                                             <Text style={{ fontSize: 16, color: 'black' }}>
                                                 {item.name}
@@ -204,6 +257,7 @@ const Schedule = ({ navigation }) => {
                             }
                         }
                     }}></FlatList>
+                {/* ))} */}
             </View>
         </Provider>
     );

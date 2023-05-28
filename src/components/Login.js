@@ -26,7 +26,7 @@ export default Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            let response = await fetch('http://192.168.1.100:8000/api/signin?userId=' + username + '&password=' + password);
+            let response = await fetch('http://192.168.1.101:8000/api/signin?userId=' + username + '&password=' + password);
             let json = await response.json();
             // api response store
             let data = json;
@@ -80,12 +80,22 @@ export default Login = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+
+
+
+
+
             <ImageBackground
                 source={require('../Images/bgimage.jpg')}
                 style={styles.bgImage}
-            />
+            >
+            </ImageBackground>
 
 
+            <View style={styles.logoContainer}>
+                <Image source={require('../Images/logo.jpg')}
+                    style={styles.logo} />
+            </View>
             <View>
 
                 <Text style={{ fontSize: 30, fontWeight: 'bold', marginVertical: 10, color: 'black', fontFamily: 'DancingScript-Regular' }}>
@@ -134,7 +144,6 @@ export default Login = ({ navigation }) => {
                 onPress={handleLogin} >
                 <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
-
 
         </View>
     );
@@ -217,7 +226,17 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
     },
-
+    logoContainer: {
+        marginBottom: 30,
+        alignItems: 'center',
+    },
+    logo: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        borderWidth: 2,
+        // borderColor: '#4682b4'
+    },
 
 });
 
