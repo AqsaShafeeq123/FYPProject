@@ -60,7 +60,7 @@ const StdDashboard = ({ navigation, route }) => {
     }, []);
     async function getStudentDetail() {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/get-student-courses?aridNumber=' + dat.userID);
+            let response = await fetch('http://192.168.1.104:8000/api/get-student-courses?aridNumber=' + dat.userID);
             let json = await response.json();
             setStdData(json);
             console.log(json);
@@ -99,37 +99,41 @@ const StdDashboard = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-student-image/UserImages/Student/' + dat.image }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-student-image/UserImages/Student/' + dat.image }} style={styles.imgStyle} />
                 </View>
 
             </View>
 
 
-            <View style={{ flex: 1, padding: 2 }}>
+            <View style={{ flex: 1, padding: 5 }}>
                 <FlatList
-                    horizontal={true}
+                    // horizontal={true}
                     showsVerticalScrollIndicator={false}
-                    // style={{ padding: 2 }}
+                    style={{ padding: 2 }}
                     data={stddata}
                     renderItem={({ item, index }) => {
                         return (
                             <Pressable
                                 onPress={() => {
                                     navigation.navigate('StdAttendance', {
-                                        CourseName: 'VP',
-                                        Credit_hours: item.Credit_hours,
-                                        Teach_By: item.Teach_By,
-                                        Attendance: '90%',
+                                        COURSENAME: item.courseName,
+                                        sID: dat.userID,
+
                                     });
                                 }}
                                 style={{
-                                    padding: 1,
-                                    backgroundColor: '#afeeee',
+
+                                    // backgroundColor: '#afeeee',
+                                    elevation: 2,
+
+                                    height: 150,
+                                    padding: 10,
+                                    backgroundColor: `#6495ed`,
                                     elevation: 2,
                                     margin: 3,
                                     borderRadius: 8,
-                                    width: 280,
-                                    height: 150,
+
+
                                 }}>
                                 <View
                                     style={{
@@ -146,7 +150,7 @@ const StdDashboard = ({ navigation, route }) => {
                                         <Text style={styles.title}>Teach_By: {item.teacherName}</Text>
                                     </View>
                                     <View>
-                                        <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                        <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                     </View>
                                 </View>
                                 <View style={{ top: 36 }}>
@@ -161,13 +165,13 @@ const StdDashboard = ({ navigation, route }) => {
 
 
             {/* Below flatlist */}
-            <View>
+            {/* <View>
                 <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 30, marginBottom: 20 }}>
                     Recent
                 </Text>
-            </View>
+            </View> */}
 
-            <View style={{ flex: 1, padding: 5 }}>
+            {/* <View style={{ flex: 1, padding: 5 }}>
                 <FlatList
                     style={{ padding: 2 }}
                     data={DATA}
@@ -226,7 +230,7 @@ const StdDashboard = ({ navigation, route }) => {
                             </Pressable>
                         );
                     }}></FlatList>
-            </View>
+            </View> */}
         </SafeAreaView>
     );
 };

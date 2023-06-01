@@ -18,9 +18,17 @@ import { Provider, Modal, Portal, Button } from 'react-native-paper';
 import { PermissionsAndroid } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';;
 
-
+import { Snackbar } from 'react-native-paper';
 
 const AddUser = ({ navigation }) => {
+    // snackbar
+    const [visible, setVisible] = useState(false);
+
+    const onToggleSnackBar = () => setVisible(!visible);
+
+    const onDismissSnackBar = () => setVisible(false);
+
+
 
     // states for textfields
     const [id, setId] = useState();
@@ -89,7 +97,7 @@ const AddUser = ({ navigation }) => {
 
         };
 
-        fetch("http://192.168.1.101:8000/api/add-user?id=" + 0 + "&userID=" + id + "&name=" + name + "&password=" + password + "&role=" + selectedUser, requestOptions)
+        fetch("http://192.168.1.104:8000/api/add-user?id=" + 0 + "&userID=" + id + "&name=" + name + "&password=" + password + "&role=" + selectedUser, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -117,7 +125,7 @@ const AddUser = ({ navigation }) => {
 
         };
 
-        fetch("http://192.168.1.101:8000/api/add-student?aridNo=" + id + "&name=" + name + "&image=" + 0 + "&password=" + password, requestOptions)
+        fetch("http://192.168.1.104:8000/api/add-student?aridNo=" + id + "&name=" + name + "&image=" + 0 + "&password=" + password, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -419,7 +427,10 @@ const AddUser = ({ navigation }) => {
             <View style={{ padding: 5, top: 10 }}>
                 <TouchableOpacity
                     style={styles.btnSave}
-                    onPress={SaveUserInfo}
+                    onPress={() => {
+                        SaveUserInfo()
+                        onToggleSnackBar()
+                    }}
                 >
                     <Text
                         style={{
@@ -431,6 +442,17 @@ const AddUser = ({ navigation }) => {
                     </Text>
                 </TouchableOpacity>
             </View>
+            <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                    label: 'Undo',
+                    onPress: () => {
+                        // Do something
+                    },
+                }}>
+                USER Added Successfully !
+            </Snackbar>
         </Provider>
     );
 };

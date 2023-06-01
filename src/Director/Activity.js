@@ -16,7 +16,7 @@ const Activity = () => {
     async function getTeacherDetail() {
         try {
             let response = await fetch(
-                'http://192.168.1.101:8000/api/get-all-teacher-chr',
+                'http://192.168.1.104:8000/api/get-all-teacher-chr',
             );
             let json = await response.json();
             setTeacherData(json);

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, } from 'react-native'
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -75,7 +75,7 @@ const ClassHeldReport = ({ navigation, route }) => {
                         img == null ?
                             <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                             :
-                            <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
+                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
                     }
                 </View>
             </View>
@@ -99,7 +99,7 @@ const ClassHeldReport = ({ navigation, route }) => {
             }} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + Img }} style={styles.imgStyle} />
 
                     <Text style={{ color: '#000', fontWeight: 'bold', top: 25 }}>{Name}</Text></View>
 
@@ -139,7 +139,6 @@ const ClassHeldReport = ({ navigation, route }) => {
             </View>
 
 
-
         </SafeAreaView>
     )
 }
@@ -152,6 +151,7 @@ const styles = StyleSheet.create({
         padding: 5,
 
     },
+
     text: {
         fontSize: 15,
 

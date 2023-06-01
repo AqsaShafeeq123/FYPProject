@@ -2,12 +2,19 @@ import { StyleSheet, Text, View, ScrollView, Dimensions, StatusBar, TouchableOpa
 import React, { useState, useEffect } from 'react';
 import { WebView } from 'react-native-webview';
 import { FAB } from 'react-native-paper';
-
+import { Snackbar } from 'react-native-paper';
 import { Modal, Portal, Provider, TextInput } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const Home = ({ navigation }) => {
+
+  // snackbar
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
 
 
   const htmlContent = `
@@ -63,7 +70,7 @@ const Home = ({ navigation }) => {
       redirect: 'follow'
     };
 
-    fetch("http://192.168.1.101:8000/api/add-dvr", requestOptions)
+    fetch("http://192.168.1.104:8000/api/add-dvr", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -109,7 +116,7 @@ const Home = ({ navigation }) => {
               javaScriptEnabled={true}
               domStorageEnabled={true}
               source={{
-                // uri: `http:// 192.168.1.101:8080/video`,
+                // uri: `http://192.168.43.35:8080/video`,
 
                 // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
 
@@ -134,7 +141,7 @@ const Home = ({ navigation }) => {
               javaScriptEnabled={true}
               domStorageEnabled={true}
               source={{
-                // uri: `http:// 192.168.1.101:8080/video`,
+                // uri: `http:// 192.168.1.104:8080/video`,
 
                 // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
                 html: '<h1>LAB 2</h1>'
@@ -293,7 +300,10 @@ const Home = ({ navigation }) => {
                         backgroundColor: '#4682b4',
                       }}
                       // CALLING API FUNC
-                      onPress={AddDvr}>
+                      onPress={() => {
+                        AddDvr()
+                        onToggleSnackBar()
+                      }}>
                       <Text
                         style={{
                           fontSize: 20,
@@ -329,7 +339,19 @@ const Home = ({ navigation }) => {
         onPress={openModal}
       />
 
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Undo',
+          onPress: () => {
+            // Do something
+          },
+        }}>
+        DVR Added Successfully !
+      </Snackbar>
     </Provider>
+
 
   );
 };

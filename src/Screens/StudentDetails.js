@@ -13,10 +13,21 @@ import {
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { FAB } from 'react-native-paper';
-
+import { Snackbar } from 'react-native-paper';
 const StudentDetails = ({ navigation, route }) => {
     const { Course, SectionOfferId, Discipline } = route.params;
     console.log(Course, SectionOfferId, Discipline);
+
+
+
+
+
+    // snackbar
+    const [snackBar, setSnackBar] = React.useState(false);
+
+    const onToggleSnackBar = () => setSnackBar(!snackBar);
+
+    const onDismissSnackBar = () => setSnackBar(false);
 
     // for flatlist selection 
 
@@ -60,7 +71,7 @@ const StudentDetails = ({ navigation, route }) => {
             redirect: 'follow'
         };
         let response = await fetch(
-            "http://192.168.1.101:8000/api/student-offered-courses", requestOptions
+            "http://192.168.1.104:8000/api/student-offered-courses", requestOptions
         );
         let json = await response.json();
 
@@ -89,7 +100,7 @@ const StudentDetails = ({ navigation, route }) => {
 
 
         console.log("api response****");
-        fetch('http://192.168.1.101:8000/api/student-enroll', requestOptions)
+        fetch('http://192.168.1.104:8000/api/student-enroll', requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -134,7 +145,7 @@ const StudentDetails = ({ navigation, route }) => {
                                         styles.itemContainer,
                                         selectedItems.includes(item.aridNo) && styles.selectedItemContainer,
                                     ]}>
-                                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-student-image/UserImages/Student/' + item.image }} style={styles.imgStyle} />
+                                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-student-image/UserImages/Student/' + item.image }} style={styles.imgStyle} />
                                     <Text style={{
                                         fontSize: 16, color: 'black', marginLeft: 70, bottom: 40
                                     }}>
@@ -178,9 +189,20 @@ const StudentDetails = ({ navigation, route }) => {
                     console.log(enroll)
 
                     StudentEnroll();
-
+                    onToggleSnackBar()
                 }}
             />
+            <Snackbar
+                visible={snackBar}
+                onDismiss={onDismissSnackBar}
+                action={{
+                    label: 'Undo',
+                    onPress: () => {
+                        // Do something
+                    },
+                }}>
+                Student Enrolled Successfully !
+            </Snackbar>
         </SafeAreaView>
     );
 };

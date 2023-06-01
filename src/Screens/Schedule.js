@@ -42,7 +42,7 @@ const Schedule = ({ navigation }) => {
     }, []);
     async function getTeacher() {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/user-details');
+            let response = await fetch('http://192.168.1.104:8000/api/user-details');
             // let response = await fetch(appcolor.api + 'user-details');
             let json = await response.json();
             setTeacherData(json);
@@ -56,13 +56,14 @@ const Schedule = ({ navigation }) => {
     // --------------------------------
 
     const showOptios = (name) => {
-        console.log("http://192.168.1.101:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"));
-        fetch("http://192.168.1.101:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"))
+        console.log("http://192.168.1.104:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"));
+        fetch("http://192.168.1.104:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"))
             .then((response) => response.json())
             .then((data) => {
                 console.log("Data:" + data[0].discipline);
                 // 
                 setSection(data);
+                // setApiData(data);
                 //if (response.status === 200) {
                 if (data == "No Class Missed") {
                     //navigation.navigate('Reschedule', { data: data });
@@ -137,6 +138,7 @@ const Schedule = ({ navigation }) => {
                                 navigation.navigate('Reschedule', {
                                     Section: section,
                                     VALUE: val,
+
                                 });
                             }}>
                             <Text
@@ -244,7 +246,7 @@ const Schedule = ({ navigation }) => {
                                                 item.image == null ?
                                                     <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                                     :
-                                                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                             }
                                             <Text style={{ fontSize: 16, color: 'black' }}>
                                                 {item.name}

@@ -34,49 +34,11 @@ const ScheduleRules = ({
     const [twenty, settwenty] = React.useState(false);
     const [mid, setMid] = React.useState(false);
     const [full, setfull] = React.useState(false);
-
+    const [action, setAction] = useState('CheckAll')
     const [selectedTimeTableIds, setelectedTimeTableIds] = React.useState([]);
     const [dataToApi, setDataToApi] = useState([]);
 
-    const handleSavePress = async () => {
-        const rules = {
-            startRecord: ten ? 1 : 0,
-            midRecord: mid ? 1 : 0,
-            endRecord: twenty ? 1 : 0,
-            fullRecord: full ? 1 : 0,
 
-        }
-        const mergedArray = selectedTimeTableIds.map((id, index) => ({
-            id: index,
-            timeTableId: id,
-            ...rules
-        }))
-
-
-
-        // APi Code  on CAMERA ICON click to add camera
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify(
-            mergedArray
-        );
-        console.log('!!!!!!!!!!!!!!!!!' + raw);
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("http://192.168.1.104:8000/api/add-rules/" + Name, requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-
-
-
-    };
 
 
 
@@ -121,20 +83,58 @@ const ScheduleRules = ({
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.104:8000/api/teacher-timetable-details/' + Name);
+            let response = await fetch('http://192.168.1.104:8000/api/get-rules-timetable/' + Name);
             let json = await response.json();
 
-            setScheduleData(json);
+            setScheduleData(json.data);
             console.log(json);
         } catch (error) {
             console.log(error);
         }
     }
 
-    // ----
+    // ------------
+
+
+    const handleSavePress = async () => {
+        const rules = {
+            startRecord: ten ? 1 : 0,
+            midRecord: mid ? 1 : 0,
+            endRecord: twenty ? 1 : 0,
+            fullRecord: full ? 1 : 0,
+
+        }
+        const mergedArray = selectedTimeTableIds.map((id, index) => ({
+            id: index,
+            timeTableId: id,
+            ...rules
+        }))
+
+
+        //console.log("mergedArray", mergedArray)
+        // APi Code  on btn click save
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify(
+            mergedArray
+        );
+        console.log("raw", raw)
+        console.log('!!!!!!!!!!!!!!!!!' + raw);
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        fetch(`http://192.168.1.104:8000/api/add-rules/${Name}`, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
 
 
 
+    };
 
 
 
@@ -405,6 +405,7 @@ const ScheduleRules = ({
                 const course = scheduleData.find((item) => item.day === day && item.starttime === timeSlot.startTime && item.endtime === timeSlot.endTime) || '';
                 if (course.discipline && course.venue) {
                     obj[day] = {
+                        isSelected: course.isSelected,
                         timeTableId: course.id,
                         detail: `${course.discipline}\n ${course.venue} \n${course.courseCode}-${course.courseName}`
                     };
@@ -453,15 +454,17 @@ const ScheduleRules = ({
                             // <View key={index} style={styles.gridBox}>
                             //     <Text style={styles.gridText}>{value}</Text>
                             // </View>
+
                             <SlotCheckBox
                                 key={index}
-                                value={isChecked}
+                                value={value?.isSelected}
                                 onValueChange={handleOnValueChange}
                                 timeTableId={value?.timeTableId || ''}
                                 textValue={value?.detail || ''}
                                 //    textValue={item[slot]}
                                 size={28}
                                 isSelectAll={selectAll}
+                                action={action}
                             />
                             // console.log(value)
                         ))}
@@ -474,7 +477,15 @@ const ScheduleRules = ({
                 <CheckBox
                     tintColors={{ true: '#fff', false: '#fff' }}
                     value={selectAll}
-                    onValueChange={newValue => setSelectAll(newValue)}
+                    onValueChange={(newValue) => {
+                        setSelectAll(newValue)
+                        if (newValue) {
+                            setAction('CheckAll')
+                        }
+                        else {
+                            setAction('UnCheckAll')
+                        }
+                    }}
                 />
 
                 <Text style={{ fontSize: 17, fontWeight: '700', color: '#fff' }}>

@@ -14,12 +14,13 @@ const Profile = ({ navigation }) => {
 
                 height: 100,
                 width: 350,
-                marginTop: -150,
+                marginBottom: -150,
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: '#ffff',
                 elevation: 2,
-                margin: 10,
+                marginTop: 5,
+                marginBottom: 90,
                 borderRadius: 8,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -44,9 +45,9 @@ const Profile = ({ navigation }) => {
 
                 backgroundColor: '#ffff',
                 elevation: 8,
-                // margin: 3,
+                margin: 3,
                 borderRadius: 8,
-
+                bottom: 70,
                 height: 380,
                 width: 350
 
@@ -83,15 +84,7 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.buttonText}> Assign Courses   </Text>
                     </TouchableOpacity>
                 </View>
-                <View>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => { }}
-                    >
-                        <Text style={styles.buttonText}> FAQ's    </Text>
-                    </TouchableOpacity>
 
-                </View>
 
                 <View>
                     <TouchableOpacity

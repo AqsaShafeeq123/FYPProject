@@ -2,25 +2,36 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
-const SlotCheckBox = ({ value, onValueChange, size, textValue, isSelectAll, timeTableId }) => {
+const SlotCheckBox = ({ value, onValueChange, size, textValue, isSelectAll, timeTableId, action }) => {
+
 
     const [isChecked, setIsChecked] = useState(value);
     const checkboxSize = size * 2 || 30;
 
+
+
     const handleOnPress = () => {
+        // value = !isChecked
         setIsChecked(!isChecked);
         onValueChange(!isChecked, timeTableId);
     };
 
     useEffect(() => {
-        setIsChecked(isSelectAll)
-    }, [isSelectAll])
+
+        setIsChecked(value)
+        if (isSelectAll) {
+            setIsChecked(isSelectAll)
+        }
+        if (action === 'UnCheckAll') {
+            setIsChecked(false)
+        }
+    }, [value, isSelectAll, action])
 
     return (
         <TouchableOpacity onPress={handleOnPress}>
             <View style={[styles.checkbox, textValue == '' ? neturalColor : isChecked ? [checkedColor] : [uncheckedColor], { width: checkboxSize, height: checkboxSize },]}>
-                {/* <Text style={[{ fontSize: 8 }, styles.checkMark, isChecked ? textDark : textWhite]}>{textValue}</Text> */}
-                <Text style={{ fontSize: 9 }}>{textValue}</Text>
+                <Text style={[{ fontSize: 9 }, isChecked ? textDark : textWhite]}>{textValue}</Text>
+                {/* <Text style={{ fontSize: 9, color: 'white' }}>{textValue}</Text> */}
             </View>
         </TouchableOpacity>
     );

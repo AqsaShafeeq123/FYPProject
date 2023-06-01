@@ -51,6 +51,7 @@ import ActivityReport from '../Teacher/ActivityReport';
 import TeacherChr from '../Teacher/TeacherChr';
 import Activity from '../Director/Activity';
 import RecordingDetails from '../Screens/RecordingDetails';
+import _Component from '../Screens/_Component';
 
 const Stack = createStackNavigator();
 
@@ -387,6 +388,18 @@ export default function stackss() {
 
 
                 <Stack.Screen name='RecordingDetails' component={RecordingDetails} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+                <Stack.Screen name='_Component' component={_Component} options={{
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         color: 'white',

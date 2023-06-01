@@ -18,7 +18,7 @@ const HOME = ({ navigation, route }) => {
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/teacher-timetable-details/' + dat.name);
+            let response = await fetch('http://192.168.1.104:8000/api/teacher-timetable-details/' + dat.name);
             let json = await response.json();
             const d = new Date()
             let currentDay = d.getDay()
@@ -99,7 +99,7 @@ const HOME = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                 </View>
 
             </View>

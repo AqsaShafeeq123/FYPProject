@@ -4,6 +4,7 @@ import { launchCamera, } from 'react-native-image-picker';
 import { appcolor } from '../components/Colorss';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 const ATTENDANCE = ({ navigation, route }) => {
 
     const { Discipline, Course } = route.params;
@@ -16,18 +17,20 @@ const ATTENDANCE = ({ navigation, route }) => {
 
     // file written here is key which is also in formdata
     const uploadImage = async (file) => {
+
         const formData = new FormData();
+        console.log(file, 'file')
 
         formData.append('file', file);
 
-        const response = await fetch('http://192.168.1.101:8000/api/mark-attendance', {
+        const response = await fetch('http://192.168.1.104:8000/api/mark-attendance', {
             method: 'POST',
             body: formData,
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log("API RESPONSE----------------------------")
+        console.log("API RESPONSE----------------------------", response)
         let jsonResponse = await response.json();
         setStdData(jsonResponse);
         console.log(jsonResponse);
@@ -36,22 +39,30 @@ const ATTENDANCE = ({ navigation, route }) => {
 
     // save button api
     const handleSavePress = async () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify(stddata);
-        console.log('!!!!!!!!!!!!!!!!!' + raw);
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("http://192.168.1.101:8000/api/add-attendance", requestOptions)
-            .then(response => response.text())
+        await axios.post('http://192.168.1.104:8000/api/add-attendance', stddata).then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+
+        // var myHeaders = new Headers();
+        // myHeaders.append("Content-Type", "application/json");
+
+        // // var raw = JSON.stringify(stddata);
+
+        // console.log('!!!!!!!!!!!!!!!!!' + raw);
+
+        // var requestOptions = {
+        //     method: 'POST',
+        //     headers: myHeaders,
+        //     body: raw,
+        //     redirect: 'follow'
+        // };
+
+        // await fetch("http://192.168.1.104:8000/api/add-attendance", requestOptions)
+        //     .then(response => response.text())
+        //     .then(result => console.log(result))
+        //     .catch(error => console.log('error', error));
+
 
     }
 
@@ -80,7 +91,7 @@ const ATTENDANCE = ({ navigation, route }) => {
         setimage(obj);
         // console.log(result.assets[0]);
 
-        console.log(obj);
+        console.log('image>>>>', obj);
         await uploadImage(obj)
 
         // let src = result.assets[0].base64;

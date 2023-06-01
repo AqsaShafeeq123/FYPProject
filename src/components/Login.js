@@ -26,7 +26,7 @@ export default Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/signin?userId=' + username + '&password=' + password);
+            let response = await fetch('http://192.168.1.104:8000/api/signin?userId=' + username + '&password=' + password);
             let json = await response.json();
             // api response store
             let data = json;

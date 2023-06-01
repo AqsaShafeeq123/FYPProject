@@ -28,12 +28,15 @@ const Reschedule = ({ navigation, route }) => {
     const handlePress = () => {
         // const startDate = formatDate(range['startDate']);
         // const endDate = formatDate(range['endDate']);
+
         navigation.navigate('FreeSlot',
             {
                 Name: VALUE,
                 Sdate: startDate,
                 EDate: endDate,
-                Disp: selectedValue
+                Disp: selectedValue,
+                teacherSlotId: Section.filter((e) => e.discipline == selectedValue)[0].id
+                // data:Section.find(e=>e.discipline)
             });
     };
 
@@ -42,20 +45,30 @@ const Reschedule = ({ navigation, route }) => {
 
 
     const handleDateSelect = date => {
+
         if (!startDate || endDate) {
             // Select start date if no start date or both dates are already selected
+            var date2 = new Date(date?.dateString); // Replace "2023-05-28" with your desired date
+
+            var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            var dayName = daysOfWeek[date2.getDay()];
+
+            global.day = dayName;
             setStartDate(date.dateString);
             setEndDate(null);
             setSelectedRange({});
         } else if (startDate && !endDate) {
             // Select end date if start date is already selected but end date is not
             if (new Date(date.dateString) >= new Date(startDate)) {
+
                 setEndDate(date.dateString);
                 setSelectedRange({
                     [startDate]: { startingDay: true, color: 'blue' },
                     [date.dateString]: { endingDay: true, color: 'blue' },
                 });
             } else {
+
                 setStartDate(date.dateString);
                 setEndDate(null);
                 setSelectedRange({});
@@ -74,7 +87,7 @@ const Reschedule = ({ navigation, route }) => {
                             VALUE.image == null ?
                                 <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                 :
-                                <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
+                                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
                         }
                         <Text style={{ color: "black", fontSize: 16 }}>{VALUE.name}</Text>
                     </View>
