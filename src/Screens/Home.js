@@ -25,7 +25,7 @@ const Home = ({ navigation }) => {
               color: red;
               font-size: 44px;
               text-align: left;
-           
+
             }
           </style>
         </head>
@@ -70,7 +70,7 @@ const Home = ({ navigation }) => {
       redirect: 'follow'
     };
 
-    fetch("http://192.168.1.104:8000/api/add-dvr", requestOptions)
+    fetch("http://192.168.1.103:8000/api/add-dvr", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -116,13 +116,12 @@ const Home = ({ navigation }) => {
               javaScriptEnabled={true}
               domStorageEnabled={true}
               source={{
-                // uri: `http://192.168.43.35:8080/video`,
-
+                // uri: `http://192.168.1.103:8080/video`,
                 // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
 
 
                 // html: '<h1>LAB 1</h1>'
-                html: htmlContent
+                // html: htmlContent
               }}
             >
 
@@ -141,10 +140,10 @@ const Home = ({ navigation }) => {
               javaScriptEnabled={true}
               domStorageEnabled={true}
               source={{
-                // uri: `http:// 192.168.1.104:8080/video`,
+                // uri: `http://192.168.1.102:8080/video`,
 
                 // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
-                html: '<h1>LAB 2</h1>'
+                // html: '<h1>LAB 2</h1>'
               }}
             />
 

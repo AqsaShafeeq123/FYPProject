@@ -40,22 +40,77 @@ const Home = ({ navigation, route }) => {
 
     // Api response store for get
     const [teacherData, setTeacherData] = useState([]);
+    const [filteredteacherData, setFilteredTeacherData] = useState([]);
 
-    // APi Code get Get DVr
+    // APi Code get Get 
     useEffect(() => {
         getTeacherDetail();
 
     }, []);
     async function getTeacherDetail() {
         try {
-            let response = await fetch('http://192.168.1.104:8000/api/get-all-teacher-chr');
+            let response = await fetch('http://192.168.1.103:8000/api/get-all-teacher-chr');
             let json = await response.json();
             setTeacherData(json);
+            setFilteredTeacherData(json);
             console.log(json);
         } catch (error) {
             console.log(error);
         }
     }
+
+
+    // ----------------------------------
+    const [filter, setFilter] = useState(0);
+    const searchFilterFunction = async (text) => {
+        // Check if searched text is not blank
+        if (text) {
+            console.log(text);
+            // Inserted text is not blank
+            // Filter the masterDataSource and update FilteredDataSource
+            const newData = teacherData.filter(function (item) {
+                // Applying filter for the inserted text in search bar
+                if (filter == 0) {
+                    const itemData = item.date
+                        ? item.date.toUpperCase()
+                        : ''.toUpperCase();
+                    const textData = text.toUpperCase();
+                    return itemData.indexOf(textData) > -1;
+                } else if (filter == 1) {
+                    const itemData = item.courseName
+                        ? item.courseName.toUpperCase()
+                        : ''.toUpperCase();
+                    const textData = text.toUpperCase();
+                    return itemData.indexOf(textData) > -1;
+                }
+                else if (filter == 2) {
+                    const itemData = item.discipline
+                        ? item.discipline.toUpperCase()
+                        : ''.toUpperCase();
+                    const textData = text.toUpperCase();
+                    return itemData.indexOf(textData) > -1;
+                }
+                else if (filter == 3) {
+                    const itemData = item.teacherName
+                        ? item.teacherName.toUpperCase()
+                        : ''.toUpperCase();
+                    const textData = text.toUpperCase();
+                    return itemData.indexOf(textData) > -1;
+                }
+            });
+            console.log(newData);
+            await setFilteredTeacherData(newData);
+            setSearchTeacher(text);
+        }
+        else {
+
+            setFilteredTeacherData(teacherData);
+            setSearchTeacher(text);
+        }
+    };
+
+
+
 
 
 
@@ -91,7 +146,7 @@ const Home = ({ navigation, route }) => {
                         dat.image == null ?
                             <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                             :
-                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                            <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                     }
                 </View>
 
@@ -106,7 +161,8 @@ const Home = ({ navigation, route }) => {
                     inputStyle={{ fontSize: 16, color: '#000' }}
                     fontSize={12}
                     style={{ borderRadius: 10, backgroundColor: '#f5fffa', width: '89%', marginRight: 7 }}
-                    onChangeText={text => setSearchTeacher(text)}
+                    //onChangeText={text => setSearchTeacher(text)}
+                    onChangeText={(text) => searchFilterFunction(text)}
                 />
 
                 <Ionicons
@@ -160,7 +216,7 @@ const Home = ({ navigation, route }) => {
                                 backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
-
+                                setFilter(0);
                             }}>
                             <Text
                                 style={{
@@ -187,6 +243,7 @@ const Home = ({ navigation, route }) => {
                             }}
                             onPress={() => {
 
+                                setFilter(1);
                             }}>
                             <Text
                                 style={{
@@ -212,7 +269,7 @@ const Home = ({ navigation, route }) => {
                                 backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
-
+                                setFilter(2);
                             }}>
                             <Text
                                 style={{
@@ -238,7 +295,7 @@ const Home = ({ navigation, route }) => {
                                 backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
-
+                                setFilter(3);
 
                             }}>
                             <Text
@@ -247,7 +304,7 @@ const Home = ({ navigation, route }) => {
                                     color: 'black',
 
                                 }}>
-                                Teacher
+                                Name
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -291,9 +348,10 @@ const Home = ({ navigation, route }) => {
                 <FlatList
                     style={{}}
                     // data={DATA}
-                    data={teacherData}
+                    data={filteredteacherData}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => {
-                        if (item.courseName.toLowerCase().includes(searchTeacher.toLowerCase())) {
+                        if (true) {
                             return (
                                 <Pressable
                                     onPress={() => {
@@ -340,7 +398,7 @@ const Home = ({ navigation, route }) => {
                                             </Text>
                                         </View>
                                         <View>
-                                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                            <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                         </View>
                                     </View>
                                     <View style={{}}>

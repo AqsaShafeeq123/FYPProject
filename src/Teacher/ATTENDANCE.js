@@ -23,7 +23,7 @@ const ATTENDANCE = ({ navigation, route }) => {
 
         formData.append('file', file);
 
-        const response = await fetch('http://192.168.1.104:8000/api/mark-attendance', {
+        const response = await fetch('http://192.168.1.103:8000/api/mark-attendance', {
             method: 'POST',
             body: formData,
             headers: {
@@ -40,7 +40,7 @@ const ATTENDANCE = ({ navigation, route }) => {
     // save button api
     const handleSavePress = async () => {
 
-        await axios.post('http://192.168.1.104:8000/api/add-attendance', stddata).then(response => response.text())
+        await axios.post('http://192.168.1.103:8000/api/add-attendance', stddata).then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
 
@@ -58,7 +58,7 @@ const ATTENDANCE = ({ navigation, route }) => {
         //     redirect: 'follow'
         // };
 
-        // await fetch("http://192.168.1.104:8000/api/add-attendance", requestOptions)
+        // await fetch("http://192.168.10.38:8000/api/add-attendance", requestOptions)
         //     .then(response => response.text())
         //     .then(result => console.log(result))
         //     .catch(error => console.log('error', error));
@@ -134,7 +134,7 @@ const ATTENDANCE = ({ navigation, route }) => {
             <FlatList
                 style={{ top: 20 }}
                 data={stddata}
-
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => {
                     return (
                         <View

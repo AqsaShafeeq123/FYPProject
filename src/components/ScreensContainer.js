@@ -52,6 +52,7 @@ import TeacherChr from '../Teacher/TeacherChr';
 import Activity from '../Director/Activity';
 import RecordingDetails from '../Screens/RecordingDetails';
 import _Component from '../Screens/_Component';
+import SwappingUsers from '../Screens/SwappingUsers';
 
 const Stack = createStackNavigator();
 
@@ -410,6 +411,23 @@ export default function stackss() {
                         backgroundColor: appcolor.primarycolor,
                     },
                 }} ></Stack.Screen>
+
+
+                <Stack.Screen name='SwappingUsers' component={SwappingUsers} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
     );

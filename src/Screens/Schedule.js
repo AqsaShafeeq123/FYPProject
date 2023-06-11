@@ -32,7 +32,8 @@ const Schedule = ({ navigation }) => {
 
     const [section, setSection] = useState([]);
     const [val, setVal] = useState();
-
+    // console.log(val)
+    // console.log(section)
 
     // Api response store
     const [teacherdata, setTeacherData] = useState();
@@ -42,7 +43,7 @@ const Schedule = ({ navigation }) => {
     }, []);
     async function getTeacher() {
         try {
-            let response = await fetch('http://192.168.1.104:8000/api/user-details');
+            let response = await fetch('http://192.168.1.103:8000/api/user-details');
             // let response = await fetch(appcolor.api + 'user-details');
             let json = await response.json();
             setTeacherData(json);
@@ -56,8 +57,8 @@ const Schedule = ({ navigation }) => {
     // --------------------------------
 
     const showOptios = (name) => {
-        console.log("http://192.168.1.104:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"));
-        fetch("http://192.168.1.104:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"))
+        // console.log("http://192.168.1.103:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"));
+        fetch("http://192.168.1.103:8000/api/check-teacher-reschedule?teacherName=" + name.replace(" ", "%20"))
             .then((response) => response.json())
             .then((data) => {
                 console.log("Data:" + data[0].discipline);
@@ -166,7 +167,12 @@ const Schedule = ({ navigation }) => {
                                 backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
-                                navigation.navigate('Preschedule');
+                                navigation.navigate('Preschedule',
+                                    {
+                                        // Section: section,
+
+                                        VALUE: val,
+                                    });
                             }}>
                             <Text
                                 style={{
@@ -177,7 +183,6 @@ const Schedule = ({ navigation }) => {
                                 Preschedule
                             </Text>
                         </TouchableOpacity>
-
 
                         {/* Btn3*/}
                         <TouchableOpacity
@@ -195,7 +200,10 @@ const Schedule = ({ navigation }) => {
                                 backgroundColor: '#ffffff',
                             }}
                             onPress={() => {
-                                navigation.navigate('Swap');
+                                navigation.navigate('Swap',
+                                    {
+                                        VALUE: val,
+                                    });
                             }}>
                             <Text
                                 style={{
@@ -246,7 +254,7 @@ const Schedule = ({ navigation }) => {
                                                 item.image == null ?
                                                     <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                                     :
-                                                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                                    <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                             }
                                             <Text style={{ fontSize: 16, color: 'black' }}>
                                                 {item.name}

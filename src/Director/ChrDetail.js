@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
-
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 const ChrDetail = () => {
     // Api response store for get
     const [teacherData, setTeacherData] = useState([]);
@@ -16,7 +16,7 @@ const ChrDetail = () => {
     // APi Code get Get DVr
     async function getTeacherDetail() {
         try {
-            let response = await fetch('http://192.168.1.104:8000/api/get-all-teacher-chr');
+            let response = await fetch('http://192.168.1.103:8000/api/get-all-teacher-chr');
             let json = await response.json();
             setTeacherData(json);
             console.log(json);
@@ -30,9 +30,55 @@ const ChrDetail = () => {
         return () => { };
     }, []);
 
-    const handleGeneratePDF = () => {
+    const handleGeneratePDF = async () => {
         // Add your PDF generation code here
         console.log('Generate PDF');
+        let data3 = ""
+        data3 = `
+        <table style="width:100%">
+        <tr>
+        <th>Sr.NO</th>
+        <th>Teacher Name</th>
+        <th>Course Name</th>
+        <th>Discipline</th>
+        <th>Date</th>
+        <th>  Status</th>
+        <th> Total Time In</th>
+        <th> Total Time Out</th>
+
+      </tr>
+        `
+        let row = ""
+        teacherData.map((item, index) => {
+            row += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${item?.teacherName}</td>
+        <td>${item?.courseName}</td>
+        <td>${item?.discipline}</td>
+        <td>${item?.date}</td>
+        <td>${item?.status}</td>
+        <td>${item?.totalTimeIn}</td>
+        <td>${item?.totalTimeOut}</td>
+
+
+      </tr>
+  
+    
+            `
+        })
+        data3 += row
+        data3 += `</table>`
+
+        let options = {
+            html: data3,
+            fileName: 'CHR',
+            directory: 'Documents',
+        };
+
+        let file = await RNHTMLtoPDF.convert(options)
+        console.log(file.filePath);
+        alert(file.filePath);
     };
 
     return (
@@ -46,7 +92,7 @@ const ChrDetail = () => {
                         <DataTable.Title numeric>Discipline</DataTable.Title>
                         <DataTable.Title numeric>Date</DataTable.Title>
                         <DataTable.Title numeric>Status</DataTable.Title>
-                        <DataTable.Title numeric>Stay in Class</DataTable.Title>
+                        <DataTable.Title numeric>Total Time In</DataTable.Title>
                         <DataTable.Title numeric>Total Time Out</DataTable.Title>
                     </DataTable.Header>
 
@@ -65,9 +111,9 @@ const ChrDetail = () => {
                 </DataTable>
             </ScrollView>
 
-            {/* <TouchableOpacity style={styles.button} onPress={handleGeneratePDF}>
+            <TouchableOpacity style={styles.button} onPress={handleGeneratePDF}>
                 <Text style={styles.buttonText}>Generate PDF</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     );
 };

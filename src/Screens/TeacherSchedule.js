@@ -23,7 +23,7 @@ const TeacherSchedule = ({ navigation, route }) => {
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.104:8000/api/teacher-timetable-details/' + Name);
+            let response = await fetch('http://192.168.1.103:8000/api/teacher-timetable-details/' + Name);
             let json = await response.json();
 
             setScheduleData(json);
@@ -319,7 +319,7 @@ const TeacherSchedule = ({ navigation, route }) => {
         <View style={{ flex: 1 }}>
             <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 

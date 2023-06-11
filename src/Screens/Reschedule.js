@@ -26,8 +26,6 @@ const Reschedule = ({ navigation, route }) => {
 
     // btn 
     const handlePress = () => {
-        // const startDate = formatDate(range['startDate']);
-        // const endDate = formatDate(range['endDate']);
 
         navigation.navigate('FreeSlot',
             {
@@ -87,7 +85,7 @@ const Reschedule = ({ navigation, route }) => {
                             VALUE.image == null ?
                                 <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                 :
-                                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
+                                <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
                         }
                         <Text style={{ color: "black", fontSize: 16 }}>{VALUE.name}</Text>
                     </View>

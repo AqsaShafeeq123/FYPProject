@@ -55,7 +55,7 @@ const CHR = ({ navigation, route }) => {
 
             console.log('****aqsa' + data.Name);
 
-            let response = await fetch('http://192.168.1.104:8000/api/get-teacher-chr?teacherName=' + data.Name);
+            let response = await fetch('http://192.168.1.103:8000/api/get-teacher-chr?teacherName=' + data.Name);
             let json = await response.json();
             setTeacherData(json);
             console.log(json);
@@ -96,7 +96,7 @@ const CHR = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
                 </View>
 
             </View>
