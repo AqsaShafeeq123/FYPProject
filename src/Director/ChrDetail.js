@@ -16,7 +16,7 @@ const ChrDetail = () => {
     // APi Code get Get DVr
     async function getTeacherDetail() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/get-all-teacher-chr');
+            let response = await fetch('http://192.168.1.101:8000/api/get-all-teacher-chr');
             let json = await response.json();
             setTeacherData(json);
             console.log(json);

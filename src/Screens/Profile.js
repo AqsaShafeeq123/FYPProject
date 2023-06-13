@@ -85,6 +85,14 @@ const Profile = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
+                <View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Demo')}
+                    >
+                        <Text style={styles.buttonText}> Demo   </Text>
+                    </TouchableOpacity>
+                </View>
 
                 <View>
                     <TouchableOpacity

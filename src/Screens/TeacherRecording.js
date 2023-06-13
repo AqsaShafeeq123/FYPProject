@@ -29,7 +29,7 @@ const TeacherRecording = ({ navigation, route }) => {
 
     async function getTeacherRec() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/recordings-details-by-teachername/' + Name);
+            let response = await fetch('http://192.168.1.101:8000/api/recordings-details-by-teachername/' + Name);
             let json = await response.json();
             setTeacherRec(json);
             console.log(json);
@@ -48,7 +48,7 @@ const TeacherRecording = ({ navigation, route }) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 
@@ -71,52 +71,73 @@ const TeacherRecording = ({ navigation, route }) => {
                     renderItem={({ item, index }) => {
                         if (item.courseName.toLowerCase().includes(searchRecording.toLowerCase())) {
                             return (
-                                <Pressable
-                                    onPress={() => {
-                                        navigation.navigate('RecordingDetails', {
-                                            FileName: item.fileName,
-                                            CourseName: item.courseName,
-                                            Section: item.discipline,
-                                            Date: item.date,
-                                        });
-                                    }}
+                                <View
                                     style={{
-                                        padding: 2,
-                                        backgroundColor: `#dcdcdc`,
+                                        padding: 5,
+                                        backgroundColor: '#ffff',
                                         elevation: 2,
-                                        margin: 13,
+                                        margin: 3,
                                         borderRadius: 8,
-
-
-                                        height: 150,
+                                        // height: 150,
                                     }}>
+                                    <Pressable
+                                        onPress={() => {
+                                            navigation.navigate('RecordingDetails', {
+                                                FileName: item.fileName,
+                                                CourseName: item.courseName,
+                                                Section: item.discipline,
+                                                Date: item.date,
+                                            });
+                                        }}
+                                    // style={{
+                                    //     // padding: 2,
+                                    //     // backgroundColor: `#dcdcdc`,
+                                    //     // elevation: 2,
+                                    //     // margin: 13,
+                                    //     // borderRadius: 8,
+                                    //     // flexDirection: 'row',
 
-                                    <View>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>{item.date}</Text>
-                                    </View>
-                                    <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            {item.fileName}
-                                        </Text>
-                                    </View>
-                                    <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            CourseName:{item.courseName}
-                                        </Text>
-                                    </View>
 
-                                    <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            Section:{item.discipline}
-                                        </Text>
-                                    </View>
+                                    // }}
+                                    >
 
-                                </Pressable>
+
+
+
+                                        <Image
+                                            source={{ uri: `http://192.168.1.101:8000/api/get-video-thumbnail/${item?.thumbnail}` }}
+                                            style={styles.imgStyle}
+                                        />
+
+
+                                        <View>
+                                            <Text style={{ color: 'black', fontWeight: '600' }}>{item.date}</Text>
+                                        </View>
+                                        <View style={{}}>
+                                            <Text style={{ color: 'black', fontWeight: '600' }}>
+                                                {item.fileName}
+                                            </Text>
+                                        </View>
+                                        <View style={{}}>
+                                            <Text style={{ color: 'black', fontWeight: '600' }}>
+                                                CourseName:{item.courseName}
+                                            </Text>
+                                        </View>
+
+                                        <View style={{}}>
+                                            <Text style={{ color: 'black', fontWeight: '600' }}>
+                                                Section:{item.discipline}
+                                            </Text>
+                                        </View>
+
+
+                                    </Pressable>
+                                </View>
                             );
                         }
                     }}></FlatList>
-            </View>
-        </SafeAreaView>
+            </View >
+        </SafeAreaView >
     );
 };
 
@@ -163,8 +184,8 @@ const styles = StyleSheet.create({
     },
 
     imgStyle: {
-        width: 60,
-        height: 60,
+        width: 80,
+        height: 80,
         borderRadius: 40,
         marginRight: 2,
 

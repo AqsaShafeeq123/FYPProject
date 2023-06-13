@@ -70,7 +70,7 @@ const Home = ({ navigation }) => {
       redirect: 'follow'
     };
 
-    fetch("http://192.168.1.103:8000/api/add-dvr", requestOptions)
+    fetch("http://192.168.1.101:8000/api/add-dvr", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -116,7 +116,7 @@ const Home = ({ navigation }) => {
               javaScriptEnabled={true}
               domStorageEnabled={true}
               source={{
-                // uri: `http://192.168.1.103:8080/video`,
+                // uri: `http://192.168.1.101:8080/video`,
                 // uri: 'http://www.youtube.com/watch?v=kW5GsrRqv-M',
 
 
@@ -148,6 +148,7 @@ const Home = ({ navigation }) => {
             />
 
           </View>
+          {/* <Text style={{ color: 'black' }}>lab2</Text> */}
         </TouchableOpacity>
 
 

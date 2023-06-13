@@ -49,7 +49,7 @@ const Home = ({ navigation, route }) => {
     }, []);
     async function getTeacherDetail() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/get-all-teacher-chr');
+            let response = await fetch('http://192.168.1.101:8000/api/get-all-teacher-chr');
             let json = await response.json();
             setTeacherData(json);
             setFilteredTeacherData(json);
@@ -146,7 +146,7 @@ const Home = ({ navigation, route }) => {
                         dat.image == null ?
                             <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                             :
-                            <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
+                            <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
                     }
                 </View>
 
@@ -398,7 +398,7 @@ const Home = ({ navigation, route }) => {
                                             </Text>
                                         </View>
                                         <View>
-                                            <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                            <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                         </View>
                                     </View>
                                     <View style={{}}>

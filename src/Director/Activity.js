@@ -20,7 +20,7 @@ const Activity = () => {
     async function getTeacherDetail() {
         try {
             let response = await fetch(
-                'http://192.168.1.103:8000/api/get-all-teacher-chr',
+                'http://192.168.1.101:8000/api/get-all-teacher-chr',
             );
             let json = await response.json();
             setTeacherData(json);
@@ -51,7 +51,7 @@ const Activity = () => {
         <th>Discipline</th>
         <th>sit</th>
         <th> Stand</th>
-        <th> Mobile</th>
+        
         <th> Status</th>
 
       </tr>
@@ -67,7 +67,7 @@ const Activity = () => {
         <td>${item?.discipline}</td>
         <td>${item?.sit}</td>
         <td>${item?.stand}</td>
-        <td>${item?.mobile}</td>
+    
         <td>${item?.status}</td>
 
 
@@ -110,7 +110,7 @@ const Activity = () => {
                         <DataTable.Title numeric>discipline </DataTable.Title>
                         <DataTable.Title numeric> sit</DataTable.Title>
                         <DataTable.Title numeric> stand </DataTable.Title>
-                        <DataTable.Title numeric> mobile </DataTable.Title>
+                        {/* <DataTable.Title numeric> mobile </DataTable.Title> */}
                         <DataTable.Title numeric>Status</DataTable.Title>
                     </DataTable.Header>
 
@@ -128,9 +128,9 @@ const Activity = () => {
                             <DataTable.Cell numeric>
                                 {item.stand}
                             </DataTable.Cell>
-                            <DataTable.Cell numeric>
+                            {/* <DataTable.Cell numeric>
                                 {item.mobile}
-                            </DataTable.Cell>
+                            </DataTable.Cell> */}
 
                             <DataTable.Cell numeric>{item.status}</DataTable.Cell>
                         </DataTable.Row>

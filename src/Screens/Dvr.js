@@ -55,7 +55,7 @@ const Dvr = ({ navigation }) => {
     }, []);
     async function getDVR() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/dvr-details');
+            let response = await fetch('http://192.168.1.101:8000/api/dvr-details');
             let json = await response.json();
             setDVRData(json);
             console.log(json);
@@ -96,7 +96,7 @@ const Dvr = ({ navigation }) => {
             redirect: 'follow'
         };
 
-        fetch('http://192.168.1.103:8000/api/update-dvr-details', requestOptions)
+        fetch('http://192.168.1.101:8000/api/update-dvr-details', requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -129,7 +129,7 @@ const Dvr = ({ navigation }) => {
             redirect: 'follow'
         };
         console.log(raw);
-        fetch("http://192.168.1.103:8000/api/delete-dvr-details", requestOptions)
+        fetch("http://192.168.1.101:8000/api/delete-dvr-details", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -301,6 +301,7 @@ const Dvr = ({ navigation }) => {
                                         // CALLING API FUNC
 
                                         UpdateDvr();
+                                        hideModal();
 
                                     }}>
                                     <Text
@@ -377,6 +378,11 @@ const Dvr = ({ navigation }) => {
                                         <Ionicons
                                             onPress={() => {
                                                 showModal();
+                                                setIp(item.ip)
+                                                setChannel(item.channel);
+                                                setHost(item.host);
+                                                setPassword(item.password);
+                                                setName(item.name);
                                                 // above state written in update
                                                 setUpdateId(item.id);
                                             }}

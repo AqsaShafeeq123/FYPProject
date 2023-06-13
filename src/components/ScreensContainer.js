@@ -25,9 +25,12 @@ import FreeSlotPre from '../Screens/FreeSlotPre';
 import ClassPrescheduled from '../Screens/ClassPrescheduled';
 import AssignCourse from '../Screens/AssignCourse';
 import StudentDetails from '../Screens/StudentDetails';
-
-
-
+import RecordingDetails from '../Screens/RecordingDetails';
+import _Component from '../Screens/_Component';
+import SwappingUsers from '../Screens/SwappingUsers';
+import Demo from '../Screens/Demo';
+import DemoVideoDetails from '../Screens/DemoVideoDetails';
+import RecordingsPlayer from '../Screens/RecordingsPlayer';
 
 
 // Std Side
@@ -50,9 +53,9 @@ import ClassHeldReport from '../Director/ClassHeldReport';
 import ActivityReport from '../Teacher/ActivityReport';
 import TeacherChr from '../Teacher/TeacherChr';
 import Activity from '../Director/Activity';
-import RecordingDetails from '../Screens/RecordingDetails';
-import _Component from '../Screens/_Component';
-import SwappingUsers from '../Screens/SwappingUsers';
+
+
+
 
 const Stack = createStackNavigator();
 
@@ -426,8 +429,43 @@ export default function stackss() {
                 }} ></Stack.Screen>
 
 
+                <Stack.Screen name='Demo' component={Demo} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+                <Stack.Screen name='DemoVideoDetails' component={DemoVideoDetails} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
 
 
+
+                <Stack.Screen name='RecordingsPlayer' component={RecordingsPlayer} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );

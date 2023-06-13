@@ -53,13 +53,13 @@ const FreeSlotPre = ({ navigation, route }) => {
     useEffect(() => {
         const fetchData = async () => {
             const venueResponse = await fetch(
-                'http://192.168.1.103:8000/api/venue-details',
+                'http://192.168.1.101:8000/api/venue-details',
             );
             const venueJson = await venueResponse.json();
             setVenue(venueJson.data);
 
             const timetableResponse = await fetch(
-                `http://192.168.1.103:8000/api/timetable-details-by-date?startdate=${Sdate}&enddate=${EDate}`,
+                `http://192.168.1.101:8000/api/timetable-details-by-date?startdate=${Sdate}&enddate=${EDate}`,
             );
             const timetableJson = await timetableResponse.json();
             setData(timetableJson);

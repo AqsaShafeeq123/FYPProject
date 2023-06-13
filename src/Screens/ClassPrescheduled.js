@@ -43,7 +43,7 @@ const ClassPrescheduled = ({ navigation, route }) => {
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.103:8000/api/teacher-timetable-details/' + Namee);
+            let response = await fetch('http://192.168.1.101:8000/api/teacher-timetable-details/' + Namee);
             let json = await response.json();
 
             setScheduleData(json);
@@ -67,7 +67,7 @@ const ClassPrescheduled = ({ navigation, route }) => {
             "status": false
         }
         console.log('data', data)
-        axios.post('http://192.168.1.103:8000/api/add-preschedule', data).then((response) => {
+        axios.post('http://192.168.1.101:8000/api/add-preschedule', data).then((response) => {
             if (response.data['data'] == 'okay') {
                 alert('Class Preschedules')
             } else {
@@ -393,7 +393,7 @@ const ClassPrescheduled = ({ navigation, route }) => {
 
             <View style={styles.txt}>
 
-                {/* <Image source={{ uri: 'http://192.168.1.103:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                {/* <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} /> */}
                 <Text style={styles.text}>{Namee}</Text>
 
