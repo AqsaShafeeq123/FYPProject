@@ -88,7 +88,11 @@ const HOME = ({ navigation, route }) => {
                     <Ionicons
 
                         name="notifications-circle"
-                        onPress={() => console.log('Edit pressed')}
+                        onPress={() => navigation.navigate('NOTIFICATION', {
+                            tID: dat.name,
+                        }
+
+                        )}
 
                         size={42}
                         color='#00008b'

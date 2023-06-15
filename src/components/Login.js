@@ -231,8 +231,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         borderRadius: 100,
         borderWidth: 2,
         // borderColor: '#4682b4'

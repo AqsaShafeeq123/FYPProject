@@ -148,8 +148,9 @@ const Dvr = ({ navigation }) => {
                     <Dialog.Actions>
                         <Button
                             onPress={() => {
-                                DeleteDvr()
+                                DeleteDvr();
                                 hideDialog();
+                                getDVR();
                             }
 
                             }>

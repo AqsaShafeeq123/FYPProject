@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, } from 'react-native'
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity, } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { appcolor } from '../components/Colorss';
+import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 const TeacherChr = ({ navigation, route }) => {
 
     const { Name,
@@ -14,7 +16,8 @@ const TeacherChr = ({ navigation, route }) => {
         Times,
         Timee,
         Status,
-        Img
+        Img,
+        TeacherSlotId
     } = route.params;
 
 
@@ -137,7 +140,16 @@ const TeacherChr = ({ navigation, route }) => {
 
             </View>
 
+            <TouchableOpacity
+                style={[styles.buttonContainer, styles.loginButton]}
 
+                onPress={() => {
+                    navigation.navigate('TeacherClaim', {
+                        TeacherSlotId
+                    })
+                }}>
+                <Text style={styles.loginText}>Claim</Text>
+            </TouchableOpacity>
 
         </SafeAreaView>
     )
@@ -164,6 +176,39 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 40,
 
+    },
+    buttonContainer: {
+
+        height: 45,
+        // flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        // marginBottom: 20,
+        marginTop: 70,
+        width: 200,
+        borderRadius: 30,
+        backgroundColor: 'transparent',
+    },
+
+    loginButton: {
+        backgroundColor: appcolor.primarycolor,
+
+        shadowColor: '#800',
+        shadowOffset: {
+            width: 0,
+            height: 9,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 12.35,
+
+        elevation: 19,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loginText: {
+        color: 'white',
+        fontWeight: 'bold',
     },
 
 })

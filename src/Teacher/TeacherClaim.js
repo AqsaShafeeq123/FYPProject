@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, Pressable } from 'react-native';
 
-const Demo = ({ navigation }) => {
-
+const TeacherClaim = ({ navigation, route }) => {
+    const {
+        TeacherSlotId
+    } = route.params;
+    console.log(TeacherSlotId, 'alienssssss')
 
     // ---------------------apiCode
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://192.168.1.101:8000/api/demo');
+            const response = await fetch('http://192.168.1.101:8000/api/teacher-claim?teacherSlotId=' + TeacherSlotId);
             const json = await response.json();
+            console.log(json)
             setData(json);
         } catch (error) {
             console.log(error);
@@ -27,6 +31,7 @@ const Demo = ({ navigation }) => {
 
     return (
 
+
         <View style={{ flex: 1, padding: 5 }}>
             <FlatList
                 style={{ backgroundColor: '#fffFff', flex: 1 }}
@@ -37,12 +42,12 @@ const Demo = ({ navigation }) => {
 
                     <Pressable
                         onPress={() =>
-                            navigation.navigate('DemoVideoDetails',
+                            navigation.navigate('ClaimVideo',
                                 {
-                                    obj: item
+                                    obj: item.file
                                 })
                         }
-                        // onPress={() => detailDemo(item)}
+
                         style={{
                             padding: 2,
                             backgroundColor: `#dcdcdc`,
@@ -51,12 +56,12 @@ const Demo = ({ navigation }) => {
                             borderRadius: 8,
 
 
-                            height: 200,
+                            height: 250,
                         }}>
 
                         <Image
                             source={{
-                                uri: `http://192.168.1.101:8000/api/demothumbnail?file=${item.thumbnail}`,
+                                uri: `http://192.168.1.101:8000/api/claim-video-thumbnails?file=${item.thumbnail}`,
                             }}
                             style={{
                                 // maxWidth: 300,
@@ -68,7 +73,12 @@ const Demo = ({ navigation }) => {
                         />
                         <View>
                             <Text style={{ color: 'black', fontWeight: '600' }}>
-                                {item.thumbnail.split('.')[0]}
+                                {item.folder}
+                            </Text>
+                        </View>
+                        <View>
+                            <Text style={{ color: 'black', fontWeight: '600' }}>
+                                {item?.thumbnail.split(".")[0].split("/")[4].split(",")[0]} - {item?.thumbnail.split(".")[0].split("/")[4].split(",")[1]}
                             </Text>
                         </View>
 
@@ -82,5 +92,5 @@ const Demo = ({ navigation }) => {
     );
 };
 
-export default Demo;
+export default TeacherClaim;
 

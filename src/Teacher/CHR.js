@@ -184,6 +184,7 @@ const CHR = ({ navigation, route }) => {
                                     Timee: selectedItem.endTime,
                                     Status: selectedItem.status,
                                     Img: selectedItem.image,
+                                    TeacherSlotId: selectedItem.teacherSlotId,
                                 });
                             }}>
                             <Text

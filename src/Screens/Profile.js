@@ -48,7 +48,7 @@ const Profile = ({ navigation }) => {
                 margin: 3,
                 borderRadius: 8,
                 bottom: 70,
-                height: 380,
+                height: 397,
                 width: 350
 
 
@@ -94,6 +94,25 @@ const Profile = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
+
+
+                <View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('ReportBtn')}
+                    >
+                        <Text style={styles.buttonText}> Report   </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => { navigation.navigate('TimeTable') }}
+                    >
+                        <Text style={styles.buttonText}> UploadTimetable    </Text>
+                    </TouchableOpacity>
+                </View>
                 <View>
                     <TouchableOpacity
                         style={styles.button}
@@ -101,6 +120,8 @@ const Profile = ({ navigation }) => {
                     >
                         <Text style={styles.buttonText}> Log Out    </Text>
                     </TouchableOpacity>
+
+
 
                 </View>
             </View>
@@ -120,9 +141,9 @@ const styles = StyleSheet.create({
     },
     button: {
 
-        height: 60,
+        height: 50,
         width: '100%',
-        margin: 10,
+        margin: 5,
         elevation: 6,
         alignSelf: 'flex-start',
 

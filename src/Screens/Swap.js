@@ -30,27 +30,6 @@ const Swap = ({ navigation, route }) => {
         }
     }
 
-    // --------------------------------------------
-    // const fetchSwappingUser = async (obj) => {
-    //     try {
-    //         console.log(obj.day);
-
-
-    //         const response = await axios.get(
-    //             `http://192.168.1.101:8000/api/get-swapping-teacher-data?day=${obj.day}&startTime=${obj.startTime}&endTime=${obj.endTime}&timeTableId=${obj.timeTableId}`
-    //         );
-    //         if (response.status === 200) {
-    //             // console.log(44, response.data);
-    //             navigation.navigate("SwappingUsers", {
-    //                 data: response.data,
-    //             });
-    //         } else {
-    //             Alert.alert("Error", "You cannot enter next pages");
-    //         }
-    //     } catch (error) {
-    //         console.log("Error fetching swapping user: ", error);
-    //     }
-    // };
 
 
     const teacherSchedule = [

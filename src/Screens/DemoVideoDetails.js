@@ -32,7 +32,7 @@ const DemoVideoDetails = ({ navigation, route }) => {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ color: 'black' }}>Demo Video Details</Text>
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 30, }}>Demo Video Details</Text>
             <View style={{ padding: 10 }}>
                 <View
                     style={{

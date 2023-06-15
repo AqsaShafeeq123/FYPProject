@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../Director/Home';
 import ShortReport from '../Director/ShortReport';
-
+import ActivityShortReport from '../Director/ActivityShortReport';
 
 import { appcolor } from '../components/Colorss';
 
@@ -52,6 +52,9 @@ export default DirectorDashboard = ({ navigation }) => {
                         iconName = focused ? 'file-tray-full-sharp' : 'file-tray-full-outline';
                     }
 
+                    if (route.name === 'ActivityShortReport') {
+                        iconName = focused ? 'file-tray-full-sharp' : 'file-tray-full-outline';
+                    }
 
 
                     // You can return any component that you like here!
@@ -97,7 +100,22 @@ export default DirectorDashboard = ({ navigation }) => {
                 }}
             />
 
-
+            <Tab.Screen
+                name="ActivityShortReport"
+                component={ActivityShortReport}
+                options={{
+                    headerShown: false,
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }}
+            />
 
         </Tab.Navigator>
 

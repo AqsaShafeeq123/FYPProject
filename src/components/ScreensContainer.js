@@ -36,7 +36,7 @@ import RecordingsPlayer from '../Screens/RecordingsPlayer';
 // Std Side
 import StdDashboard from '../Student/StdDashboard';
 import StdAttendance from '../Student/StdAttendance';
-
+import Notificationns from '../Student/Notificationns';
 
 // Teacher Side
 
@@ -44,15 +44,23 @@ import TeacherDashboard from '../Teacher/TeacherDashboard';
 import EditAttendance from '../Teacher/EditAttendance';
 import ATTENDANCE from '../Teacher/ATTENDANCE';
 import SessionsChr from '../Teacher/SessionsChr';
+import TeacherClaim from '../Teacher/TeacherClaim';
+import ClaimVideo from '../Teacher/ClaimVideo';
+import ActivityReport from '../Teacher/ActivityReport';
+import TeacherChr from '../Teacher/TeacherChr';
+import NOTIFICATION from '../Teacher/NOTIFICATION';
 
 
 // Director Side
 import DirectorDashBoard from '../Director/DirectorDashBoard';
 import ChrDetail from '../Director/ChrDetail';
 import ClassHeldReport from '../Director/ClassHeldReport';
-import ActivityReport from '../Teacher/ActivityReport';
-import TeacherChr from '../Teacher/TeacherChr';
+
 import Activity from '../Director/Activity';
+import ReportBtn from '../Screens/ReportBtn';
+import TimeTable from '../Screens/TimeTable';
+
+
 
 
 
@@ -456,6 +464,83 @@ export default function stackss() {
 
 
                 <Stack.Screen name='RecordingsPlayer' component={RecordingsPlayer} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='TeacherClaim' component={TeacherClaim} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='ClaimVideo' component={ClaimVideo} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='Notificationns' component={Notificationns} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='NOTIFICATION' component={NOTIFICATION} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='ReportBtn' component={ReportBtn} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+                <Stack.Screen name='TimeTable' component={TimeTable} options={{
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         color: 'white',

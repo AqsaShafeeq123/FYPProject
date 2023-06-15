@@ -78,7 +78,6 @@ const TeacherRecording = ({ navigation, route }) => {
                                         elevation: 2,
                                         margin: 3,
                                         borderRadius: 8,
-                                        // height: 150,
                                     }}>
                                     <Pressable
                                         onPress={() => {
@@ -89,16 +88,15 @@ const TeacherRecording = ({ navigation, route }) => {
                                                 Date: item.date,
                                             });
                                         }}
-                                    // style={{
-                                    //     // padding: 2,
-                                    //     // backgroundColor: `#dcdcdc`,
-                                    //     // elevation: 2,
-                                    //     // margin: 13,
-                                    //     // borderRadius: 8,
-                                    //     // flexDirection: 'row',
-
-
-                                    // }}
+                                        style={{
+                                            padding: 10,
+                                            marginVertical: 8,
+                                            marginHorizontal: 10,
+                                            borderRadius: 10,
+                                            flexDirection: 'row',
+                                            justifyContent: 'flex-start',
+                                            alignItems: 'center',
+                                        }}
                                     >
 
 
@@ -106,31 +104,39 @@ const TeacherRecording = ({ navigation, route }) => {
 
                                         <Image
                                             source={{ uri: `http://192.168.1.101:8000/api/get-video-thumbnail/${item?.thumbnail}` }}
-                                            style={styles.imgStyle}
+                                            style={{
+                                                width: 80,
+                                                height: 90,
+                                                borderRadius: 10,
+                                                marginLeft: -24,
+                                                margin: 2
+
+                                            }}
                                         />
-
-
                                         <View>
+
+
                                             <Text style={{ color: 'black', fontWeight: '600' }}>{item.date}</Text>
-                                        </View>
-                                        <View style={{}}>
+
+
                                             <Text style={{ color: 'black', fontWeight: '600' }}>
+                                                {/* {item.fileName.split(",")[2].split("."[0])} */}
                                                 {item.fileName}
                                             </Text>
-                                        </View>
-                                        <View style={{}}>
+
+
                                             <Text style={{ color: 'black', fontWeight: '600' }}>
                                                 CourseName:{item.courseName}
                                             </Text>
-                                        </View>
 
-                                        <View style={{}}>
+
+
                                             <Text style={{ color: 'black', fontWeight: '600' }}>
                                                 Section:{item.discipline}
                                             </Text>
+
+
                                         </View>
-
-
                                     </Pressable>
                                 </View>
                             );

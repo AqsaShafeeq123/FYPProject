@@ -88,7 +88,10 @@ const StdDashboard = ({ navigation, route }) => {
                     <Ionicons
 
                         name="notifications-circle"
-                        onPress={() => console.log('Edit pressed')}
+                        onPress={() => navigation.navigate('Notificationns', {
+                            sID: dat.userID,
+
+                        })}
 
                         size={42}
                         color='#00008b'

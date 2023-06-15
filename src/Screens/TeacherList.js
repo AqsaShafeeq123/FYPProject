@@ -13,44 +13,6 @@ import { Searchbar } from 'react-native-paper';
 
 import { appcolor } from '../components/Colorss';
 
-const DATA = [
-    {
-        id: '1',
-        name: 'Dr Naseer',
-        image:
-            'https://i.pinimg.com/550x/03/06/46/0306467bab5c7b61cf9823a263d2ab9b.jpg',
-    },
-    {
-        id: '2',
-        name: 'Mr. Umar',
-        image:
-            'https://i.pinimg.com/550x/03/06/46/0306467bab5c7b61cf9823a263d2ab9b.jpg',
-    },
-    {
-        id: '3',
-        name: 'Dr Munir',
-        image:
-            'https://i.pinimg.com/550x/03/06/46/0306467bab5c7b61cf9823a263d2ab9b.jpg',
-    },
-    {
-        id: '4',
-        name: 'Mr. Zahid',
-        image:
-            'https://i.pinimg.com/550x/03/06/46/0306467bab5c7b61cf9823a263d2ab9b.jpg',
-    },
-    {
-        id: '5',
-        name: 'Sir. Aftab',
-        image:
-            'https://i.pinimg.com/550x/03/06/46/0306467bab5c7b61cf9823a263d2ab9b.jpg',
-    },
-    {
-        id: '6',
-        name: 'Dr Mohsin',
-        image:
-            'https://i.pinimg.com/550x/03/06/46/0306467bab5c7b61cf9823a263d2ab9b.jpg',
-    },
-];
 
 const TeacherList = ({ navigation }) => {
 

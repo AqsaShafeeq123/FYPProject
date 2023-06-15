@@ -17,7 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { appcolor } from '../components/Colorss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ShortReport = ({ navigation, route }) => {
+const ActivityShortReport = ({ navigation, route }) => {
 
     //  data from login
     const [name, setName] = useState('');
@@ -153,7 +153,7 @@ const ShortReport = ({ navigation, route }) => {
                                         borderRadius: 8,
 
 
-                                        height: 150,
+                                        height: 230,
                                     }}>
                                     <View
                                         style={{
@@ -193,6 +193,29 @@ const ShortReport = ({ navigation, route }) => {
                                     </View>
 
                                     <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Teacher Name:{item.teacherName}
+                                        </Text>
+                                    </View>
+
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Venue  :{item.venue}
+                                        </Text>
+                                    </View>
+
+
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Sit:{item.sit}
+                                        </Text>
+                                    </View>
+                                    <View style={{}}>
+                                        <Text style={{ color: 'black', fontWeight: '600' }}>
+                                            Stand:{item.stand}
+                                        </Text>
+                                    </View>
+                                    <View style={{}}>
                                         <Text style={{ color: 'black', fontWeight: '600', alignSelf: 'flex-end' }}>
                                             {item.status}
                                         </Text>
@@ -212,7 +235,7 @@ const ShortReport = ({ navigation, route }) => {
     );
 };
 
-export default ShortReport;
+export default ActivityShortReport;
 
 const styles = StyleSheet.create({
     container: {

@@ -301,8 +301,9 @@ const Home = ({ navigation }) => {
                       }}
                       // CALLING API FUNC
                       onPress={() => {
-                        AddDvr()
-                        onToggleSnackBar()
+                        AddDvr();
+                        onToggleSnackBar();
+
                       }}>
                       <Text
                         style={{
