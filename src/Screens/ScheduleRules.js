@@ -83,7 +83,7 @@ const ScheduleRules = ({
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/get-rules-timetable/' + Name);
+            let response = await fetch('http://192.168.1.104:8000/api/get-rules-timetable/' + Name);
             let json = await response.json();
 
             setScheduleData(json.data);
@@ -127,7 +127,7 @@ const ScheduleRules = ({
             body: raw,
             redirect: 'follow'
         };
-        fetch(`http://192.168.1.101:8000/api/add-rules/${Name}`, requestOptions)
+        fetch(`http://192.168.1.104:8000/api/add-rules/${Name}`, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -425,7 +425,7 @@ const ScheduleRules = ({
         <View style={{ flex: 1 }}>
             {/* <View style={styles.txt}>
 
-                <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }}
+                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + Img }}
                     style={styles.imgStyle} />
                 <Text style={styles.text}>{Name}</Text>
 

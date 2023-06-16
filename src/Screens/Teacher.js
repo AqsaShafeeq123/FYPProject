@@ -40,7 +40,7 @@ const Teacher = ({ navigation }) => {
   }, []);
   async function getTeacher() {
     try {
-      let response = await fetch('http://192.168.1.101:8000/api/user-details');
+      let response = await fetch('http://192.168.1.104:8000/api/user-details');
 
       let json = await response.json();
       setTeacherData(json);
@@ -190,7 +190,7 @@ const Teacher = ({ navigation }) => {
                       item.image == null ?
                         <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                         :
-                        <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                        <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                     }
                     <Text style={{ fontSize: 16, color: 'black' }}>
                       {item.name}

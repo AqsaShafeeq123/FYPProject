@@ -41,9 +41,9 @@ import Notificationns from '../Student/Notificationns';
 // Teacher Side
 
 import TeacherDashboard from '../Teacher/TeacherDashboard';
-import EditAttendance from '../Teacher/EditAttendance';
+
 import ATTENDANCE from '../Teacher/ATTENDANCE';
-import SessionsChr from '../Teacher/SessionsChr';
+
 import TeacherClaim from '../Teacher/TeacherClaim';
 import ClaimVideo from '../Teacher/ClaimVideo';
 import ActivityReport from '../Teacher/ActivityReport';
@@ -59,6 +59,13 @@ import ClassHeldReport from '../Director/ClassHeldReport';
 import Activity from '../Director/Activity';
 import ReportBtn from '../Screens/ReportBtn';
 import TimeTable from '../Screens/TimeTable';
+import ViewChr from '../Screens/ViewChr';
+import AllReport from '../Screens/AllReport';
+import ViewActivity from '../Screens/ViewActivity';
+import ViewShortReport from '../Screens/ViewShortReport';
+import ViewShortActivity from '../Screens/ViewShortActivity';
+import ViewSpecificChr from '../Screens/ViewSpecificChr';
+
 
 
 
@@ -232,33 +239,8 @@ export default function stackss() {
 
                 <Stack.Screen name='TeacherDashboard' component={TeacherDashboard} options={{ headerShown: false }}></Stack.Screen>
 
-                <Stack.Screen name='EditAttendance' component={EditAttendance} options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
-                }} ></Stack.Screen>
 
 
-
-
-
-                <Stack.Screen name='SessionsChr' component={SessionsChr} options={{
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                    },
-                    headerStyle: {
-                        backgroundColor: appcolor.primarycolor,
-                    },
-                }} ></Stack.Screen>
 
                 <Stack.Screen name='DirectorDashboard' component={DirectorDashBoard} options={{ headerShown: false }}></Stack.Screen>
 
@@ -551,6 +533,87 @@ export default function stackss() {
                         backgroundColor: appcolor.primarycolor,
                     },
                 }} ></Stack.Screen>
+
+
+                <Stack.Screen name='ViewChr' component={ViewChr} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+                <Stack.Screen name='AllReport' component={AllReport} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+                <Stack.Screen name='ViewActivity' component={ViewActivity} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+                <Stack.Screen name='ViewShortReport' component={ViewShortReport} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+
+                <Stack.Screen name='ViewShortActivity' component={ViewShortActivity} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+                <Stack.Screen name='ViewSpecificChr' component={ViewSpecificChr} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                    headerStyle: {
+                        backgroundColor: appcolor.primarycolor,
+                    },
+                }} ></Stack.Screen>
+
+
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -13,7 +13,7 @@ const StreamingDetails = ({ navigation, route }) => {
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     source={{
-                        uri: uri,
+                        // uri: `http://192.168.1.102:8080/video`,
                     }}
                 /></View>
 

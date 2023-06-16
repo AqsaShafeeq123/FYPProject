@@ -42,7 +42,7 @@ const Recording = ({ navigation, route }) => {
 
     const showRecordings = async () => {
         try {
-            const response = await axios.get('http://192.168.1.101:8000/api/recordings-details');
+            const response = await axios.get('http://192.168.1.104:8000/api/recordings-details');
             setData(response.data);
         } catch (error) {
             console.log(error);
@@ -94,7 +94,7 @@ const Recording = ({ navigation, route }) => {
                                     }}>
 
                                     <Image
-                                        source={{ uri: `http://192.168.1.101:8000/api/get-video-thumbnail/${item.thumbnail}` }}
+                                        source={{ uri: `http://192.168.1.104:8000/api/get-video-thumbnail/${item.thumbnail}` }}
                                         style={{ width: 320, height: 180, borderRadius: 5 }}
                                         resizeMode="cover"
                                     />

@@ -38,7 +38,7 @@ const RecordingDetails = ({ navigation, route }) => {
                 <WebView
 
                     source={{
-                        uri: `http://192.168.1.101:8000/api/videos?id=${nam[1]}&type=${nam[2]}`
+                        uri: `http://192.168.1.104:8000/api/videos?id=${nam[1]}&type=${nam[2]}`
 
                     }}
                     style={{ marginTop: 20 }}

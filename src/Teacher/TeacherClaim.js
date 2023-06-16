@@ -12,7 +12,7 @@ const TeacherClaim = ({ navigation, route }) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://192.168.1.101:8000/api/teacher-claim?teacherSlotId=' + TeacherSlotId);
+            const response = await fetch('http://192.168.1.104:8000/api/teacher-claim?teacherSlotId=' + TeacherSlotId);
             const json = await response.json();
             console.log(json)
             setData(json);
@@ -61,7 +61,7 @@ const TeacherClaim = ({ navigation, route }) => {
 
                         <Image
                             source={{
-                                uri: `http://192.168.1.101:8000/api/claim-video-thumbnails?file=${item.thumbnail}`,
+                                uri: `http://192.168.1.104:8000/api/claim-video-thumbnails?file=${item.thumbnail}`,
                             }}
                             style={{
                                 // maxWidth: 300,

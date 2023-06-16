@@ -29,7 +29,7 @@ const Notificationns = ({ navigation, route }) => {
 
   const showNotifications = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.101:8000/api/get-student-notification-data?aridNumber=${sID}`);
+      const response = await axios.get(`http://192.168.1.104:8000/api/get-student-notification-data?aridNumber=${sID}`);
       console.log("rest", response.data);
       setData(response.data);
     } catch (error) {
@@ -53,7 +53,7 @@ const Notificationns = ({ navigation, route }) => {
     };
 
 
-    fetch("http://192.168.1.101:8000/api/student-attendance-claim", {
+    fetch("http://192.168.1.104:8000/api/student-attendance-claim", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(info),
@@ -106,7 +106,7 @@ const Notificationns = ({ navigation, route }) => {
                     }}>
 
                     <View>
-                      <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={{
+                      <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={{
                         width: 80,
                         height: 90,
                         borderRadius: 10,

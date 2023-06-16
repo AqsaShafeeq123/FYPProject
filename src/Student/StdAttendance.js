@@ -15,7 +15,7 @@ const StdAttendance = ({ navigation, route }) => {
         try {
             const response = await fetch(
 
-                `http://192.168.1.101:8000/api/get-course-attendance?aridNumber=${sID}&courseName=${COURSENAME}`
+                `http://192.168.1.104:8000/api/get-course-attendance?aridNumber=${sID}&courseName=${COURSENAME}`
             );
             const json = await response.json();
             console.log('stddata ', json);

@@ -30,7 +30,7 @@ const ClaimVideo = ({ navigation, route }) => {
                 <WebView
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
-                    source={{ uri: `http://192.168.1.101:8000/api/get-claim-video?file=${obj}` }}
+                    source={{ uri: `http://192.168.1.104:8000/api/get-claim-video?file=${obj}` }}
                 />
             </View>
 

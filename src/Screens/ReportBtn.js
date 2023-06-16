@@ -20,7 +20,7 @@ const ReportBtn = ({ navigation, route }) => {
                     backgroundColor: '#4682b4',
                 }}
                 onPress={() => {
-                    navigation.navigate('TeacherRecording', {
+                    navigation.navigate('AllReport', {
                         // here is data fr next screen storing state in var
 
                     });
@@ -31,7 +31,7 @@ const ReportBtn = ({ navigation, route }) => {
                         color: 'black',
 
                     }}>
-                    Chr
+                    TeacherChr
                 </Text>
             </TouchableOpacity>
 
@@ -52,7 +52,7 @@ const ReportBtn = ({ navigation, route }) => {
                         backgroundColor: '#4682b4',
                     }}
                     onPress={() => {
-                        navigation.navigate('TeacherRecording', {
+                        navigation.navigate('ViewShortReport', {
                             // here is data fr next screen storing state in var
 
                         });
@@ -63,7 +63,38 @@ const ReportBtn = ({ navigation, route }) => {
                             color: 'black',
 
                         }}>
-                        Activity Report
+                        ShortReport
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <View>
+                <TouchableOpacity
+                    style={{
+                        width: '50%',
+                        top: 14,
+                        alignSelf: 'center',
+                        margin: 5,
+                        alignItems: 'center',
+                        justifyContent: 'space-evenly',
+                        borderRadius: 10,
+                        padding: 10,
+                        height: 50,
+
+                        backgroundColor: '#4682b4',
+                    }}
+                    onPress={() => {
+                        navigation.navigate('ViewShortActivity', {
+                            // here is data fr next screen storing state in var
+
+                        });
+                    }}>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            color: 'black',
+
+                        }}>
+                        ShortActivity
                     </Text>
                 </TouchableOpacity>
             </View>

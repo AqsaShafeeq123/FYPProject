@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const ClassHeldReport = ({ navigation, route }) => {
+const ViewSpecificChr = ({ navigation, route }) => {
 
     const { Name,
         Discipline,
@@ -25,60 +25,29 @@ const ClassHeldReport = ({ navigation, route }) => {
     const [img, setImg] = useState();
     // APi Code get Get DVr
     useEffect(() => {
-        getData();
+        // getData();
 
 
     }, []);
 
 
-    const getData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('TeacherData');
-            if (value !== null) {
-                const data = JSON.parse(value);
-                // frpm prev screen storedata login screen
-                setName(data.Name)
-                setImg(data.Image)
-                console.log('****' + value);
-            }
-        } catch (e) {
-            // error reading value
-        }
-    };
+    // const getData = async () => {
+    //     try {
+    //         const value = await AsyncStorage.getItem('TeacherData');
+    //         if (value !== null) {
+    //             const data = JSON.parse(value);
+    //             // frpm prev screen storedata login screen
+    //             setName(data.Name)
+    //             setImg(data.Image)
+    //             console.log('****' + value);
+    //         }
+    //     } catch (e) {
+    //         // error reading value
+    //     }
+    // };
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9 }}>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.text}>
-                        {/* extracting obj */}
-                        {/* {dat.name} */}
-                        {name}
-                    </Text>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <Ionicons
-
-                        name="notifications-circle"
-                        onPress={() => console.log('Edit pressed')}
-
-                        size={42}
-                        color='#00008b'
-                        style={{
-                            alignSelf: 'center',
-                            marginRight: 30
-                        }}
-
-
-                    />
-                    {
-                        img == null ?
-                            <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
-                            :
-                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
-                    }
-                </View>
-            </View>
 
             <View style={{ borderRadius: 8, height: 65, top: 24, padding: 12, backgroundColor: '#fff', elevation: 7, }}>
                 <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 30, color: 'black', alignSelf: 'center' }}>
@@ -143,7 +112,7 @@ const ClassHeldReport = ({ navigation, route }) => {
     )
 }
 
-export default ClassHeldReport
+export default ViewSpecificChr;
 
 const styles = StyleSheet.create({
     container: {

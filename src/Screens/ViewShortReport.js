@@ -17,38 +17,38 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { appcolor } from '../components/Colorss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ActivityShortReport = ({ navigation, route }) => {
+const ViewShortReport = ({ navigation, route }) => {
 
     //  data from login
-    const [name, setName] = useState('');
-    const [img, setImg] = useState();
+    // const [name, setName] = useState('');
+    // const [img, setImg] = useState();
 
     // Api response store for get
     const [teacherData, setTeacherData] = useState([]);
 
     // APi Code get Get DVr
     useEffect(() => {
-        getData();
+        // getData();
         getTeacherDetail();
 
     }, []);
 
 
 
-    const getData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('TeacherData');
-            if (value !== null) {
-                const data = JSON.parse(value);
-                // frpm prev screen storedata login screen
-                setName(data.Name)
-                setImg(data.Image)
-                console.log('****' + value);
-            }
-        } catch (e) {
-            // error reading value
-        }
-    };
+    // const getData = async () => {
+    //     try {
+    //         const value = await AsyncStorage.getItem('TeacherData');
+    //         if (value !== null) {
+    //             const data = JSON.parse(value);
+    //             // frpm prev screen storedata login screen
+    //             setName(data.Name)
+    //             setImg(data.Image)
+    //             console.log('****' + value);
+    //         }
+    //     } catch (e) {
+    //         // error reading value
+    //     }
+    // };
 
     // api func of this list
 
@@ -67,53 +67,10 @@ const ActivityShortReport = ({ navigation, route }) => {
 
 
 
-
-
-
-
-
-
-
     // Search bar
     const [searchTeacher, setSearchTeacher] = useState('');
     return (
         <Provider style={styles.container}>
-            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9, top: 5 }}>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.text}>
-                        {/* extracting obj */}
-
-                        {name}
-
-                    </Text>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <Ionicons
-
-                        name="notifications-circle"
-                        onPress={() => console.log('Edit pressed')}
-
-                        size={42}
-                        color='#00008b'
-                        style={{
-                            alignSelf: 'center',
-                            marginRight: 30
-                        }}
-
-
-                    />
-
-
-                    {
-                        img == null ?
-                            <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
-                            :
-                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
-                    }
-
-                </View>
-
-            </View>
 
             {/* Below flatlist */}
             <View style={{ margin: '3%', flexDirection: 'row', }}>
@@ -153,7 +110,7 @@ const ActivityShortReport = ({ navigation, route }) => {
                                         borderRadius: 8,
 
 
-                                        height: 230,
+                                        height: 150,
                                     }}>
                                     <View
                                         style={{
@@ -193,29 +150,6 @@ const ActivityShortReport = ({ navigation, route }) => {
                                     </View>
 
                                     <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            Teacher Name:{item.teacherName}
-                                        </Text>
-                                    </View>
-
-                                    <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            Venue  :{item.venue}
-                                        </Text>
-                                    </View>
-
-
-                                    <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            Sit:{item.sit}
-                                        </Text>
-                                    </View>
-                                    <View style={{}}>
-                                        <Text style={{ color: 'black', fontWeight: '600' }}>
-                                            Stand:{item.stand}
-                                        </Text>
-                                    </View>
-                                    <View style={{}}>
                                         <Text style={{ color: 'black', fontWeight: '600', alignSelf: 'flex-end' }}>
                                             {item.status}
                                         </Text>
@@ -235,7 +169,7 @@ const ActivityShortReport = ({ navigation, route }) => {
     );
 };
 
-export default ActivityShortReport;
+export default ViewShortReport;
 
 const styles = StyleSheet.create({
     container: {

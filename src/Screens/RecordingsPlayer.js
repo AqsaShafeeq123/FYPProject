@@ -22,7 +22,7 @@ const RecordingsPlayer = ({ navigation, route }) => {
                 <WebView
 
                     source={{
-                        uri: `http://192.168.1.101:8000/api/videos?id=${id}&type=${typeA}`
+                        uri: `http://192.168.1.104:8000/api/videos?id=${id}&type=${typeA}`
 
                     }}
                     style={{ marginTop: 20 }}

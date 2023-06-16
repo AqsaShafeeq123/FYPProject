@@ -47,7 +47,7 @@ const Time = ({ starttime, endtime, venue, courseName, discipline, day }) => {
             style={[
                 currentStatus === 'Running'
                     ? { backgroundColor: '#ffffff' }
-                    : { backgroundColor: 'green' },
+                    : { backgroundColor: '#6495ed' },
                 {
                     flexDirection: 'column',
                     justifyContent: 'space-between',

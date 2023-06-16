@@ -62,7 +62,7 @@ const DvrDetails = ({ navigation, route }) => {
     }, []);
     async function getCamera() {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/camera-details/' + id);
+            let response = await fetch('http://192.168.1.104:8000/api/camera-details/' + id);
             let json = await response.json();
             setCamera(json.data);
 
@@ -81,7 +81,7 @@ const DvrDetails = ({ navigation, route }) => {
     const [venueData, setVenueData] = useState([]);
     async function GetVenue() {
 
-        let response = await fetch('http://192.168.1.101:8000/api/venue-details')
+        let response = await fetch('http://192.168.1.104:8000/api/venue-details')
 
         let json = await response.json();
         let arr = json.data;
@@ -110,7 +110,7 @@ const DvrDetails = ({ navigation, route }) => {
 
     async function GetChannel() {
 
-        let response = await fetch('http://192.168.1.101:8000/api/camera-details/' + id)
+        let response = await fetch('http://192.168.1.104:8000/api/camera-details/' + id)
 
         let json = await response.json();
         let arr = json.data;
@@ -171,7 +171,7 @@ const DvrDetails = ({ navigation, route }) => {
             redirect: 'follow'
         };
         console.log(raw);
-        fetch('http://192.168.1.101:8000/api/update-camera-details', requestOptions)
+        fetch('http://192.168.1.104:8000/api/update-camera-details', requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -207,7 +207,7 @@ const DvrDetails = ({ navigation, route }) => {
             redirect: 'follow'
         };
         console.log(raw);
-        fetch("http://192.168.1.101:8000/api/delete-camera-details", requestOptions)
+        fetch("http://192.168.1.104:8000/api/delete-camera-details", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -243,7 +243,7 @@ const DvrDetails = ({ navigation, route }) => {
             redirect: 'follow'
         };
 
-        fetch("http://192.168.1.101:8000/api/add-camera", requestOptions)
+        fetch("http://192.168.1.104:8000/api/add-camera", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));

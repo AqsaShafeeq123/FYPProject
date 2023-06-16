@@ -56,7 +56,7 @@ const ShortReport = ({ navigation, route }) => {
     async function getTeacherDetail() {
         try {
 
-            let response = await fetch('http://192.168.1.101:8000/api/get-all-teacher-chr');
+            let response = await fetch('http://192.168.1.104:8000/api/get-all-teacher-chr');
             let json = await response.json();
             setTeacherData(json);
             console.log(json);
@@ -108,7 +108,7 @@ const ShortReport = ({ navigation, route }) => {
                         img == null ?
                             <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                             :
-                            <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
+                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
                     }
 
                 </View>
@@ -172,7 +172,7 @@ const ShortReport = ({ navigation, route }) => {
                                             </Text>
                                         </View>
                                         <View>
-                                            <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                         </View>
                                     </View>
                                     <View style={{}}>

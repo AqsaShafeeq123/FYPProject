@@ -9,7 +9,10 @@ import {
     StyleSheet,
 } from 'react-native';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-const ChrDetail = () => {
+const ViewChr = () => {
+
+
+
     // Api response store for get
     const [teacherData, setTeacherData] = useState([]);
 
@@ -111,14 +114,14 @@ const ChrDetail = () => {
                 </DataTable>
             </ScrollView>
 
-            {/* <TouchableOpacity style={styles.button} onPress={handleGeneratePDF}>
+            <TouchableOpacity style={styles.button} onPress={handleGeneratePDF}>
                 <Text style={styles.buttonText}>Generate PDF</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     );
 };
 
-export default ChrDetail;
+export default ViewChr;
 
 const styles = StyleSheet.create({
     container: {

@@ -29,7 +29,7 @@ const NOTIFICATION = ({ navigation, route }) => {
 
     const showNotifications = async () => {
         try {
-            const response = await axios.get(`http://192.168.1.101:8000/api/get-teacher-notification-data?teacherName=${tID}`);
+            const response = await axios.get(`http://192.168.1.104:8000/api/get-teacher-notification-data?teacherName=${tID}`);
             console.log("testresponse------", response.data);
             setData(response.data);
         } catch (error) {
@@ -53,7 +53,7 @@ const NOTIFICATION = ({ navigation, route }) => {
     //     };
 
 
-    //     fetch("http://192.168.1.101:8000/api/student-attendance-claim", {
+    //     fetch("http://192.168.1.104:8000/api/student-attendance-claim", {
     //         method: "POST",
     //         headers: { "Content-Type": "application/json" },
     //         body: JSON.stringify(info),
@@ -71,7 +71,7 @@ const NOTIFICATION = ({ navigation, route }) => {
     const acceptClaim = async (item) => {
         await axios
             .get(
-                `http://192.168.1.101:8000/api/update-attendance?attendanceId=${item.id}&status=${true}`
+                `http://192.168.1.104:8000/api/update-attendance?attendanceId=${item.id}&status=${true}`
             )
             .then((res) => {
                 console.log("rest", res.data);
@@ -83,7 +83,7 @@ const NOTIFICATION = ({ navigation, route }) => {
     const rejectClaim = async (item) => {
         await axios
             .get(
-                `http://192.168.1.101:8000/api/update-attendance?attendanceId=${item.id}&status=${false}`
+                `http://192.168.1.104:8000/api/update-attendance?attendanceId=${item.id}&status=${false}`
             )
             .then((res) => {
                 console.log("rest", res.data);
@@ -130,7 +130,7 @@ const NOTIFICATION = ({ navigation, route }) => {
                                         }}>
 
                                         <View>
-                                            <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Student/' + item.image }} style={{
+                                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Student/' + item.image }} style={{
                                                 width: 80,
                                                 height: 90,
                                                 borderRadius: 10,

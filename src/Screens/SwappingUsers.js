@@ -45,7 +45,7 @@ const SwappingUsers = ({ navigation, route }) => {
         try {
             console.log(1, value?.startTime);
             const response = await axios.get(
-                `http://192.168.1.101:8000/api/get-swapping-teacher-data?day=${value.day}&startTime=${value.startTime}&endTime=${value.endTime}&timeTableId=${value.timeTableId}`
+                `http://192.168.1.104:8000/api/get-swapping-teacher-data?day=${value.day}&startTime=${value.startTime}&endTime=${value.endTime}&timeTableId=${value.timeTableId}`
             );
             console.log(response.data);
             setSwapData(response.data);
@@ -111,7 +111,7 @@ const SwappingUsers = ({ navigation, route }) => {
             }
             console.log(5555, obj);
 
-            const response = await axios.post('http://192.168.1.101:8000/api/add-swapping', obj);
+            const response = await axios.post('http://192.168.1.104:8000/api/add-swapping', obj);
             console.log(response.data);
             if (response.data.data === 'okay') {
                 navigation.goBack();
@@ -211,7 +211,7 @@ const SwappingUsers = ({ navigation, route }) => {
                                             item.image == null ?
                                                 <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                                 :
-                                                <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
+                                                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + item.image }} style={styles.imgStyle} />
                                         }
                                     </View>
                                     <View style={{}}>

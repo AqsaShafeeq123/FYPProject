@@ -9,7 +9,7 @@ const Demo = ({ navigation }) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://192.168.1.101:8000/api/demo');
+            const response = await fetch('http://192.168.1.104:8000/api/demo');
             const json = await response.json();
             setData(json);
         } catch (error) {
@@ -56,7 +56,7 @@ const Demo = ({ navigation }) => {
 
                         <Image
                             source={{
-                                uri: `http://192.168.1.101:8000/api/demothumbnail?file=${item.thumbnail}`,
+                                uri: `http://192.168.1.104:8000/api/demothumbnail?file=${item.thumbnail}`,
                             }}
                             style={{
                                 // maxWidth: 300,

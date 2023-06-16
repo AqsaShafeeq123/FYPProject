@@ -20,7 +20,7 @@ const Swap = ({ navigation, route }) => {
     }, []);
     async function getSchedule() {
         try {
-            let response = await fetch('http://192.168.1.101:8000/api/teacher-timetable-details/' + VALUE.name);
+            let response = await fetch('http://192.168.1.104:8000/api/teacher-timetable-details/' + VALUE.name);
             let json = await response.json();
 
             setScheduleData(json);
@@ -331,7 +331,7 @@ const Swap = ({ navigation, route }) => {
                     VALUE.image == null ?
                         <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                         :
-                        <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
+                        <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
                 }
 
                 <Text style={styles.text}>{VALUE.name}</Text>

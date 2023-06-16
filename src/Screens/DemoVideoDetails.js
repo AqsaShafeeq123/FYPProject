@@ -13,7 +13,7 @@ const DemoVideoDetails = ({ navigation, route }) => {
 
     const VideoSend = async (data) => {
         try {
-            const response = await axios.get(`http://192.168.1.101:8000/api/demovideos?file=${data}`);
+            const response = await axios.get(`http://192.168.1.104:8000/api/demovideos?file=${data}`);
             console.log('res', response);
             if (response.status === 200) {
                 setLoader(false);
@@ -43,7 +43,7 @@ const DemoVideoDetails = ({ navigation, route }) => {
                     }}
                 >
                     <Image
-                        source={{ uri: `http://192.168.1.101:8000/api/demothumbnail?file=${obj.thumbnail}` }}
+                        source={{ uri: `http://192.168.1.104:8000/api/demothumbnail?file=${obj.thumbnail}` }}
                         style={{ width: 300, height: 200 }}
                         resizeMode="cover"
                     />

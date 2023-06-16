@@ -78,7 +78,7 @@ const TeacherChr = ({ navigation, route }) => {
 
 
                     />
-                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + img }} style={styles.imgStyle} />
                 </View>
             </View>
 
@@ -101,7 +101,7 @@ const TeacherChr = ({ navigation, route }) => {
             }} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                    <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + Img }} style={styles.imgStyle} />
+                    <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + Img }} style={styles.imgStyle} />
 
                     <Text style={{ color: '#000', fontWeight: 'bold', top: 25 }}>{Name}</Text></View>
 

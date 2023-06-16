@@ -21,7 +21,7 @@ const Preschedule = ({ navigation, route }) => {
     }, []);
     async function getSched() {
         try {
-            let response = await fetch("http://192.168.1.101:8000/api/teacher-timetable-details/" + VALUE.name)
+            let response = await fetch("http://192.168.1.104:8000/api/teacher-timetable-details/" + VALUE.name)
             console.log(VALUE.name
             )
             let json = await response.json();
@@ -114,7 +114,7 @@ const Preschedule = ({ navigation, route }) => {
                             VALUE.image == null ?
                                 <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
                                 :
-                                <Image source={{ uri: 'http://192.168.1.101:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
+                                <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + VALUE.image }} style={styles.imgStyle} />
                         }
                         <Text style={{ color: "black", fontSize: 16 }}>{VALUE.name}</Text>
                     </View>

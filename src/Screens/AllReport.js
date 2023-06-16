@@ -17,10 +17,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { appcolor } from '../components/Colorss';
 
 
-const Home = ({ navigation, route }) => {
+const AllReport = ({ navigation, route }) => {
 
-    const { dat } = route.params;
-    console.log(dat + '****')
+    // const { dat } = route.params;
+    // console.log(dat + '****')
 
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
@@ -117,40 +117,10 @@ const Home = ({ navigation, route }) => {
     const [searchTeacher, setSearchTeacher] = useState('');
     return (
         <Provider style={styles.container}>
-            <View style={{ flexDirection: 'row', borderBottomWidth: 2, backgroundColor: '#fff', borderRadius: 9, top: 5 }}>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.text}>
-                        {/* extracting obj */}
-                        {dat.name}
 
 
 
-                    </Text>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <Ionicons
 
-                        name="notifications-circle"
-                        onPress={() => console.log('Edit pressed')}
-
-                        size={42}
-                        color='#00008b'
-                        style={{
-                            alignSelf: 'center',
-                            marginRight: 30
-                        }}
-
-
-                    />
-                    {
-                        dat.image == null ?
-                            <Image source={require('../Images/imgIcon.png')} style={styles.imgStyle} />
-                            :
-                            <Image source={{ uri: 'http://192.168.1.104:8000/api/get-user-image/UserImages/Teacher/' + dat.image }} style={styles.imgStyle} />
-                    }
-                </View>
-
-            </View>
 
             {/* Below flatlist */}
             <View style={{ margin: '3%', flexDirection: 'row', }}>
@@ -325,12 +295,12 @@ const Home = ({ navigation, route }) => {
                         {
                             icon: 'star',
                             label: 'Switch to Activity ',
-                            onPress: () => { navigation.navigate('Activity') },
+                            onPress: () => { navigation.navigate('ViewActivity') },
                         },
                         {
                             icon: 'view-grid',
                             label: 'Switch to DataTable',
-                            onPress: () => { navigation.navigate('ChrDetail') },
+                            onPress: () => { navigation.navigate('ViewChr') },
                         },
 
                     ]}
@@ -355,7 +325,7 @@ const Home = ({ navigation, route }) => {
                             return (
                                 <Pressable
                                     onPress={() => {
-                                        navigation.navigate('ClassHeldReport', {
+                                        navigation.navigate('ViewSpecificChr', {
                                             Name: item.name,
                                             Discipline: item.discipline,
                                             Date: item.date,
@@ -438,7 +408,7 @@ const Home = ({ navigation, route }) => {
     );
 };
 
-export default Home;
+export default AllReport;
 
 const styles = StyleSheet.create({
     container: {
